@@ -2,7 +2,7 @@ import * as Discord from 'discord.js';
 import { readdir } from 'fs/promises';
 
 export default async function eventHandler(client: Discord.Client, pathAdditions: string = '') {
-  const eventFiles = await readdir('./dist/events' + pathAdditions);
+  const eventFiles = await readdir('./dist/bot/events' + pathAdditions);
 
   for (const file of eventFiles) {
 
