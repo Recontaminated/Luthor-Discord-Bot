@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node .",
-    "watch": "rm -rf dist && ./node_modules/.bin/tsc -w"
+    "watch": "rm -rf dist && .\\node_modules\\.bin\\tsc -w"
   },
   "author": "",
   "license": "ISC",
