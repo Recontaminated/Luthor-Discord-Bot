@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
 import { readdir } from 'fs/promises';
-
+import Logger from '../utils/logger.js';
 export default async function commandAdder(commandCollection: Discord.Collection<any, any>, pathAdditions: string = '') {
   const commandFiles = await readdir('./dist/bot/commands' + pathAdditions);
 
@@ -18,7 +18,7 @@ export default async function commandAdder(commandCollection: Discord.Collection
     let commandName = file.split('.')[0];
 
     commandCollection.set(commandName, command.default);
-    console.log(`Loaded command: ${commandName}`);
+    Logger.info(`Loaded command: ${commandName}`);
     if (command.description.aliases === undefined)
       continue;
 
