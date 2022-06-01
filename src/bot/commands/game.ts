@@ -140,6 +140,7 @@ export const description: DescriptionTypes = {
   name: 'test',
   description: 'game command',
   usage: 'mention as many players as you want to join',
+
   };
 
 export interface DescriptionTypes {

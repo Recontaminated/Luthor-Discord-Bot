@@ -1,3 +1,4 @@
+import { description } from './commands/help';
 import * as Discord from 'discord.js';
 import { readdir } from 'fs/promises';
 import Logger from '../utils/logger.js';
@@ -19,7 +20,8 @@ export default async function commandAdder(commandCollection: Discord.Collection
 
     commandCollection.set(commandName, command.default);
     Logger.info(`Loaded command: ${commandName}`);
-    if (command.description.aliases === undefined)
+
+    if (command.description?.aliases === undefined)
       continue;
 
     for (let i in command.description.aliases) {

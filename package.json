@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.7.0",
+    "keyv": "^4.3.0",
+    "sequelize": "^6.20.1",
     "typescript": "^4.6.4"
   }
 }
