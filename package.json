@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/rest": "^0.4.1",
+    "chalk": "^5.0.1",
+    "discord-api-types": "^0.33.1",
     "discord.js": "^13.7.0",
     "keyv": "^4.3.0",
     "sequelize": "^6.20.1",

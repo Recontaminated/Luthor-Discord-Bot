@@ -26,4 +26,5 @@ function commandHandler(message: Discord.Message) {
 
 export const settings = {
   once: false,
+  event: "messageCreate"
 };
