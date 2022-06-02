@@ -1,17 +1,27 @@
-import { readFileSync } from 'fs';
-// get enviroment variables all
-
-export function readConfig(): Config {
-  
-  const configFile = readFileSync('config.json');
-  return JSON.parse(configFile.toString());
+import { existsSync } from 'fs';
+import Logger from './logger.js';
+import * as dotenv from "dotenv";
+import * as fs from "fs";
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv  {
+      token: string;
+      prefix: string;
+      botNames: string;
+      database: {
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+      };
+    }
+  }
 }
 
-interface Config {
-  token: string;
-  prefix: string;
-  botName: string;
-}
 
-const config = readConfig();
+dotenv.config();
+
+const config = process.env;
+
 export { config as default };
