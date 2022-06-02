@@ -1,16 +1,16 @@
 //export a default class for the logger
 export default class Logger {
     //create a method for each loglevel starting with Logger.Info()
-    static info(message: string) {
+    static info(message: string): void  {
         console.log(`\x1b[42m[INFO]\x1b[40m ${message}`);
     }
-    static warn(message: string) {
+    static warn(message: string): void  {
         console.log(`\x1b[43m[INFO]\x1b[40m ${message}`);
     }
-    static error(message: string) {
+    static error(message: string): void  {
         console.log(`\x1b[41m[ERROR]\x1b[40m ${message}`);
     }
-    static debug(message: string) {
+    static debug(message: string): void  {
         console.log(`\x1b[44m[DEBUG]\x1b[40m ${message}`);
     }
 }
