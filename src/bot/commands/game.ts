@@ -9,6 +9,18 @@ export default async function (message: Discord.Message, args:any[] ) {
   if (message.mentions.users.first() === undefined) return;
 
 
+  for (let i = 0; i < args.length; i++) {
+    let userInQuestion = getUserFromMention(message.client, args[i])
+    if (message.author.id == userInQuestion?.id) {
+      message.reply("you cant play a game with yourself in it idot")
+      
+      return
+  }
+  if(userInQuestion?.bot) {
+    message.reply("bots arent smart enough to play games") 
+    return
+  }
+}
 
   let list_of_players:any = []
   list_of_players.push(message.author)
@@ -22,6 +34,7 @@ export default async function (message: Discord.Message, args:any[] ) {
 
     message_to_send += list_of_players[i].toString()
   }
+  
   // const row = new Discord.MessageActionRow()
   // .addComponents(
   //   new Discord.MessageButton()
