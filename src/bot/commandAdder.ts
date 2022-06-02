@@ -3,7 +3,7 @@ import * as Discord from 'discord.js';
 import { readdir } from 'fs/promises';
 import Logger from '../utils/logger.js';
 import client from '../index.js';
-export default async function commandAdder(pathAdditions: string = '') {
+export default async function commandAdder(pathAdditions = '') {
   const commandFiles = await readdir('./dist/bot/commands' + pathAdditions);
 
   for (const file of commandFiles) {
