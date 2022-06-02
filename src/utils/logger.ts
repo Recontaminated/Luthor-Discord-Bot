@@ -7,10 +7,10 @@ export default class Logger {
     static warn(message: string) {
         console.log(`\x1b[43m[INFO]\x1b[40m ${message}`);
     }
-    static error(message: string) {
+    static error(message: unknown) {
         console.log(`\x1b[41m[ERROR]\x1b[40m ${message}`);
     }
-    static debug(message: string) {
+    static debug(message: unknown) {
         console.log(`\x1b[44m[DEBUG]\x1b[40m ${message}`);
     }
 }
