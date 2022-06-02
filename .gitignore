@@ -4,3 +4,4 @@ config.json
 repoCleaner.jar
 .history/
 /.idea/
+.env
