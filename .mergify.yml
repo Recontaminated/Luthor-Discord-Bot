@@ -5,3 +5,10 @@ pull_request_rules:
     actions:
       merge:
         method: merge
+  - name: merge pull requests from dependabot if CI passes
+    conditions:
+      - author=dependabot[bot]
+      - status-success=continuous-integration/travis/pr
+    actions:
+      merge:
+        method: merge
