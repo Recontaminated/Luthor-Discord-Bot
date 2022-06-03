@@ -50,7 +50,7 @@ export default async function (message: Discord.Message, args:any[] ) {
 let filter = (reaction:Discord.MessageReaction, user:Discord.User) => {
 
     for (let i = 0; i < list_of_players.length; i++) {
-      if (user.id == undefined || user.id == null) return false;
+      if (user.id == undefined || user.id === null) return false;
       if (user.id === list_of_players[i].id) {console.log("asdf"); return true};
     }
 
@@ -97,7 +97,7 @@ let filter = (reaction:Discord.MessageReaction, user:Discord.User) => {
 
   let messageFilter = (message:Discord.Message)=> {
   for (let i = 0; i < list_of_players.length; i++) {
-    if (message.author.id == undefined || message.author.id == null) return false;
+    if (message.author.id == undefined || message.author.id === null) return false;
     if (message.author.id === list_of_players[i].id) {console.log("asdf"); return true};
   }
 
