@@ -10,7 +10,7 @@ let d =
 //check if the file exists
 if (!fs.existsSync(`./logs/${d}.txt`)) {
   console.log("creating file at " + `../../logs/${d}.txt`);
-  //TODO: figure this shit out, makes no sense
+  //TODO: check if log directory exists, create if it doesnt
   fs.writeFileSync(`./logs/${d}.txt`, "");
 }
 let logStream = fs.createWriteStream(`./logs/${d}.txt`, { flags: "a" });
