@@ -20,6 +20,6 @@
     "keyv": "^4.3.0",
     "sequelize": "^6.20.1",
     "typeorm": "^0.3.6",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.2"
   }
 }
