@@ -4,7 +4,6 @@ import commandAdder from "./bot/commandAdder.js";
 import eventHandler from "./bot/eventHandler.js";
 import shutdown from "./utils/shutdown.js";
 import Logger from "./utils/logger.js";
-import registerCommands from "./utils/registerCommands.js";
 import DBClient from "./utils/mongoManager.js";
 
 declare module "discord.js" {
