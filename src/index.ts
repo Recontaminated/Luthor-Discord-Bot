@@ -52,9 +52,8 @@ process.on("SIGINT", async function () {
 
   try {
     await client.destroy();
-    await shutdown(() => {
-      process.exit(1)
-    });
+    await shutdown();
+    process.exit(0)
 
   } catch (err: any) {
     Logger.error(err);
