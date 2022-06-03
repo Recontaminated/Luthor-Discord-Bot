@@ -17,6 +17,7 @@ let logStream = fs.createWriteStream(`./logs/${d}.txt`, { flags: "a" });
 logStream.write("-----------------------------------------------------\n");
 
 export default class Logger {
+
   //create a method for each loglevel starting with Logger.Info()
   static info(message: string) {
     console.log(`\x1b[42m[INFO]\x1b[40m ${message}`);
@@ -44,3 +45,4 @@ export async function closeLogStream(callback?: any) {
     resolve();
   });
 }
+
