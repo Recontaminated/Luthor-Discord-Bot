@@ -5,3 +5,4 @@ repoCleaner.jar
 .history/
 /.idea/
 .env
+logs/
