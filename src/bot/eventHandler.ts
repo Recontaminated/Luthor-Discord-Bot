@@ -5,7 +5,7 @@ import Logger from "../utils/logger.js";
 
 export default async function eventHandler(
   client: Discord.Client,
-  pathAdditions: string = ""
+  pathAdditions = ""
 ) {
   const eventFiles = await readdir("./dist/bot/events" + pathAdditions);
 
