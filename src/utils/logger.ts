@@ -7,9 +7,12 @@ let today = new Date();
 
 let d =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+
+if (!fs.existsSync("./logs")) {
+  fs.mkdirSync("./logs");
+}
 //check if the file exists
 if (!fs.existsSync(`./logs/${d}.txt`)) {
-  console.log("creating file at " + `../../logs/${d}.txt`);
   //TODO: check if log directory exists, create if it doesnt
   fs.writeFileSync(`./logs/${d}.txt`, "");
 }
@@ -17,7 +20,6 @@ let logStream = fs.createWriteStream(`./logs/${d}.txt`, { flags: "a" });
 logStream.write("-----------------------------------------------------\n");
 
 export default class Logger {
-
   //create a method for each loglevel starting with Logger.Info()
   static info(message: string) {
     console.log(`\x1b[42m[INFO]\x1b[40m ${message}`);
@@ -45,4 +47,3 @@ export async function closeLogStream(callback?: any) {
     resolve();
   });
 }
-
