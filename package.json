@@ -9,6 +9,9 @@
     "watch": "rm -rf dist && .\\node_modules\\.bin\\tsc -w",
     "dev": "nodemon src/index.ts"
   },
+  "engines": {
+    "node": ">=16 <17"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
