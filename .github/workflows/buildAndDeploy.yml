@@ -1,0 +1,50 @@
+name: Discord Bot CD
+
+on:
+  [push, workflow_dispatch]:
+    branches: [mater]
+
+jobs:
+  buildAndDeployment:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: "Checkout branch"
+      - uses: actions/checkout@master
+      - name: Use Node.js ${{ matrix.node-version }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: npm run build
+      - name: List output files
+        run: ls
+
+
+      - name: Deploy (stop server)
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.API_ENDPOINT }}
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+          data: '{"signal":"stop"}'
+
+          
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          LOCAL_DIR: dist/
+          METHOD: sftp
+          PORT: ${{ secrets.FTP_PORT }}
+          ARGS: --delete
+      - name: Deploy (start server)
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.API_ENDPOINT }}
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+          data: '{"signal":"stop"}'        
