@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: "Checkout branch"
       - uses: actions/checkout@master
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: setup nodeJS
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -19,8 +19,6 @@ jobs:
       - run: npm run build
       - name: List output files
         run: ls
-
-
       - name: Deploy (stop server)
         uses: fjogeleit/http-request-action@v1
         with:
