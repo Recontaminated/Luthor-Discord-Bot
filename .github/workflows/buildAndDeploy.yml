@@ -1,8 +1,9 @@
 name: Discord Bot CD
 
 on:
-  [push, workflow_dispatch]:
-    branches: [mater]
+  push:
+    branches: [master]
+  workflow_dispatch:
 
 jobs:
   buildAndDeployment:
