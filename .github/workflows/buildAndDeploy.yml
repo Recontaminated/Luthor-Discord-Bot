@@ -3,8 +3,6 @@ name: Discord Bot CD
 on:
   push:
     branches: [master]
-  workflow_dispatch:
-
 jobs:
   buildAndDeployment:
     runs-on: ubuntu-latest
