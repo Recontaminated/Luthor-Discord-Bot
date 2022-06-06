@@ -56,21 +56,29 @@ jobs:
       #     dist_target_dir: "/"
       #     delete: "true"
       #     exclude: "'.env'"        
-
-          
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
-        env:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: upload/
-          server-dir: ./
-          log-level: verbose
+      - name: SFTP uploader
+        uses: wangyucode/sftp-upload-action@v1.3.2
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          password: ${{ secrets.password }} 
+          localDir: 'upload/'
+          remoteDir: "./"
           port: ${{ secrets.FTP_PORT }}
-          ARGS: --delete
-          exclude: |
-            .env
+          
+      # - name: FTP Deploy
+      #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      #   env:
+      #     server: ${{ secrets.FTP_SERVER }}
+      #     method: sftp
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     local-dir: upload/
+      #     server-dir: ./
+      #     log-level: verbose
+      #     port: ${{ secrets.FTP_PORT }}
+      #     ARGS: --delete
+      #     exclude: |
+      #       .env
 
       - name: Deploy (1/3)
         uses: fjogeleit/http-request-action@v1
