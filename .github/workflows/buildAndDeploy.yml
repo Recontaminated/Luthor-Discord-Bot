@@ -39,7 +39,7 @@ jobs:
       - name: rsync deployments
 
         run: |
-        sshpass -p ${{ secrets.FTP_PASSWORD }} rsync --progress -avz -e "ssh -o StrictHostKeyChecking=no" public/* " ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:/
+        sshpass -p ${{ secrets.FTP_PASSWORD }} rsync --progress -avz -e "ssh -o StrictHostKeyChecking=no" public/* " ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:/"
 
 
 
