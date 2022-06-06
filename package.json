@@ -9,7 +9,7 @@
     "watch": "rm -rf dist && .\\node_modules\\.bin\\tsc -w",
     "dev": "nodemon src/index.ts",
     "build": "rm -rf dist && tsc",
-    "host":"npm install && node dist/index.js"
+    "host": "npm install && node dist/index.js"
   },
   "engines": {
     "node": "16.x"
@@ -25,6 +25,5 @@
     "dotenv": "^16.0.1",
     "mongodb": "^4.6.0",
     "typescript": "^4.6.4"
-
   }
 }
