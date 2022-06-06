@@ -58,8 +58,8 @@ jobs:
       #     exclude: "'.env'"        
 
           
-      - name: 'Deploy(1/2): Copy dist)'
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
