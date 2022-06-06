@@ -41,6 +41,18 @@ jobs:
       #     customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
       #     data: '{"signal":"stop"}'
 
+      # - name: SFTP Deploy
+      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.2
+      #   with:
+      #     server: ${{ secrets.FTP_SERVER }}
+      #     port: ${{ secrets.FTP_PORT }}
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     ftp_password: ${{ secrets.FTP_PASSWORD }}
+      #     ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
+      #     local_source_dir: "upload/"
+      #     dist_target_dir: "/"
+      #     delete: "true"
+      #     exclude: "'.env'"        
 
           
       - name: 'Deploy(1/2): Copy dist)'
@@ -56,8 +68,6 @@ jobs:
           PORT: ${{ secrets.FTP_PORT }}
           ARGS: --delete
           exclude: |
-            logs/*
-            **.env*
             .env
 
       - name: Deploy (1/2)
