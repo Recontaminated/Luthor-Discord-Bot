@@ -57,17 +57,17 @@ jobs:
       #     delete: "true"
       #     exclude: "'.env'"    
 
-
-      - name: Rsync Deployments Action
-        uses: Burnett01/rsync-deployments@5.2    
-        with:
-          switches: -r --exclude=".env" --delete
-          path: upload/
-          remote_path: /
-          remote_host: ${{ secrets.FTP_SERVER }}
-          remote_user: ${{ secrets.FTP_USERNAME }}
-          remote_key: ${{ secrets.SSH_KEY }}
-          remote_port: ${{ secrets.FTP_PORT }}
+        - name      
+      # - name: Rsync Deployments Action
+      #   uses: Burnett01/rsync-deployments@5.2    
+      #   with:
+      #     switches: -avzr --exclude=".env" --delete
+      #     path: upload/
+      #     remote_path: /
+      #     remote_host: ${{ secrets.FTP_SERVER }}
+      #     remote_user: ${{ secrets.FTP_USERNAME }}
+      #     remote_key: ${{ secrets.SSH_KEY }}
+      #     remote_port: ${{ secrets.FTP_PORT }}
       # - name: SFTP uploader
       #   uses: SamKirkland/web-deploy@1.0.0
       #   with:
@@ -91,7 +91,14 @@ jobs:
       #     ARGS: --delete
       #     exclude: |
       #       .env
-
+      - name: Deploy/Upload
+        env:
+          REDELINUX_PASS: ${{ secrets.FTP_PASSWORD }}
+          REDELINUX_USER: ${{ secrets.FTP_USERNAME }}
+          REDELINUX_HOST: ${{ secrets.FTP_SERVER }}
+          REDELINUX_PATH: /
+        run: |
+          sshpass -p "$REDELINUX_PASS" rsync --progress -avz -e "ssh -o StrictHostKeyChecking=no" public/* "$REDELINUX_USER@$REDELINUX_HOST:$REDELINUX_PATH"
       - name: Deploy (1/3)
         uses: fjogeleit/http-request-action@v1
         with:
