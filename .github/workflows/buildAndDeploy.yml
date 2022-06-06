@@ -29,16 +29,11 @@ jobs:
           data: '{"signal":"stop"}'
 
 
-      - name: Show Response
-        run: |
-          echo ${{ steps.myRequest.outputs.response }}
-
-
       - name: Zip files for deployment
         uses: papeloto/action-zip@v1
         with:
           files: dist/ node_modules/ package.json package-lock.json
-          dest: /result.zip
+          dest: /zipped/result.zip
           
       - name: 'Deploy(1/2): Copy dist)'
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
@@ -46,8 +41,8 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          LOCAL_DIR: /result.zip
-          SERVER_DIR: dist/
+          LOCAL_DIR: /zipped
+          SERVER_DIR: /
           METHOD: sftp
           PORT: ${{ secrets.FTP_PORT }}
           ARGS: --delete
