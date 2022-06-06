@@ -61,7 +61,7 @@ jobs:
         with:
           host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.password }} 
+          password: ${{ secrets.FTP_PASSWORD }}
           localDir: 'upload/'
           remoteDir: "./"
           port: ${{ secrets.FTP_PORT }}
