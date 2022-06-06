@@ -43,7 +43,7 @@ jobs:
           REDELINUX_HOST: ${{ secrets.FTP_SERVER }}
           REDELINUX_PATH: /
         run: |
-          sshpass -p "$REDELINUX_PASS" rsync --progress -azrP --exclude=".env" "ssh -p 2022 -o StrictHostKeyChecking=no" public/* "$REDELINUX_USER@$REDELINUX_HOST:$REDELINUX_PATH"
+          sshpass -p "$REDELINUX_PASS" rsync --progress -azrP --exclude=".env" -e= "ssh -p 2022 -o StrictHostKeyChecking=no" public/* "$REDELINUX_USER@$REDELINUX_HOST:$REDELINUX_PATH"
       - name: Deploy (1/3)
         uses: fjogeleit/http-request-action@v1
         with:
