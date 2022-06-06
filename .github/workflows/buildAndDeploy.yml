@@ -31,7 +31,7 @@ jobs:
       - name: Create upload directory
         run: mkdir -p upload
       - name: Zip files
-      - run: tar -zcf upload/result.tar.gz -C build .
+        run: tar -zcf upload/result.tar.gz -C build .
 
       - name: Deploy (stop server)
         uses: fjogeleit/http-request-action@v1
