@@ -36,14 +36,18 @@ jobs:
       - name: Zip files
         run: tar -zcf upload/result.tar.gz -C build .
 
-      - name: Deploy/Upload
-        env:
-          REDELINUX_PASS: ${{ secrets.FTP_PASSWORD }}
-          REDELINUX_USER: ${{ secrets.FTP_USERNAME }}
-          REDELINUX_HOST: ${{ secrets.FTP_SERVER }}
-          REDELINUX_PATH: /
-        run: |
-          sshpass -p "$REDELINUX_PASS" rsync --port 2022 --progress -azr--exclude=".env"  "ssh -p 2022 -o StrictHostKeyChecking=no" public/* "$REDELINUX_USER@$REDELINUX_HOST:$REDELINUX_PATH"
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: -avzr --delete --exclude="" --include="" --filter=""
+          path: upload/
+          remote_path: /
+          remote_host: ${{ secrets.FTP_SERVER }}
+          remote_port: 2022
+          remote_user: ${{ secrets.FTP_USERNAME }}
+          remote_key: ${{ secrets.SSH_KEY }}
+
+
       - name: Deploy (1/3)
         uses: fjogeleit/http-request-action@v1
         with:
