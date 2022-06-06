@@ -88,6 +88,8 @@ jobs:
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
           data: '{"root":"/","file":"result.tar.gz"}'
+          exclude: |
+            .env
 
       # - name: Deploy (2/3)
       #   uses: fjogeleit/http-request-action@v1

@@ -23,12 +23,12 @@ declare global {
 dotenv.config();
 let config: NodeJS.ProcessEnv;
 
-if (isDocker()) {
+// if (isDocker()) {
   
-	//load config.json
-  config = JSON.parse(fs.readFileSync('../../env.json', 'utf8'));
-}
-else {
- config = process.env;
-}
+// 	//load config.json
+//   config = JSON.parse(fs.readFileSync('../../env.json', 'utf8'));
+// }
+
+config = process.env;
+
 export { config as default };
