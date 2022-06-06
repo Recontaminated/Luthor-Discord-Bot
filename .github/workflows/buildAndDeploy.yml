@@ -36,6 +36,42 @@ jobs:
       - name: Zip files
         run: tar -zcf upload/result.tar.gz -C build .
 
+      - name: Deploy/Upload
+        env:
+          REDELINUX_PASS: ${{ secrets.FTP_PASSWORD }}
+          REDELINUX_USER: ${{ secrets.FTP_USERNAME }}
+          REDELINUX_HOST: ${{ secrets.FTP_SERVER }}
+          REDELINUX_PATH: /
+        run: |
+          sshpass -p "$REDELINUX_PASS" rsync --progress -azr --exclude=".env" "ssh -o StrictHostKeyChecking=no" public/* "$REDELINUX_USER@$REDELINUX_HOST:$REDELINUX_PATH"
+      - name: Deploy (1/3)
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.API_ENDPOINT2 }}
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+          data: '{"root":"/","file":"result.tar.gz"}'
+          excludeMode: 'ignore'
+          exclude: |
+            .env
+
+      # - name: Deploy (2/3)
+      #   uses: fjogeleit/http-request-action@v1
+      #   with:
+      #     url: ${{ secrets.API_ENDPOINT3 }}
+      #     method: 'POST'
+      #     customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+      #     data: '{{server.build.env.envVAR}}'    
+
+      - name: Deploy (3/3)
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.API_ENDPOINT }}
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+          data: '{"signal":"restart"}'   
+
+
       # - name: Deploy (stop server)
       #   uses: fjogeleit/http-request-action@v1
       #   with:
@@ -57,7 +93,7 @@ jobs:
       #     delete: "true"
       #     exclude: "'.env'"    
 
-        - name      
+        # - name      
       # - name: Rsync Deployments Action
       #   uses: Burnett01/rsync-deployments@5.2    
       #   with:
@@ -91,37 +127,3 @@ jobs:
       #     ARGS: --delete
       #     exclude: |
       #       .env
-      - name: Deploy/Upload
-        env:
-          REDELINUX_PASS: ${{ secrets.FTP_PASSWORD }}
-          REDELINUX_USER: ${{ secrets.FTP_USERNAME }}
-          REDELINUX_HOST: ${{ secrets.FTP_SERVER }}
-          REDELINUX_PATH: /
-        run: |
-          sshpass -p "$REDELINUX_PASS" rsync --progress -avz -e "ssh -o StrictHostKeyChecking=no" public/* "$REDELINUX_USER@$REDELINUX_HOST:$REDELINUX_PATH"
-      - name: Deploy (1/3)
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.API_ENDPOINT2 }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"root":"/","file":"result.tar.gz"}'
-          excludeMode: 'ignore'
-          exclude: |
-            .env
-
-      # - name: Deploy (2/3)
-      #   uses: fjogeleit/http-request-action@v1
-      #   with:
-      #     url: ${{ secrets.API_ENDPOINT3 }}
-      #     method: 'POST'
-      #     customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-      #     data: '{{server.build.env.envVAR}}'    
-
-      - name: Deploy (3/3)
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.API_ENDPOINT }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"signal":"restart"}'   
