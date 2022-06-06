@@ -65,7 +65,7 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           LOCAL_DIR: upload/
-          SERVER_DIR: ./bot
+          SERVER_DIR: ./
           LOG-LEVEL: minimal
           METHOD: sftp
           PORT: ${{ secrets.FTP_PORT }}
@@ -73,30 +73,16 @@ jobs:
           exclude: |
             .env
 
-      - name: Deploy (1/4)
+      - name: Deploy (1/2)
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT2 }}
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"root":"/bot","file":"result.tar.gz"}'
+          data: '{"root":"/","file":"result.tar.gz"}'
 
-      - name: Deploy (2/4)
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.API_ENDPOINT4 }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{location: "/.envTemplate"}'    
-
-      - name: Deploy (3/4)
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.API_ENDPOINT3 }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{root: "/", files: [{from: " copy.envTemplate", to: "/bot/.env"}]}'           
-      - name: Deploy (4/4)
+        
+      - name: Deploy (2/2)
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT }}
