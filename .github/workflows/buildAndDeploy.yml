@@ -28,9 +28,10 @@ jobs:
       - run: cp package-lock.json build/package-lock.json
 
 
-      - name: Zip files for deployment
+      - name: Create upload directory
         run: mkdir -p upload
-        run: tar -zcf upload/result.tar.gz -C build .
+      - name: Zip files
+      - run: tar -zcf upload/result.tar.gz -C build .
 
       - name: Deploy (stop server)
         uses: fjogeleit/http-request-action@v1
