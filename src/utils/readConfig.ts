@@ -25,7 +25,8 @@ let config: NodeJS.ProcessEnv;
 
 if (isDocker()) {
   
-	config = JSON.parse('{{server.build.env.envVAR}}')
+	//load config.json
+  config = JSON.parse(fs.readFileSync('../../env.json', 'utf8'));
 }
 else {
  config = process.env;

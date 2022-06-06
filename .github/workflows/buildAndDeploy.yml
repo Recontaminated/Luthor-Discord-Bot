@@ -73,7 +73,7 @@ jobs:
           exclude: |
             .env
 
-      - name: Deploy (1/2)
+      - name: Deploy (1/3)
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT2 }}
@@ -81,8 +81,15 @@ jobs:
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
           data: '{"root":"/","file":"result.tar.gz"}'
 
-        
-      - name: Deploy (2/2)
+       - name: Deploy (2/3)
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.API_ENDPOINT3 }}
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+          data: '{{server.build.env.envVAR}}'    
+
+      - name: Deploy (3/3)
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT }}
