@@ -30,7 +30,7 @@ jobs:
 
       - name: Zip files for deployment
         run: mkdir -p upload
-      - run: tar -zcf upload/result.tar.gz build/*
+      - run: tar -zcf upload/result.tar.gz -C build .
 
       - name: Deploy (stop server)
         uses: fjogeleit/http-request-action@v1
