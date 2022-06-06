@@ -56,16 +56,15 @@ jobs:
       #     dist_target_dir: "/"
       #     delete: "true"
       #     exclude: "'.env'"        
-      - name: SFTP uploader
-        uses: wangyucode/sftp-upload-action@v1.3.2
-        with:
-          host: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          localDir: 'upload/'
-          remoteDir: "./"
-          port: ${{ secrets.FTP_PORT }}
-          
+    - name: SFTP uploader
+      uses: SamKirkland/web-deploy@1.0.0
+      with:
+        target-server: ${{ secrets.FTP_SERVER }}
+        remote-user: ${{ secrets.FTP_USERNAME }}
+        remote-key: ${{ secrets.SSH_KEY }}
+        source-path: upload/
+        destination-path: /
+        rsync-options: --delete --exclude=".env"
       # - name: FTP Deploy
       #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
       #   env:
