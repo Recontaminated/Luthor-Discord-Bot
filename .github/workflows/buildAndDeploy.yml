@@ -37,8 +37,8 @@ jobs:
       - name: Zip files for deployment
         uses: papeloto/action-zip@v1
         with:
-          files: dist/ manifest.json node_modules/
-          dest: result.zip
+          files: dist/ node_modules/ package.json package-lock.json
+          dest: /result.zip
           
       - name: 'Deploy(1/2): Copy dist)'
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
@@ -46,13 +46,13 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          LOCAL_DIR: result.zip
+          LOCAL_DIR: /result.zip
           SERVER_DIR: dist/
           METHOD: sftp
           PORT: ${{ secrets.FTP_PORT }}
           ARGS: --delete
 
-          
+
       - name: Deploy (start server)
         uses: fjogeleit/http-request-action@v1
         with:
