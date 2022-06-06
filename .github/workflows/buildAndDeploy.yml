@@ -60,6 +60,7 @@ jobs:
         uses: wangyucode/sftp-upload-action@v1.3.2
         with:
           host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.password }} 
           localDir: 'upload/'
           remoteDir: "./"
