@@ -33,7 +33,7 @@ jobs:
       - name: Zip files
         run: tar -zcf upload/result.tar.gz -C build .
       - name: Uploading 
-        run: ls -R /build
+        run: ls -R build/
       - name: Deploy (stop server)
         uses: fjogeleit/http-request-action@v1
         with:
