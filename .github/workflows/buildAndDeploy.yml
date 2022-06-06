@@ -39,7 +39,7 @@ jobs:
       - name: rsync deployments
         uses: burnett01/rsync-deployments@5.2
         with:
-          switches: -avzr --delete --exclude="" --include="" --filter=""
+          switches: -avzr --delete --exclude="" --include="" --filter="" -e "ssh -p 2022"
           path: upload/
           remote_path: /
           remote_host: ${{ secrets.FTP_SERVER }}
