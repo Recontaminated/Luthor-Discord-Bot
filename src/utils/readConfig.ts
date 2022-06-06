@@ -2,6 +2,7 @@ import { existsSync } from 'fs';
 import Logger from './logger.js';
 import * as dotenv from "dotenv";
 import * as fs from "fs";
+import isDocker from 'is-docker';
 declare global {
   namespace NodeJS {
     interface ProcessEnv  {
@@ -19,9 +20,14 @@ declare global {
   }
 }
 
-
 dotenv.config();
+let config: NodeJS.ProcessEnv;
 
-const config = process.env;
-
+if (isDocker()) {
+  
+	config = JSON.parse('{{server.build.env.envVAR}}')
+}
+else {
+ config = process.env;
+}
 export { config as default };
