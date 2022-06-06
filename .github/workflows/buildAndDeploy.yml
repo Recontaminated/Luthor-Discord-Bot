@@ -34,13 +34,13 @@ jobs:
         run: tar -zcf upload/result.tar.gz -C build .
       - name: Uploading 
         run: ls -R build/
-      - name: Deploy (stop server)
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.API_ENDPOINT }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"signal":"stop"}'
+      # - name: Deploy (stop server)
+      #   uses: fjogeleit/http-request-action@v1
+      #   with:
+      #     url: ${{ secrets.API_ENDPOINT }}
+      #     method: 'POST'
+      #     customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+      #     data: '{"signal":"stop"}'
 
 
           
@@ -52,15 +52,19 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           LOCAL_DIR: upload/
           SERVER_DIR: ./
+          LOG-LEVEL: minimal
           METHOD: sftp
           PORT: ${{ secrets.FTP_PORT }}
           ARGS: --delete
+          exclude: |
+            **/node_modules/**
+            .env
 
 
-      - name: Deploy (start server)
+      - name: Deploy (restart server)
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT }}
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"signal":"stop"}'        
+          data: '{"signal":"restart"}'        
