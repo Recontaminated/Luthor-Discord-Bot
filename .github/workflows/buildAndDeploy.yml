@@ -37,15 +37,10 @@ jobs:
         run: tar -zcf upload/result.tar.gz -C build .
 
       - name: rsync deployments
-        uses: burnett01/rsync-deployments@5.2
-        with:
-          switches: -avzr --delete --exclude="" --include="" --filter="" -e "ssh -p 2022"
-          path: upload/
-          remote_path: /
-          remote_host: ${{ secrets.FTP_SERVER }}
-          remote_port: 2022
-          remote_user: ${{ secrets.FTP_USERNAME }}
-          remote_key: ${{ secrets.SSH_KEY }}
+
+        run: |
+        sshpass -p ${{ secrets.FTP_PASSWORD }} rsync --progress -avz -e "ssh -o StrictHostKeyChecking=no" public/* " ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:/
+
 
 
       - name: Deploy (1/3)
@@ -83,7 +78,15 @@ jobs:
       #     method: 'POST'
       #     customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
       #     data: '{"signal":"stop"}'
-
+        # uses: burnett01/rsync-deployments@5.2
+        # with:
+        #   switches: -avzr --delete --exclude="" --include="" --filter="" -e "ssh -p 2022"
+        #   path: upload/
+        #   remote_path: /
+        #   remote_host: ${{ secrets.FTP_SERVER }}
+        #   remote_port: 2022
+        #   remote_user: ${{ secrets.FTP_USERNAME }}
+        #   remote_key: ${{ secrets.SSH_KEY }}
       # - name: SFTP Deploy
       #   uses: wlixcc/SFTP-Deploy-Action@v1.2.2
       #   with:
