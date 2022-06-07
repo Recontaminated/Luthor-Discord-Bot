@@ -40,7 +40,7 @@ jobs:
 
         run: |
           export SSHPASS={}
-          sshpass -e sftp --port 2022 -oBatchMode=no -b - ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} << !
+          sshpass -e sftp -P 2022 -oBatchMode=no -b - ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} << !
             put upload/result.tar.gz
             bye
           !
