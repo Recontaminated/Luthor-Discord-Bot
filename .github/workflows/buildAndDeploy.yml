@@ -39,9 +39,11 @@ jobs:
       - name: rsync deployments
 
         run: |
-          sshpass -p ${{ secrets.FTP_PASSWORD }} rsync --progress --port 2022 -avz -e "ssh -o StrictHostKeyChecking=no" public/* " ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:/"
-
-
+          export SSHPASS={}
+          sshpass -e sftp -oBatchMode=no -b - ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} << !
+            put upload/result.tar.gz
+            bye
+          !
 
       - name: Deploy (1/3)
         uses: fjogeleit/http-request-action@v1
