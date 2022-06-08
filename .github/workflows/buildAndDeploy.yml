@@ -6,7 +6,12 @@ on:
       - master
   push:
     branches: [master]
+env:
+  API_ENDPOINT2: ${{ secrets.API_ENDPOINT2 }}
+  API_KEY: ${{ secrets.API_KEY }}
+
 jobs:
+
   buildAndDeployment:
     runs-on: ubuntu-latest
     environment: production
@@ -27,6 +32,7 @@ jobs:
       - name: Postbuild
         run: mkdir -p build/dist
       - run: cp -r dist/ build/
+      - run: cp .env build/
       - run: cp package.json build/package.json
       - run: cp package-lock.json build/package-lock.json
 
@@ -36,34 +42,16 @@ jobs:
       - name: Zip files
         run: tar -zcf upload/result.tar.gz -C build .
 
-      - name: rsync deployments
-
-        run: |
-          export SSHPASS={}
-          sshpass -e sftp -P 2022 -oBatchMode=no -b - ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} << !
-            put upload/result.tar.gz
-            bye
-          !
 
       - name: Deploy (1/3)
-        uses: fjogeleit/http-request-action@v1
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
-          url: ${{ secrets.API_ENDPOINT2 }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"root":"/","file":"result.tar.gz"}'
-          excludeMode: 'ignore'
-          exclude: |
-            .env
-
-      # - name: Deploy (2/3)
-      #   uses: fjogeleit/http-request-action@v1
-      #   with:
-      #     url: ${{ secrets.API_ENDPOINT3 }}
-      #     method: 'POST'
-      #     customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-      #     data: '{{server.build.env.envVAR}}'    
-
+          ftp-server: ${{ secrets.FTP_SERVER }}
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: upload/
+          
       - name: Deploy (3/3)
         uses: fjogeleit/http-request-action@v1
         with:
@@ -72,67 +60,3 @@ jobs:
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
           data: '{"signal":"restart"}'   
 
-
-      # - name: Deploy (stop server)
-      #   uses: fjogeleit/http-request-action@v1
-      #   with:
-      #     url: ${{ secrets.API_ENDPOINT }}
-      #     method: 'POST'
-      #     customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-      #     data: '{"signal":"stop"}'
-        # uses: burnett01/rsync-deployments@5.2
-        # with:
-        #   switches: -avzr --delete --exclude="" --include="" --filter="" -e "ssh -p 2022"
-        #   path: upload/
-        #   remote_path: /
-        #   remote_host: ${{ secrets.FTP_SERVER }}
-        #   remote_port: 2022
-        #   remote_user: ${{ secrets.FTP_USERNAME }}
-        #   remote_key: ${{ secrets.SSH_KEY }}
-      # - name: SFTP Deploy
-      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.2
-      #   with:
-      #     server: ${{ secrets.FTP_SERVER }}
-      #     port: ${{ secrets.FTP_PORT }}
-      #     username: ${{ secrets.FTP_USERNAME }}
-      #     ftp_password: ${{ secrets.FTP_PASSWORD }}
-      #     ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-      #     local_source_dir: "upload/"
-      #     dist_target_dir: "/"
-      #     delete: "true"
-      #     exclude: "'.env'"    
-
-        # - name      
-      # - name: Rsync Deployments Action
-      #   uses: Burnett01/rsync-deployments@5.2    
-      #   with:
-      #     switches: -avzr --exclude=".env" --delete
-      #     path: upload/
-      #     remote_path: /
-      #     remote_host: ${{ secrets.FTP_SERVER }}
-      #     remote_user: ${{ secrets.FTP_USERNAME }}
-      #     remote_key: ${{ secrets.SSH_KEY }}
-      #     remote_port: ${{ secrets.FTP_PORT }}
-      # - name: SFTP uploader
-      #   uses: SamKirkland/web-deploy@1.0.0
-      #   with:
-      #     target-server: ${{ secrets.FTP_SERVER }}
-      #     remote-user: ${{ secrets.FTP_USERNAME }}
-      #     remote-key: ${{ secrets.SSH_KEY }}
-      #     source-path: upload/
-      #     destination-path: /
-      #     rsync-options: --delete --exclude=".env"
-      # - name: FTP Deploy
-      #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      #   env:
-      #     server: ${{ secrets.FTP_SERVER }}
-      #     method: sftp
-      #     username: ${{ secrets.FTP_USERNAME }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     local-dir: upload/
-      #     server-dir: ./
-      #     log-level: verbose
-      #     port: ${{ secrets.FTP_PORT }}
-      #     ARGS: --delete
-      #     exclude: |
-      #       .env
