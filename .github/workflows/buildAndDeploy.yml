@@ -6,9 +6,6 @@ on:
       - master
   push:
     branches: [master]
-env:
-  API_ENDPOINT2: ${{ secrets.API_ENDPOINT2 }}
-  API_KEY: ${{ secrets.API_KEY }}
 
 jobs:
 
@@ -32,7 +29,6 @@ jobs:
       - name: Postbuild
         run: mkdir -p build/dist
       - run: cp -r dist/ build/
-      - run: cp .env build/
       - run: cp package.json build/package.json
       - run: cp package-lock.json build/package-lock.json
 
