@@ -8,8 +8,9 @@
     "start": "node .",
     "watch": "rm -rf dist && .\\node_modules\\.bin\\tsc -w",
     "dev": "nodemon src/index.ts",
-    "build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc && python ./CI/preupload.py",
     "host": "npm install && node dist/index.js"
+    
   },
   "engines": {
     "node": "16.x"
