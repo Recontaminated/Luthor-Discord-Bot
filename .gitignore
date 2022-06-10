@@ -6,3 +6,4 @@ repoCleaner.jar
 /.idea/
 .env
 logs/
+bfg.jar
