@@ -9,13 +9,7 @@ declare global {
       token: string;
       prefix: string;
       botNames: string;
-      database: {
-        host: string;
-        port: number;
-        username: string;
-        password: string;
-        database: string;
-      };
+      databaseURL: string;
     }
   }
 }
