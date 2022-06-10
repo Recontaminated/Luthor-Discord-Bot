@@ -4,7 +4,7 @@ import commandAdder from "./bot/commandAdder.js";
 import eventHandler from "./bot/eventHandler.js";
 import shutdown from "./utils/shutdown.js";
 import Logger from "./utils/logger.js";
-import DBClient from "./utils/mongoManager.js";
+import { initMongo } from "./utils/mongoManager.js";
 
 declare module "discord.js" {
   interface Client<Ready extends boolean = boolean> {
@@ -18,15 +18,16 @@ const intents = new Discord.Intents(32767);
 const client = new Discord.Client({ intents: intents });
 client.commands = new Discord.Collection();
 
-const database = DBClient.db("Dev");
+
 
 export { client as default };
 //TODO: await theese by wrapping  all in a anyno function so it isnt top level
-let loadCommands = async () => {
+let asycFunctions = async () => {
   await eventHandler(client);
   await commandAdder();
+  await initMongo();
 };
-loadCommands();
+asycFunctions();
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
