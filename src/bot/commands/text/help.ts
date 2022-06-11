@@ -1,7 +1,7 @@
 import * as Discord from 'discord.js';
 import { readdirSync } from 'fs';
-import { DescriptionTypes } from './_example.js';
-import config from '../../utils/readConfig.js';
+import { DescriptionTypes } from '../text/_example.js';
+import config from '../../../utils/readConfig.js';
 
 export default async function (message: Discord.Message, args: string[]) {
   await message.delete();

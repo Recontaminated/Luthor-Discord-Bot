@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
-import getUserFromMention from '../../utils/getUserFromMention.js';
-import sleep from '../../utils/sleep.js';
+import getUserFromMention from '../../../utils/getUserFromMention.js';
+import sleep from '../../../utils/sleep.js';
 
 
 export default async function (message: Discord.Message, args:any[] ) {

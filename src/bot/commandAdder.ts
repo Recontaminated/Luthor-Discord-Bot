@@ -1,10 +1,10 @@
-import { description } from './commands/help';
+import { description } from './commands/text/help';
 import * as Discord from 'discord.js';
 import { readdir } from 'fs/promises';
 import Logger from '../utils/logger.js';
 import client from '../index.js';
 export default async function commandAdder(pathAdditions = '') {
-  const commandFiles = await readdir('./dist/bot/commands' + pathAdditions);
+  const commandFiles = await readdir('./dist/bot/commands/text' + pathAdditions);
 
   for (const file of commandFiles) {
 
@@ -19,7 +19,7 @@ export default async function commandAdder(pathAdditions = '') {
     const command = await import(`./commands${pathAdditions}/${file}`);
     let commandName = file.split('.')[0];
 
-    client.commands.set(commandName, command.default);
+    client.commands.text.set(commandName, command.default);
     Logger.info(`Loaded command: ${commandName}`);
 
     if (command.description?.aliases === undefined)
