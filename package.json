@@ -25,6 +25,7 @@
     "dotenv": "^16.0.1",
     "is-docker": "^3.0.0",
     "mongoose": "^6.3.6",
+    "node-fetch": "^3.2.6",
     "typescript": "^4.7.3"
   }
 }
