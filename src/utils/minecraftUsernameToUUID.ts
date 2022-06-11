@@ -7,7 +7,7 @@ export default async function usernameToUUID(username:string) {
         let json = await response.json()
         console.log(json)
 
-        return json.id
+        return json
 
 
     } catch (error:any) {

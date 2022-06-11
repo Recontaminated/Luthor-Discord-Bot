@@ -9,10 +9,14 @@ const uri = config.databaseURL
 
 const PlayerSchema = new Schema({
   discordId: String,
-  playerUuid: String,
+  minecraft: {
+    friendlyName: String,
+    UUID: String,
+  },
 }, {timestamps: true});
 
-let Player;
+
+let Player: any;
 
 
 async function initMongo():Promise<void> {
