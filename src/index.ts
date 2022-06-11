@@ -5,19 +5,21 @@ import eventHandler from "./bot/eventHandler.js";
 import shutdown from "./utils/shutdown.js";
 import Logger from "./utils/logger.js";
 import { initMongo } from "./utils/mongoManager.js";
-
+import deployCommands from "./utils/deployCommands.js";
 declare module "discord.js" {
   interface Client<Ready extends boolean = boolean> {
     commands: any;
   }
 }
 
-// all intents fuck the pricintpal of least permisisons
+// all intents f*** the pricintpal of least permisisons
 const intents = new Discord.Intents(32767);
 
 const client = new Discord.Client({ intents: intents });
-client.commands = new Discord.Collection();
+client.commands = {}
 
+client.commands.text = new Discord.Collection();
+client.commands.slash = new Discord.Collection();
 
 
 export { client as default };
@@ -25,27 +27,25 @@ export { client as default };
 let asycFunctions = async () => {
   await eventHandler(client);
   await commandAdder();
+  await deployCommands()
   await initMongo();
 };
 asycFunctions();
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
 
-  const command = client.commands.get(interaction.commandName);
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
 
-  if (!command) return;
+	const command = client.commands.slash.get(interaction.commandName);
+  console.log(command)
+	if (!command) return;
 
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    Logger.error(error);
-    await interaction.reply({
-      content: "There was an error while executing this command!",
-      ephemeral: true,
-    });
-  }
+	try {
+		await command.default.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
 });
-
 client.login(config.token);
 process.on("SIGINT", async function () {
   Logger.warn("Caught interrupt signal, itinating graceful shutdown");

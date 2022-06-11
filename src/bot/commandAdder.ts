@@ -3,10 +3,14 @@ import * as Discord from 'discord.js';
 import { readdir } from 'fs/promises';
 import Logger from '../utils/logger.js';
 import client from '../index.js';
-export default async function commandAdder(pathAdditions = '') {
-  const commandFiles = await readdir('./dist/bot/commands/text' + pathAdditions);
+import path from 'node:path';
+import * as fs from "fs"
 
-  for (const file of commandFiles) {
+export default async function commandAdder(pathAdditions = '') {
+  Logger.info("Adding text commands")
+  const textCommandFiles = await readdir('./dist/bot/commands/text' + pathAdditions);
+
+  for (const file of textCommandFiles) {
 
     if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
       continue;
@@ -16,7 +20,7 @@ export default async function commandAdder(pathAdditions = '') {
       continue;
     }
 
-    const command = await import(`./commands${pathAdditions}/${file}`);
+    const command = await import(`./commands/text${pathAdditions}/${file}`);
     let commandName = file.split('.')[0];
 
     client.commands.text.set(commandName, command.default);
@@ -29,4 +33,28 @@ export default async function commandAdder(pathAdditions = '') {
       client.commands.set(command.description.aliases[i], command.default);
     }
   }
+  Logger.info("Adding slash commands")
+  const slashCommandFiles = await readdir('./dist/bot/commands/slash' );
+
+  for (const file of slashCommandFiles) {
+
+    if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
+      continue;
+
+    if (!file.endsWith('.js')) {
+      continue;
+    }
+
+    const command = await import(`./commands/slash/${file}`);
+
+
+    client.commands.slash.set(command.default.data.name, command);
+    Logger.info(`Loaded command: ${command.default.data.name}`);
+
+
+  }
+  
+
+
+
 }
