@@ -39,7 +39,7 @@ jobs:
         run: tar -zcf upload/result.tar.gz -C build .
 
       - name: upload
-      - run: |
+        run: |
           export LFTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
           lftp --env-password sftp://${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:2022  -e "put local-file.name; bye"
 
