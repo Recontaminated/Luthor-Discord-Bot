@@ -43,7 +43,7 @@ jobs:
           export LFTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
           lftp --env-password sftp://${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:2022  -e "put local-file.name; bye"
 
-        export LFTP_PASSWORD=""
+          export LFTP_PASSWORD=""
         
       - name: Upload
         run: sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}
