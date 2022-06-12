@@ -40,7 +40,7 @@ jobs:
 
 
       - name: Upload
-      - run: |
+        run: |
         sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}
 
 
