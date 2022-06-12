@@ -1,4 +1,3 @@
-import { description } from './commands/text/help';
 import * as Discord from 'discord.js';
 import { readdir } from 'fs/promises';
 import Logger from '../utils/logger.js';
@@ -21,7 +20,7 @@ export default async function commandAdder(pathAdditions = '') {
     }
 
     const command = await import(`./commands/text${pathAdditions}/${file}`);
-    let commandName = file.split('.')[0];
+    let commandName = command.description.name
 
     client.commands.text.set(commandName, command.default);
     Logger.info(`Loaded command: ${commandName}`);
