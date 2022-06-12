@@ -40,6 +40,7 @@ jobs:
 
       - name: upload
         run: |
+          apt install lftp
           export LFTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
           lftp --env-password sftp://${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:2022  -e "put local-file.name; bye"
 
