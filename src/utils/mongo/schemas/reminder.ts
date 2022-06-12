@@ -6,12 +6,16 @@ const reqString = {
     type: String,
     required: true
 }
+const reqNumber = {
+  type: Number,
+  required: true
+}
 const ReminderSchema = new Schema({
     creatorId: reqString,
     orginalMessage: reqString,
-    duration: Number,
+    duration: reqNumber,
     reminder: reqString,
-    createdAt: reqString
+    createdAt: reqNumber
   });
 
 let Reminder = model('Reminder', ReminderSchema) 
