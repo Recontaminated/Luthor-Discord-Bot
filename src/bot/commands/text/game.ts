@@ -152,7 +152,7 @@ let filter = (reaction:Discord.MessageReaction, user:Discord.User) => {
 export const description: DescriptionTypes = {
   name: 'game',
   description: 'that text game michael told me about',
-  usage: 'mention as many players as you want to join',
+  usage: '<mention>',
 
   };
 
