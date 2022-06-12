@@ -24,13 +24,14 @@ client.commands.slash = new Discord.Collection();
 
 export { client as default };
 //TODO: await theese by wrapping  all in a anyno function so it isnt top level
-let asycFunctions = async () => {
+let sycFunctions = async () => {
   await eventHandler(client);
   await commandAdder();
   await deployCommands()
   await initMongo();
+  client.emit("asyncInit")
 };
-asycFunctions();
+sycFunctions();
 
 
 client.login(config.token);
