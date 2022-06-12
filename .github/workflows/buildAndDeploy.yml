@@ -40,8 +40,8 @@ jobs:
 
       - name: upload
       - run: |
-        export LFTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
-        lftp --env-password sftp://${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:2022  -e "put local-file.name; bye"
+          export LFTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
+          lftp --env-password sftp://${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:2022  -e "put local-file.name; bye"
 
         export LFTP_PASSWORD=""
         
