@@ -4,7 +4,7 @@ import commandAdder from "./bot/commandAdder.js";
 import eventHandler from "./bot/eventHandler.js";
 import shutdown from "./utils/shutdown.js";
 import Logger from "./utils/logger.js";
-import { initMongo } from "./utils/mongoManager.js";
+import { initMongo } from "./utils/mongo/mongoManager.js";
 import deployCommands from "./utils/deployCommands.js";
 declare module "discord.js" {
   interface Client<Ready extends boolean = boolean> {
