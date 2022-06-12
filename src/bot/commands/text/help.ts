@@ -17,7 +17,7 @@ export default async function (message: Discord.Message, args: string[]) {
   let totalCommands = 0;
 
   async function fileLoop(pathAdditions = '') {
-    const files = readdirSync('./dist/bot/commands' + pathAdditions);
+    const files = readdirSync('./dist/bot/commands/text' + pathAdditions);
 
     for (const file of files) {
       if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
