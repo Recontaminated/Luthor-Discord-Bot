@@ -6,9 +6,11 @@ import shutdown from "./utils/shutdown.js";
 import Logger from "./utils/logger.js";
 import { initMongo } from "./utils/mongo/mongoManager.js";
 import deployCommands from "./utils/deployCommands.js";
+import { Guild } from "./utils/mongo/schemas/guild.js";
 declare module "discord.js" {
   interface Client<Ready extends boolean = boolean> {
     commands: any;
+    prefix: any;
   }
 }
 
@@ -20,15 +22,28 @@ client.commands = {}
 
 client.commands.text = new Discord.Collection();
 client.commands.slash = new Discord.Collection();
-
+client.prefix = {}
 
 export { client as default };
-//TODO: await theese by wrapping  all in a anyno function so it isnt top level
+
+
+async function loadPrefixes(){
+  Logger.info("Loading prefixes...");
+  let guildsWithCustomPrefix = await Guild.find({ prefix: { $exists: true } });
+  for (let index = 0; index < guildsWithCustomPrefix.length; index++) {
+    const guild = guildsWithCustomPrefix[index];
+    client.prefix[guild.guildId] = guild.prefix
+  }
+  Logger.debug(client.prefix)
+}
 let sycFunctions = async () => {
+  Logger.info("Sync init functions");
   await eventHandler(client);
   await commandAdder();
   await deployCommands()
   await initMongo();
+  await loadPrefixes();
+  Logger.info("Siginaling for async init");
   client.emit("asyncInit")
 };
 sycFunctions();

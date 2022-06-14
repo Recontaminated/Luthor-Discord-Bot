@@ -2,25 +2,39 @@ import clientCollections from '../../index.js';
 import * as Discord from 'discord.js';
 import config from '../../utils/readConfig.js';
 import client from '../../index.js'
+import Logger from '../../utils/logger.js';
+import * as util from 'util'
+import { Guild } from '../../utils/mongo/schemas/guild.js';
 export default async function (message: Discord.Message) {
   commandHandler(message);
 }
 
 function commandHandler(message: Discord.Message) {
-  if (!message.content.startsWith(config.prefix))
+  let prefix
+
+  if (!message.guildId) prefix = config.prefix
+  
+  else  prefix = client.prefix[message.guildId] || config.prefix;
+  
+  
+  if (!message.content.startsWith(prefix))
     return;
-
-  const messageArray = message.content.split(' ');
-
+  
+    let commandMessage = message.content.slice(prefix.length)
+    console.log(commandMessage)
+  let messageArray = commandMessage.split(' ');
+  console.log(messageArray)
   let commandName = messageArray[0].toLowerCase();
-  commandName = commandName.slice(config.prefix.length);
+  console.log(commandName)
+
+;
+
   const args = messageArray.slice(1);
 
   const command = clientCollections.commands.text.get(commandName);
 
   if (!command || typeof command !== 'function')
     return;
-
   command(message, args);
 }
 client.on('interactionCreate', async interaction => {
