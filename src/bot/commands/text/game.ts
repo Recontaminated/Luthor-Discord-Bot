@@ -51,7 +51,7 @@ let filter = (reaction:Discord.MessageReaction, user:Discord.User) => {
 
     for (let i = 0; i < list_of_players.length; i++) {
       if (user.id == undefined || user.id === null) return false;
-      if (user.id === list_of_players[i].id) {console.log("asdf"); return true};
+      if (user.id === list_of_players[i].id) {return true};
     }
 
     return false;
@@ -66,7 +66,6 @@ let filter = (reaction:Discord.MessageReaction, user:Discord.User) => {
     readyPlayers.set(user.id, user);
     await send.edit(`${message_to_send}, you are now playing a game of what the fuck is that word. React to this message to begin (${readyPlayers.size}/${list_of_players.length})`);
     
-    console.log(`Collected ${reaction.emoji.name} from ${user.tag}`);
   });
 
   // collector.on('end', collected => {
@@ -86,7 +85,6 @@ let filter = (reaction:Discord.MessageReaction, user:Discord.User) => {
 //something here
 
   } catch(e) {
-    console.log(e)
 
     send.channel.send("Not enough players reacted, game cancelled");
     return 
@@ -98,7 +96,7 @@ let filter = (reaction:Discord.MessageReaction, user:Discord.User) => {
   let messageFilter = (message:Discord.Message)=> {
   for (let i = 0; i < list_of_players.length; i++) {
     if (message.author.id == undefined || message.author.id === null) return false;
-    if (message.author.id === list_of_players[i].id) {console.log("asdf"); return true};
+    if (message.author.id === list_of_players[i].id) { return true};
   }
 
   return false;
