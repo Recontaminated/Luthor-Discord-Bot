@@ -5,13 +5,13 @@ export default async function usernameToUUID(username:string) {
     try {
         let response  = await fetch(`${url}${username}`, {method:"GET"}) as any
         let json = await response.json()
-        console.log(json)
+        
 
         return json
 
 
     } catch (error:any) {
-        Logger.error("fuck")
+
         throw new Error(error)
     }
 

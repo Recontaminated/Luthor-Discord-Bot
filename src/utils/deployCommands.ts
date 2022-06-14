@@ -4,6 +4,7 @@ import path from "node:path";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import config from "./readConfig.js";
+import Logger from './logger.js';
 
 
 let clientId = config.clientId;
@@ -28,6 +29,6 @@ export default async function deployCommands():Promise<void>{
 
   rest
     .put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-    .then(() => console.log("Successfully registered application commands."))
+    .then(() => Logger.info("Successfully registered application commands."))
     .catch(console.error);
 }
