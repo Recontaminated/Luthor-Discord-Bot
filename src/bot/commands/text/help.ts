@@ -2,13 +2,19 @@ import * as Discord from 'discord.js';
 import { readdirSync } from 'fs';
 import { DescriptionTypes } from '../text/_example.js';
 import config from '../../../utils/readConfig.js';
-
+import { Guild } from '../../../utils/mongo/schemas/guild.js';
+import client from "../../../index.js"
+import errorBuilder from '../../responces/error.js';
 export default async function (message: Discord.Message, args: string[]) {
   await message.delete();
+  if (!message.guildId) return 
+  const prefix = client.prefix[message.guildId] || config.prefix;
+
+
   const helpEmbed = new Discord.MessageEmbed;
   helpEmbed
     .setTitle(`${config.botName || message?.client?.user?.username || 'Bot'} Help`)
-    .setDescription(`<> = Required Argument\n[] = Optional Argument\n${config.prefix} = Prefix`)
+    .setDescription(`<> = Required Argument\n[] = Optional Argument\n${prefix} = Prefix`)
     .setColor('#00ff22');
 
   let commandFields: { [index: string]: any[] } = {
@@ -40,7 +46,7 @@ export default async function (message: Discord.Message, args: string[]) {
         continue;
 
       let commandInfo = {
-        name: `${config.prefix}${fileDescription.name} ${fileDescription.usage}`,
+        name: `${prefix}${fileDescription.name} ${fileDescription.usage}`,
         value: `${fileDescription.description}`,
         inline: false,
       };
