@@ -23,18 +23,22 @@ export default class Logger {
   //create a method for each loglevel starting with Logger.Info()
   static info(message: string) {
     console.log(`\x1b[42m[INFO]\x1b[40m ${message}`);
+    logStream.write(new Date().toString())
     logStream.write("[INFO] " + message + "\n");
   }
   static warn(message: string) {
     console.log(`\x1b[43m[INFO]\x1b[40m ${message}`);
+    logStream.write(new Date().toString())
     logStream.write("[WARN] " + message + "\n");
   }
   static error(message: unknown) {
+    logStream.write(new Date().toString())
     console.log(`\x1b[41m[ERROR]\x1b[40m ${message}`);
     logStream.write("[ERROR] " + message + "\n");
   }
   static debug(message: unknown) {
     console.log(`\x1b[44m[DEBUG]\x1b[40m ${message}`);
+    logStream.write(new Date().toString())
     logStream.write("[DEBUG] " + message + "\n");
   }
 }
