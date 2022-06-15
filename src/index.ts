@@ -62,3 +62,15 @@ process.on("SIGINT", async function () {
     Logger.error(err);
   }
 });
+process.on("SIGTERM", async function () {
+  Logger.warn("Itinating graceful shutdown");
+
+  try {
+    await client.destroy();
+    await shutdown();
+    process.exit(0)
+
+  } catch (err: any) {
+    Logger.error(err);
+  }
+});
