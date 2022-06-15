@@ -59,6 +59,7 @@ client.on('asyncInit', async () => {
         }
         sendReminder(document.creatorId, createdAt, document.orginalMessage, reminderText, timeLeft);
     });
+    Logger.info(`${remincders.length} reminders refreshed`);
 });
 
 const numberRegex = /^[^\d]*(\d+)/;
