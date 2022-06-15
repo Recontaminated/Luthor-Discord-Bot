@@ -7,7 +7,7 @@ import config from "./readConfig.js";
 import Logger from './logger.js';
 
 
-let clientId = config.clientId;
+let clientId = config.clientID;
 let guildId = config.guildID;
 let token = config.token;
 export default async function deployCommands():Promise<void>{

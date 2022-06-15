@@ -7,7 +7,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv  {
       token: string;
-      clientId: string;
+      clientID: string;
       prefix: string;
       botNames: string;
       guildID: string
