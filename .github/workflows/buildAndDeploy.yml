@@ -40,7 +40,7 @@ jobs:
 
       - run: |
           echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
-      - run: sftp -oPort=${{ secrets.FTP_PORT }} -o identityfile=/tmp/sftp_rsa ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}/bot "put upload/result.tar.gz"
+      - run: sftp -oPort=${{ secrets.FTP_PORT }} -o identityfile=/tmp/sftp_rsa ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} "put upload/result.tar.gz"
           
           
 
