@@ -46,7 +46,7 @@ export default class Logger {
 export async function closeLogStream(callback?: any) {
   return new Promise<void>(async (resolve, reject) => {
     console.log(`\x1b[42m[INFO]\x1b[40m Closing Log.. Goodbye`);
-    fs.appendFileSync(`./logs/${d}.txt`, "Closing log... Goodbye");
+    fs.appendFileSync(`./logs/${d}.txt`, `\n ${new Date().toString()} Closing log... Goodbye`);
     await logStream.close();
     resolve();
   });
