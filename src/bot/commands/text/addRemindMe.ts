@@ -44,8 +44,8 @@ async function sendReminder(
 // subprocess of remindme module
 
 client.on('asyncInit', async () => {
-    Logger.info('Refreshing reminders');
     const remincders = await Reminder.find({});
+    Logger.info(`Refreshing ${remincders.length} reminders`);
     remincders.forEach(async (document) => {
         const duration = document.duration;
         const createdAt = document.createdAt;
@@ -59,7 +59,7 @@ client.on('asyncInit', async () => {
         }
         sendReminder(document.creatorId, createdAt, document.orginalMessage, reminderText, timeLeft);
     });
-    Logger.info(`${remincders.length} reminders refreshed`);
+
 });
 
 const numberRegex = /^[^\d]*(\d+)/;
