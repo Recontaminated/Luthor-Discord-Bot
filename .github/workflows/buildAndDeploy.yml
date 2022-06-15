@@ -42,9 +42,7 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
           chmod 400 /tmp/sftp_rsa
       - run: |
-          sftp -o StrictHostKeyChecking=no -oPort=${{ secrets.FTP_PORT }} -o identityfile=/tmp/sftp_rsa ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} 
-          put upload/result.tar.gz
-          bye
+          sftp -o StrictHostKeyChecking=no -oPort=${{ secrets.FTP_PORT }} -o identityfile=/tmp/sftp_rsa ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} <<< $"put upload/result.tar.gz ${{ secrets.FTP_PATH }}"
           
           
 
