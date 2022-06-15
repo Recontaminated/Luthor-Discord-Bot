@@ -37,17 +37,16 @@ jobs:
       - name: Zip files
         run: tar -zcf upload/result.tar.gz -C build .
 
-      - name: upload
-        run: |
-          apt install lftp
-          export LFTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
-          lftp --env-password sftp://${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:2022  -e "put local-file.name; bye"
-
-          export LFTP_PASSWORD=""
-        
-      - name: Upload
-        run: sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}
-
+        env: 
+          SFTP_KEY: ${{ secrets.SSH_KEY }}
+          SFTP_USER: ${{ secrets.FTP_USER }}
+          SFTP_HOST: ${{ secrets.FTP_SERVER }}
+      - run: |
+          echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+          curl --ftp-create-dirs
+                -T filename
+                --key /tmp/sftp_rsa
+                sftp://${SFTP_USER}:${SFTP_PASSWORD}@${SFTP_HOST}/bot
 
 
       # - name: FTP-Deploy-Action
