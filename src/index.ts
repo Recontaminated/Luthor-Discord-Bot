@@ -34,7 +34,6 @@ async function loadPrefixes(){
     const guild = guildsWithCustomPrefix[index];
     client.prefix[guild.guildId] = guild.prefix
   }
-  Logger.debug(client.prefix)
 }
 let sycFunctions = async () => {
   Logger.info("Sync init functions");
