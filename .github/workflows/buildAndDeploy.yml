@@ -37,7 +37,7 @@ jobs:
       - name: Zip files
         run: tar -zcf upload/result.tar.gz -C build .
       - name: Clear known hosts
-        run: rm -rf .ssh/known_hosts
+        run: ssh-keygen -R ${{ secrets.FTP_SERVER }}
 
       - run: |
           echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
