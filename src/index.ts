@@ -62,15 +62,24 @@ process.on("SIGINT", async function () {
     Logger.error(err);
   }
 });
-process.on("SIGTERM", async function () {
-  Logger.warn("Itinating graceful shutdown");
+let stdin = process.openStdin();
 
-  try {
-    await client.destroy();
-    await shutdown();
-    process.exit(0)
+stdin.addListener("data", async function(d) {
+    // note:  d is an object, and when converted to a string it will
+    // end with a linefeed.  so we (rather crudely) account for that  
+    // with toString() and then trim() 
+    let input = d.toString().trim()
 
-  } catch (err: any) {
-    Logger.error(err);
-  }
-});
+    if (input === "stop") {
+      Logger.warn("Itinating graceful shutdown");
+
+      try {
+        await client.destroy();
+        await shutdown();
+        process.exit(0)
+    
+      } catch (err: any) {
+        Logger.error(err);
+      }
+    }
+  });
