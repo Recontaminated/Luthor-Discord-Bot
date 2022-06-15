@@ -43,7 +43,7 @@ jobs:
       - run: |
           echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
       - run: |
-          sftp -o identityfile=/tmp/sftp_rsa ${SFTP_USER}@${SFTP_HOST} \
+          sftp -o identityfile=/tmp/sftp_rsa ${SFTP_USER}@${SFTP_HOST} 
           put upload/result.tar.gz
           !
 
