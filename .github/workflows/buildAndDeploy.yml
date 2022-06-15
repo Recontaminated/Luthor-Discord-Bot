@@ -64,7 +64,12 @@ jobs:
           url: ${{ secrets.API_ENDPOINT3 }}
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"root": "/", "files": ["dist", node_modules", "package.json", "package-lock.json"]}'
+          data: '{
+  "root": "/",
+  "files": [
+    "dist"
+  ]
+}'
 
       - name: Deploy (2/3)
         uses: fjogeleit/http-request-action@v1
