@@ -42,11 +42,9 @@ jobs:
           SFTP_USER: ${{ secrets.FTP_USER }}
           SFTP_HOST: ${{ secrets.FTP_SERVER }}
       - run: |
-          echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
-          curl --ftp-create-dirs
-                -T filename
-                --key /tmp/sftp_rsa
-                sftp://${SFTP_USER}:${SFTP_PASSWORD}@${SFTP_HOST}/bot
+          echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa \
+          sftp -o identityfile=/tmp/sftp_rsa ${SFTP_USER}@${SFTP_HOST} \
+          put upload/result.tar.gz
 
 
       # - name: FTP-Deploy-Action
