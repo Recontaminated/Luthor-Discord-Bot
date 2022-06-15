@@ -37,12 +37,10 @@ jobs:
       - name: Zip files
         run: tar -zcf upload/result.tar.gz -C build .
 
-        env: 
-          SFTP_USER: ${{ secrets.FTP_USERNAME }}
-          SFTP_HOST: ${{ secrets.FTP_SERVER }}
+
       - run: |
           echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
-      - run: sftp -o identityfile=/tmp/sftp_rsa ${SFTP_USER}@${SFTP_HOST}/bot "put upload/result.tar.gz"
+      - run: sftp -o identityfile=/tmp/sftp_rsa ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}/bot "put upload/result.tar.gz"
           
           
 
