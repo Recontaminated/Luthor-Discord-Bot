@@ -38,7 +38,7 @@ jobs:
         run: tar -zcf upload/result.tar.gz -C build .
 
         env: 
-          SFTP_USER: ${{ secrets.FTP_USER }}
+          SFTP_USER: ${{ secrets.FTP_USERNAME }}
           SFTP_HOST: ${{ secrets.FTP_SERVER }}
       - run: |
           echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
