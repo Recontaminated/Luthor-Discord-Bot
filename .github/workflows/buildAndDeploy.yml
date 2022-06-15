@@ -58,15 +58,21 @@ jobs:
       #     ftp-username: ${{ secrets.FTP_USERNAME }}
       #     ftp-password: ${{ secrets.FTP_PASSWORD }}
       #     local-dir: upload/
-          
-      - name: Deploy (3/3)
+      - name: Deploy (1/3)
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.API_ENDPOINT3 }}
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+          data: '{"root": "/", "files": ["dist", node_modules", "package.json", "package-lock.json"]}'
+
+      - name: Deploy (2/3)
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT2 }}
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"root": "/", "file": "result.tar.gz"
-}'  
+          data: '{"root": "/", "file": "result.tar.gz"}'  
                   
       - name: Deploy (3/3)
         uses: fjogeleit/http-request-action@v1
