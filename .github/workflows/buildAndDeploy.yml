@@ -41,7 +41,7 @@ jobs:
           SFTP_USER: ${{ secrets.FTP_USER }}
           SFTP_HOST: ${{ secrets.FTP_SERVER }}
       - run: |
-          echo "${{ secrets.SSH_KEY }}" | base64 --decode >/tmp/sftp_rsa 
+          echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
       - run: |
           sftp -o identityfile=/tmp/sftp_rsa ${SFTP_USER}@${SFTP_HOST} \
           put upload/result.tar.gz
