@@ -18,7 +18,7 @@ declare module "discord.js" {
 
 // all intents f*** the pricintpal of least permisisons
 const intents = new Discord.Intents(32767);
-
+//TODO: this is dangerous, if init commands are run before Discord.Client is created it will break. Make checks or some shit for it.
 const client = new Discord.Client({ intents: intents });
 client.config = config
 client.commands = {}
@@ -51,7 +51,7 @@ let sycFunctions = async () => {
 sycFunctions();
 
 
-client.login(config.token);
+client.login(client.config.token);
 process.on("SIGINT", async function () {
   Logger.warn("Caught interrupt signal, itinating graceful shutdown");
 
