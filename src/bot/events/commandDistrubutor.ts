@@ -1,6 +1,5 @@
 import clientCollections from '../../index.js';
 import * as Discord from 'discord.js';
-import config from '../../utils/readConfig.js';
 import client from '../../index.js'
 import Logger from '../../utils/logger.js';
 import * as util from 'util'
@@ -12,9 +11,9 @@ export default async function (message: Discord.Message) {
 function commandHandler(message: Discord.Message) {
   let prefix
 
-  if (!message.guildId) prefix = config.prefix
+  if (!message.guildId) prefix = client.config.prefix
   
-  else  prefix = client.prefix[message.guildId] || config.prefix;
+  else  prefix = client.prefix[message.guildId] || client.config.prefix;
   
   
   if (!message.content.startsWith(prefix))

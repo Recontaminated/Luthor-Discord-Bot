@@ -3,14 +3,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-import config from "./readConfig.js";
+import client from "../index.js"
 import Logger from './logger.js';
 
 
-let clientId = config.clientID;
-let guildId = config.guildID;
-let token = config.token;
+
 export default async function deployCommands():Promise<void>{
+  let clientId = client.config.clientID;
+  let guildId = client.config.guildID;
+  let token = client.config.token;
   const commands = [];
 
 
