@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import client from "../../../index.js";
-import Logger from "../../../utils/logger.js";
-import usernameToUUID from "../../../utils/minecraftUsernameToUUID.js";
-import { Player } from "../../../utils/mongo/schemas/player.js";
-import errorBuilder from "../../responces/error.js";
+import client from "../../../../index.js";
+import Logger from "../../../../utils/logger.js";
+import usernameToUUID from "../../../../utils/minecraftUsernameToUUID.js";
+import { Player } from "../../../../utils/mongo/schemas/player.js";
+import errorBuilder from "../../../responces/error.js";
 
 let command = {
   data: new SlashCommandBuilder()
