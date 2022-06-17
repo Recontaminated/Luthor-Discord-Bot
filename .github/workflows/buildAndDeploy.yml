@@ -5,6 +5,9 @@ on:
     branches:
       - master
   push:
+    paths-ignore:
+      - 'package-lock.json'
+      - 'package.json'
     branches:
       - master
 
