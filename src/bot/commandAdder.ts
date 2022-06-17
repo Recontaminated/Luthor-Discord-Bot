@@ -5,7 +5,7 @@ import client from '../index.js';
 import path from 'node:path';
 import * as fs from "fs"
 
-export default async function commandAdder(pathAdditions = '') {
+async function addTextCommands(pathAdditions = ''): Promise<void> {
   Logger.info("Adding text commands")
   const textCommandFiles = await readdir('./dist/bot/commands/text' + pathAdditions);
 
@@ -15,7 +15,7 @@ export default async function commandAdder(pathAdditions = '') {
       continue;
 
     if (!file.endsWith('.js')) {
-      await commandAdder(pathAdditions + '/' + file);
+      await addTextCommands(pathAdditions + '/' + file);
       continue;
     }
 
@@ -32,8 +32,12 @@ export default async function commandAdder(pathAdditions = '') {
       client.commands.set(command.description.aliases[i], command.default);
     }
   }
+
+}
+async function addSlashCommands(pathAdditions = ''): Promise<void> {
+
   Logger.info("Adding slash commands")
-  const slashCommandFiles = await readdir('./dist/bot/commands/slash' );
+  const slashCommandFiles = await readdir('./dist/bot/commands/slash' + pathAdditions);
 
   for (const file of slashCommandFiles) {
 
@@ -41,19 +45,22 @@ export default async function commandAdder(pathAdditions = '') {
       continue;
 
     if (!file.endsWith('.js')) {
+      await addSlashCommands(pathAdditions + '/' + file);
       continue;
     }
 
-    const command = await import(`./commands/slash/${file}`);
+    const command = await import(`./commands/slash${pathAdditions}/${file}`);
 
 
     client.commands.slash.set(command.default.data.name, command);
     Logger.info(`Loaded command: ${command.default.data.name}`);
+}
+}
+
+export default async function commandAdder() {
+  await addTextCommands();
+  await addSlashCommands();
 
 
   }
   
-
-
-
-}

@@ -5,6 +5,7 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import client from "../index.js"
 import Logger from './logger.js';
+import command from '../bot/commands/slash/_example.js';
 
 
 
@@ -12,20 +13,26 @@ export default async function deployCommands():Promise<void>{
   let clientId = client.config.clientID;
   let guildId = client.config.guildID;
   let token = client.config.token;
-  const commands = [];
+  const commands:{}[] = [];
 
-
-  const commandFiles = await readdir('./dist/bot/commands/slash' );
+async function getCommands(pathAdditions = ''){
+  const commandFiles = await readdir('./dist/bot/commands/slash'+ pathAdditions);
 
 
 
   for (const file of commandFiles) {
     if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
     continue;
-    const command = await import("../bot/commands/slash/"+file);
+    if (!file.endsWith('.js')) {
+      await getCommands(pathAdditions + '/' + file);
+      continue;
+    }
+    const command = await import(`../bot/commands/slash${pathAdditions}/`+file);
     commands.push(command.default.data.toJSON());
   }
-
+}
+ 
+  await getCommands();
   const rest = new REST({ version: "9" }).setToken(token);
 
   rest
