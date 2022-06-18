@@ -11,10 +11,14 @@ export default async function (message: Discord.Message, args: string[]) {
 
 
   const helpEmbed = new Discord.MessageEmbed;
+  
   helpEmbed
     .setTitle(`${client.config.botName || message?.client?.user?.username || 'Bot'} Help`)
     .setDescription(`<> = Required Argument\n[] = Optional Argument\n${prefix} = Prefix`)
-    .setColor('#00ff22');
+    .setColor('#00ff22')
+    .setFooter({text:"Slash commands not listed here because they are self explanatory"})
+
+    
 
   let commandFields: { [index: string]: any[] } = {
     0: [],
@@ -78,6 +82,8 @@ export default async function (message: Discord.Message, args: string[]) {
       embedsArray.push(copy);
     }
   }
+  
+  
 
   return message.channel.send({
     embeds: embedsArray,
