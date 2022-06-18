@@ -13,9 +13,10 @@ export default async function eventHandler(
     if (file.startsWith("_") || (file.includes(".") && !file.endsWith(".js")))
       continue;
 
-    if (!file.endsWith(".js"))
+    if (!file.endsWith(".js")){
       await eventHandler(client, pathAdditions + "/" + file);
-
+      continue;
+    }
     const event = await import(`./events${pathAdditions}/${file}`);
 
     if (event.settings?.event === undefined) {
