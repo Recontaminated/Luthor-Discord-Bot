@@ -19,6 +19,7 @@ const GuildSchema = new Schema(
                 countingChannelId: Number,
                 countingCounter: Number,
             },
+            luthorChatChannelId: String,
         },
         prefix: String,
 
