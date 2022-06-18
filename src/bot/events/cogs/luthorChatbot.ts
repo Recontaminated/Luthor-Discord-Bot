@@ -34,15 +34,84 @@ return ""
 client.cache.cog = {};
 client.cache.cog.luthorChatBot = {};
 
+
+async function contentFilter(prompt:string) {
+  console.log("checking "+prompt)
+  const data = {  "model": "content-filter-alpha",
+  "prompt": `<|endoftext|>${prompt}\n--\nLabel:`,
+  "max_tokens": 1,
+  "temperature": 0.0,
+  "top_p": 0,
+  "logprobs":10}
+  const completion = await fetch("https://api.openai.com/v1/completions", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data),
+  });
+
+  const response = (await completion.json()) as OpenAIResponse;
+  console.log(response)
+  let output_label = response["choices"][0]["text"];
+
+// This is the probability at which we evaluate that a "2" is likely real
+// vs. should be discarded as a false positive
+var toxic_threshold = -0.355;
+
+if (output_label == "2") {
+    // If the model returns "2", return its confidence in 2 or other output-labels
+    var logprobs = response["choices"][0]["logprobs"]["top_logprobs"][0];
+
+    // If the model is not sufficiently confident in "2",
+    // choose the most probable of "0" or "1"
+    // Guaranteed to have a confidence for 2 since this was the selected token.
+    if (logprobs["2"] < toxic_threshold) {
+        var logprob_0 = logprobs.get("0", null);
+        var logprob_1 = logprobs.get("1", null);
+
+        // If both "0" and "1" have probabilities, set the output label
+        // to whichever is most probable
+        if (logprob_0 != null && logprob_1 != null) {
+            if (logprob_0 >= logprob_1) {
+                output_label = "0";
+            } else {
+                output_label = "1";
+            }
+        // If only one of them is found, set output label to that one
+        } else if (logprob_0 != null) {
+            output_label = "0";
+        } else if (logprob_1 != null) {
+            output_label = "1";
+        }
+
+        // If neither "0" or "1" are available, stick with "2"
+        // by leaving output_label unchanged.
+    }
+}
+
+// if the most probable token is none of "0", "1", or "2"
+// this should be set as unsafe
+if (output_label != "0" && output_label != "1" && output_label != "2") {
+    output_label = "2";
+}
+
+return output_label;
+
+
+  
+  
+}
+
+
 export default async function (message: Message) {
 
   if (!message.mentions.has(client.user)) return;
+  console.log(typeof client.cache.cog.luthorChatBot[message.guild.id])
   if (client.cache.cog.luthorChatBot[message.guild.id] === null) return
   if (client.cache.cog.luthorChatBot[message.guild.id]===undefined){
     let chatChannelId = await Guild.findOne({guildId:message.guild.id})
     if (!chatChannelId) return;
-    if (!chatChannelId.luthorChatChannelId) return client.cache.cog.luthorChatBot[message.guild.id] = null
-    chatChannelId = chatChannelId.luthorChatChannelId
+    if (!chatChannelId.features.luthorChatChannelId) return client.cache.cog.luthorChatBot[message.guild.id] = null
+    chatChannelId = chatChannelId.features.luthorChatChannelId
     console.log("searching for chat channel")
     client.cache.cog.luthorChatBot[message.guild.id] = chatChannelId
   }
@@ -87,7 +156,9 @@ export default async function (message: Message) {
   });
   // use the OpenAPIResponse interface to get the response
   const response = (await completion.json()) as OpenAIResponse;
-  message.channel.send(response.choices[0].text);
+  const contentFilterGauge = await contentFilter(response["choices"][0]["text"])
+  if (contentFilterGauge == "0") return message.channel.send(response.choices[0].text);
+  message.channel.send("This question asks about a sentive topic. Please refrain from prompting potentally illicit responces.")
 }
 
 export const settings = {
