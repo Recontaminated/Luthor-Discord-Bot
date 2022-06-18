@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node .",
     "watch": "rm -rf dist && .\\node_modules\\.bin\\tsc -w",
-    "dev": "nodemon src/index.ts",
+    "dev": "set dev=true && nodemon src/index.ts",
     "build": "rm -rf dist && tsc",
     "host": "npm install && node dist/index.js"
   },
