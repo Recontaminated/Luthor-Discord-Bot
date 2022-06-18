@@ -4,6 +4,7 @@ declare module "discord.js" {
     config: configType;
     commands: any;
     prefix: any;
+    cache: any;
   }
 }
 // all intents f*** the pricintpal of least permisisons
@@ -18,13 +19,13 @@ import Logger from "./utils/logger.js";
 import { initMongo } from "./utils/mongo/mongoManager.js";
 import deployCommands from "./utils/deployCommands.js";
 import { Guild } from "./utils/mongo/schemas/guild.js";
-
+// TODO: make prefix inside cache
 client.config = config;
 client.commands = {};
 client.commands.text = new Discord.Collection();
 client.commands.slash = new Discord.Collection();
 client.prefix = {};
-
+client.cache = {};
 export { client as default };
 
 async function loadPrefixes() {
@@ -32,7 +33,7 @@ async function loadPrefixes() {
   let guildsWithCustomPrefix = await Guild.find({ prefix: { $exists: true } });
   for (let index = 0; index < guildsWithCustomPrefix.length; index++) {
     const guild = guildsWithCustomPrefix[index];
-    client.prefix.set(guild.guildId, guild.prefix);
+    client.prefix[guild.guildId]= guild.prefix;
   }
 }
 let sycFunctions = async () => {
