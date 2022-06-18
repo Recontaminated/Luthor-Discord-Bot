@@ -6,7 +6,7 @@ import path from 'node:path';
 import * as fs from "fs"
 
 async function addTextCommands(pathAdditions = ''): Promise<void> {
-  Logger.info("Adding text commands")
+  
   const textCommandFiles = await readdir('./dist/bot/commands/text' + pathAdditions);
 
   for (const file of textCommandFiles) {
@@ -36,7 +36,7 @@ async function addTextCommands(pathAdditions = ''): Promise<void> {
 }
 async function addSlashCommands(pathAdditions = ''): Promise<void> {
 
-  Logger.info("Adding slash commands")
+  
   const slashCommandFiles = await readdir('./dist/bot/commands/slash' + pathAdditions);
 
   for (const file of slashCommandFiles) {
@@ -58,7 +58,9 @@ async function addSlashCommands(pathAdditions = ''): Promise<void> {
 }
 
 export default async function commandAdder() {
+  Logger.info("Adding text commands")
   await addTextCommands();
+  Logger.info("Adding slash commands")
   await addSlashCommands();
 
 
