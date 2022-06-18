@@ -11,6 +11,7 @@ declare global {
       botNames: string;
       guildID: string
       databaseURL: string;
+      openAIKey: string
     }
   }
 }
