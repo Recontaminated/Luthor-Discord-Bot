@@ -16,7 +16,7 @@ export default async function (message: Discord.Message, args: string[]) {
     .setTitle(`${client.config.botName || message?.client?.user?.username || 'Bot'} Help`)
     .setDescription(`<> = Required Argument\n[] = Optional Argument\n${prefix} = Prefix`)
     .setColor('#00ff22')
-    .setFooter({text:"Slash commands not listed here because they are self explanatory"})
+    .setFooter({text:"Slash commands not listed here because they are self explanatory."})
 
     
 
