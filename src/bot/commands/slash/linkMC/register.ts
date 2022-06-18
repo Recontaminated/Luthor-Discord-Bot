@@ -22,14 +22,14 @@ let command = {
 
     if (existingDiscordData.length !== 0)
       return interaction.reply(errorBuilder('You have already linked on this discord account. Please use the unlink command and then try ' +
-        'linking again.', command.data.name, interaction.message));
+        'linking again.', command.data.name));
 
     let username = options.get("username");
     let mojang;
     try {
       mojang = await usernameToUUID(username.value);
     } catch (error) {
-      return interaction.reply(errorBuilder(error=`Couldn't find user ${username.value}`, "register", interaction.message));
+      return interaction.reply(errorBuilder(error=`Couldn't find user ${username.value}`, "register"));
     }
 
     await Player.create(
