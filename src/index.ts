@@ -4,7 +4,6 @@ declare module "discord.js" {
     config: configType;
     commands: any;
     prefix: any;
-    cache: any;
   }
 }
 // all intents f*** the pricintpal of least permisisons
@@ -25,7 +24,6 @@ client.commands = {};
 client.commands.text = new Discord.Collection();
 client.commands.slash = new Discord.Collection();
 client.prefix = {};
-client.cache = {};
 export { client as default };
 
 async function loadPrefixes() {
