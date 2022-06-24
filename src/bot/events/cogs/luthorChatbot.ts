@@ -31,7 +31,7 @@ const headers = {
 };
 const askedRecently = new Set();
 function argsChecks(args:any){
-if (args.length > 2000) return "I know what you are trying to do here."
+if (args.length > 1000) return "I know what you are trying to do here."
 return ""
 }
 
