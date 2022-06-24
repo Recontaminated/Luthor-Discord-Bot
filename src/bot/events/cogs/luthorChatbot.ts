@@ -112,7 +112,9 @@ export default async function (message: Message) {
   if (luthorChatBotConfig[message.guild.id]===undefined){
     let chatChannelId = await Guild.findOne({guildId:message.guild.id})
     if (!chatChannelId) return;
+    //@ts-ignore
     if (!chatChannelId.features.luthorChatChannelId) return luthorChatBotConfig[message.guild.id] = null
+    //@ts-ignore
     chatChannelId = chatChannelId.features.luthorChatChannelId
     console.log("searching for chat channel")
     luthorChatBotConfig[message.guild.id] = chatChannelId
