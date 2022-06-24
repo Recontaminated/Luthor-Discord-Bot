@@ -7,6 +7,10 @@ import { MessageMentions } from "discord.js";
 import { resourceUsage } from "process";
 import { config } from "dotenv";
 import {Guild} from "../../../utils/mongo/schemas/guild.js";
+import Logger from "../../../utils/logger.js";
+let luthorChatBotConfig:any = {};
+export { luthorChatBotConfig };
+
 interface OpenAIResponse {
   id: string;
   object: string;
@@ -27,12 +31,10 @@ const headers = {
 };
 const askedRecently = new Set();
 function argsChecks(args:any){
-if (args.length > 100) return "I know what you are trying to do here."
+if (args.length > 2000) return "I know what you are trying to do here."
 return ""
 }
 
-client.cache.cog = {};
-client.cache.cog.luthorChatBot = {};
 
 
 async function contentFilter(prompt:string) {
@@ -103,19 +105,21 @@ return output_label;
 
 
 export default async function (message: Message) {
-
+  console.log("asdgadg"+ luthorChatBotConfig[message.guild.id])
   if (!message.mentions.has(client.user)) return;
-  console.log(typeof client.cache.cog.luthorChatBot[message.guild.id])
-  if (client.cache.cog.luthorChatBot[message.guild.id] === null) return
-  if (client.cache.cog.luthorChatBot[message.guild.id]===undefined){
+
+  if (luthorChatBotConfig[message.guild.id] === null) return
+  if (luthorChatBotConfig[message.guild.id]===undefined){
     let chatChannelId = await Guild.findOne({guildId:message.guild.id})
     if (!chatChannelId) return;
-    if (!chatChannelId.features.luthorChatChannelId) return client.cache.cog.luthorChatBot[message.guild.id] = null
+    if (!chatChannelId.features.luthorChatChannelId) return luthorChatBotConfig[message.guild.id] = null
     chatChannelId = chatChannelId.features.luthorChatChannelId
     console.log("searching for chat channel")
-    client.cache.cog.luthorChatBot[message.guild.id] = chatChannelId
+    luthorChatBotConfig[message.guild.id] = chatChannelId
   }
-    if (message.channel.id !== client.cache.cog.luthorChatBot[message.guild.id]) return;
+
+    Logger.debug("this is message id"+message.channel.id+"this is luthor chat bot config"+luthorChatBotConfig[message.guild.id])
+    if (message.channel.id !== luthorChatBotConfig[message.guild.id]) return;
 
 //TODO: make a better ratelimiter using decorators
   if (askedRecently.has(message.author.id)){
