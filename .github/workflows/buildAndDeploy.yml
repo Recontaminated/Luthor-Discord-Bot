@@ -6,7 +6,7 @@ on:
       - master
   push:
     paths-ignore:
-      - 'package-lock.json'
+      - 'yarn.lock'
       - 'package.json'
     branches:
       - master
@@ -26,8 +26,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
-      - run: npm run build
+      - run: yarn install --frozen-lockfile
+      - run: yarn run build
 
       - name: List output files
         run: ls
