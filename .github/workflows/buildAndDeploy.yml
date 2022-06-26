@@ -36,7 +36,7 @@ jobs:
         run: mkdir -p build/dist
       - run: cp -r dist/ build/
       - run: cp package.json build/package.json
-      - run: cp package-lock.json build/package-lock.json
+      - run: cp yarn.lock build/yarn.lock
 
 
       - name: Create upload directory
