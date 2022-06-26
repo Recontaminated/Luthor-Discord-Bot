@@ -11,17 +11,22 @@ const reqNumber = {
     type: Number,
     required: true,
 };
+const featureSchema = new Schema({
+    counting: {
+        countingChannelId: Number,
+        countingCounter: Number
+    },
+    luthorChatChannelId: String
+});
+
+
+
+
 const GuildSchema = new Schema(
     {
         guildId: reqString,
-        features: {
-            counting: {
-                countingChannelId: Number,
-                countingCounter: Number,
-            },
-            luthorChatChannelId: String,
-        },
-        prefix: String,
+        features: featureSchema,
+        prefix: String
 
 
     },
