@@ -102,7 +102,7 @@ export default async function (message: Discord.Message, args: any[]) {
     };
     while (true) {
         const countdown = await message.channel.send(
-            "Please select a random word from your imagination and type it in the chat in 5 secconds.."
+            "Please select a random word from your imagination and type it in the chat in 5 seconds.."
         );
         await sleep(1500);
         await countdown.edit("4");

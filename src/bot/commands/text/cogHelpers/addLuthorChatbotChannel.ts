@@ -14,7 +14,7 @@ export default async function (message: Discord.Message, args: string[]) {
     if (args.length > 1)
         return await message.channel.send(
             errorBuilder(
-                "Please provide only one arguement!",
+                "Please provide only one argument!",
                 "addLuthorChatbotChannel"
             )
         );

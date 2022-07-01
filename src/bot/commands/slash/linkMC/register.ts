@@ -47,7 +47,7 @@ let command = {
             minecraft: { friendlyName: mojang.name, UUID: mojang.id },
         });
 
-        return interaction.reply("Sucessfulyl registered!");
+        return interaction.reply("Successfully registered!");
     },
 };
 

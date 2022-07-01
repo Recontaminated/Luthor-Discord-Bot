@@ -115,10 +115,10 @@ export default async function (message: Message) {
 
     if (message.channel.id !== luthorChatBotConfig[message.guild.id]) return;
 
-    //TODO: make a better ratelimiter using decorators
+    //TODO: make a better rate-limiter using decorators
     if (askedRecently.has(message.author.id)) {
         return await message.reply(
-            errorBuilder("Im too tired rn lol. wait 10 secconds", "Talk")
+            errorBuilder("Im too tired rn lol. wait 10 seconds", "Talk")
         );
     }
 
@@ -157,7 +157,7 @@ export default async function (message: Message) {
     if (contentFilterGauge == "0")
         return message.channel.send(response.choices[0].text);
     message.channel.send(
-        "This question asks about a sentive topic. Please refrain from prompting potentally illicit responces."
+        "This question asks about a sensitive topic. Please refrain from prompting potentially illicit responses."
     );
 }
 
