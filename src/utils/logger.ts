@@ -37,6 +37,15 @@ export default class Logger {
     logStream.write("[ERROR] " + message + "\n");
   }
   static debug(message: unknown) {
+    // if message is object
+    if (typeof message === "object") {
+      let str = JSON.stringify(message);      
+    console.log(`\x1b[44m[DEBUG]\x1b[40m ${str}`);
+    logStream.write(new Date().toString())
+    logStream.write("[DEBUG] " + str + "\n");
+    return
+    }
+
     console.log(`\x1b[44m[DEBUG]\x1b[40m ${message}`);
     logStream.write(new Date().toString())
     logStream.write("[DEBUG] " + message + "\n");
