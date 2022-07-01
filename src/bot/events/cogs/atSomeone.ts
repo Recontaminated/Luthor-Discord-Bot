@@ -1,8 +1,13 @@
 import { Message } from "discord.js";
 
 export default async function (message: Message) {
-    if (!message.content.toLowerCase().includes("@someone") && message.mentions.roles.first().name !== 'someone')
-        return;
+    let firstRole = message.mentions.roles.first()
+    if (!firstRole)
+        if (!message.content.toLowerCase().includes("@someone"))
+            return;
+    else
+        if (!message.content.toLowerCase().includes("@someone") && firstRole.name !== "someone")
+            return;
 
     const members = message.guild.members.cache;
 
