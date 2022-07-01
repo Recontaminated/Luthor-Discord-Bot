@@ -60,7 +60,7 @@ client.on("asyncInit", async () => {
         sendReminder(
             document.creatorId,
             createdAt,
-            document.orginalMessage,
+            document.originalMessage,
             reminderText,
             timeLeft
         );
