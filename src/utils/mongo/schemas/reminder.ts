@@ -1,23 +1,23 @@
-import pkg from 'mongoose';
+import pkg from "mongoose";
 
 const { Schema, model } = pkg;
 
 const reqString = {
     type: String,
-    required: true
-}
+    required: true,
+};
 const reqNumber = {
-  type: Number,
-  required: true
-}
+    type: Number,
+    required: true,
+};
 const ReminderSchema = new Schema({
     creatorId: reqString,
     orginalMessage: reqString,
     duration: reqNumber,
     reminder: reqString,
-    createdAt: reqNumber
-  });
+    createdAt: reqNumber,
+});
 
-let Reminder = model('Reminder', ReminderSchema) 
-  
-export { Reminder } 
+let Reminder = model("Reminder", ReminderSchema);
+
+export { Reminder };
