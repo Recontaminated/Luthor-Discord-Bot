@@ -1,86 +1,103 @@
-import * as Discord from 'discord.js';
-import { readdirSync } from 'fs';
-import { DescriptionTypes } from '../text/_example.js';
-import config from '../../../utils/readConfig.js';
+import * as Discord from "discord.js";
+import { readdirSync } from "fs";
+import { DescriptionTypes } from "../text/_example.js";
+import client from "../../../index.js";
 
 export default async function (message: Discord.Message, args: string[]) {
-  await message.delete();
-  const helpEmbed = new Discord.MessageEmbed;
-  helpEmbed
-    .setTitle(`${config.botName || message?.client?.user?.username || 'Bot'} Help`)
-    .setDescription(`<> = Required Argument\n[] = Optional Argument\n${config.prefix} = Prefix`)
-    .setColor('#00ff22');
+    await message.delete();
+    if (!message.guildId) return;
+    const prefix = client.prefix[message.guildId] || client.config.prefix;
 
-  let commandFields: { [index: string]: any[] } = {
-    0: [],
-  };
-  let totalCommands = 0;
+    const helpEmbed = new Discord.MessageEmbed();
 
-  async function fileLoop(pathAdditions = '') {
-    const files = readdirSync('./dist/bot/commands' + pathAdditions);
+    helpEmbed
+        .setTitle(
+            `${
+                client.config.botName ||
+                message?.client?.user?.username ||
+                "Bot"
+            } Help`
+        )
+        .setDescription(
+            `<> = Required Argument\n[] = Optional Argument\n${prefix} = Prefix`
+        )
+        .setColor("#00ff22")
+        .setFooter({
+            text: "Slash commands not listed here because they are self explanatory.",
+        });
 
-    for (const file of files) {
-      if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
-        continue;
+    let commandFields: { [index: string]: any[] } = {
+        0: [],
+    };
+    let totalCommands = 0;
 
-      if (!file.endsWith('.js')) {
-        await fileLoop(pathAdditions + '/' + file);
-        continue;
-      }
+    async function fileLoop(pathAdditions = "") {
+        const files = readdirSync("./dist/bot/commands/text" + pathAdditions);
 
-      let importedFile;
-      if (pathAdditions === '')
-        importedFile = await import('./' + file);
-      else
-        importedFile = await import('.' + pathAdditions + '/' + file);
+        for (const file of files) {
+            if (
+                file.startsWith("_") ||
+                (file.includes(".") && !file.endsWith(".js"))
+            )
+                continue;
 
-      let fileDescription: DescriptionTypes = importedFile.description;
+            if (!file.endsWith(".js")) {
+                await fileLoop(pathAdditions + "/" + file);
+                continue;
+            }
 
-      if (!fileDescription)
-        continue;
+            let importedFile;
+            if (pathAdditions === "") importedFile = await import("./" + file);
+            else importedFile = await import("." + pathAdditions + "/" + file);
 
-      let commandInfo = {
-        name: `${config.prefix}${fileDescription.name} ${fileDescription.usage}`,
-        value: `${fileDescription.description}`,
-        inline: false,
-      };
-      if (fileDescription.aliases)
-        commandInfo.value += `\nAliases: ${fileDescription.aliases.join(', ')}`;
+            let fileDescription: DescriptionTypes = importedFile.description;
 
-      totalCommands++;
+            if (!fileDescription) continue;
 
-      if (commandFields[Math.floor(totalCommands / 25)] === undefined)
-        commandFields[Math.floor(totalCommands / 25)] = [];
+            let commandInfo = {
+                name: `${prefix}${fileDescription.name} ${fileDescription.usage}`,
+                value: `${fileDescription.description}`,
+                inline: false,
+            };
+            if (fileDescription.aliases)
+                commandInfo.value += `\nAliases: ${fileDescription.aliases.join(
+                    ", "
+                )}`;
 
-      commandFields[Math.floor(totalCommands / 25)].push(commandInfo);
+            totalCommands++;
+
+            if (commandFields[Math.floor(totalCommands / 25)] === undefined)
+                commandFields[Math.floor(totalCommands / 25)] = [];
+
+            commandFields[Math.floor(totalCommands / 25)].push(commandInfo);
+        }
     }
-  }
 
-  await fileLoop();
+    await fileLoop();
 
-  let embedsArray = [];
+    let embedsArray = [];
 
-  if (totalCommands <= 25) {
-    embedsArray.push(helpEmbed);
-    for (const field of commandFields[0])
-      helpEmbed.addField(field.name, field.value, field.inline);
-  } else {
-    for (let i = 0; i <= Math.floor(totalCommands / 3); i++) {
-      let copy = helpEmbed;
-      copy.title += ` (Page ${i})`;
-      for (const field of commandFields[i])
-        copy.addField(field.name, field.value, field.inline);
-      embedsArray.push(copy);
+    if (totalCommands <= 25) {
+        embedsArray.push(helpEmbed);
+        for (const field of commandFields[0])
+            helpEmbed.addField(field.name, field.value, field.inline);
+    } else {
+        for (let i = 0; i <= Math.floor(totalCommands / 3); i++) {
+            let copy = helpEmbed;
+            copy.title += ` (Page ${i})`;
+            for (const field of commandFields[i])
+                copy.addField(field.name, field.value, field.inline);
+            embedsArray.push(copy);
+        }
     }
-  }
 
-  return message.channel.send({
-    embeds: embedsArray,
-  });
+    return message.channel.send({
+        embeds: embedsArray,
+    });
 }
 
 export const description = {
-  name: 'help',
-  description: 'Shows this message.',
-  usage: '',
+    name: "help",
+    description: "Shows this message.",
+    usage: "",
 };
