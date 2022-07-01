@@ -1,9 +1,6 @@
-import * as Discord from "discord.js";
 import { readdir } from "fs/promises";
 import Logger from "../utils/logger.js";
 import client from "../index.js";
-import path from "node:path";
-import * as fs from "fs";
 
 async function addTextCommands(pathAdditions = ""): Promise<void> {
     const textCommandFiles = await readdir(

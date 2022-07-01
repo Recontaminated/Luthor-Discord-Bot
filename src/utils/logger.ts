@@ -1,8 +1,6 @@
-import { log } from "util";
-
 //export a default class for the logger
 import * as fs from "fs";
-import { createImportSpecifier } from "typescript";
+
 let today = new Date();
 
 let d =

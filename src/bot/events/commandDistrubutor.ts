@@ -1,9 +1,7 @@
 import clientCollections from "../../index.js";
 import * as Discord from "discord.js";
 import client from "../../index.js";
-import Logger from "../../utils/logger.js";
-import * as util from "util";
-import { Guild } from "../../utils/mongo/schemas/guild.js";
+
 export default async function (message: Discord.Message) {
     commandHandler(message);
 }
