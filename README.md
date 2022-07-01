@@ -3,7 +3,7 @@
 
 
 
-This is a cool discord bot im attempting to write with at least good practices in orginzation and mostly as a side project to learn TS.
-Slash command support + text commands + dyanmic help command = cool.
+This is a cool discord bot im attempting to write with at least good practices in organization and mostly as a side project to learn TS.
+Slash command support + text commands + dynamic help command = cool.
  
- No support provided for selfhosting. Mostly if people want to check out the inner workings of the bot.
+ No support provided for self-hosting. Mostly if people want to check out the inner workings of the bot.

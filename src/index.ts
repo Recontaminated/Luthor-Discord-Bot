@@ -6,7 +6,7 @@ declare module "discord.js" {
         prefix: any;
     }
 }
-// all intents f*** the pricintpal of least permisisons
+// all intents f*** the principal of Least Permissions
 const intents = new Discord.Intents(32767);
 const client = new Discord.Client({ intents: intents });
 import config from "./utils/readConfig.js";
@@ -43,14 +43,14 @@ let sycFunctions = async () => {
     await initMongo();
     await loadPrefixes();
     await deployCommands();
-    Logger.info("Siginaling for async init");
+    Logger.info("Signaling for async init");
     client.emit("asyncInit");
 };
 sycFunctions();
 
 client.login(client.config.token);
 process.on("SIGINT", async function () {
-    Logger.warn("Caught interrupt signal, itinating graceful shutdown");
+    Logger.warn("Caught interrupt signal, initiating graceful shutdown");
 
     try {
         await client.destroy();
@@ -69,7 +69,7 @@ stdin.addListener("data", async function (d) {
     let input = d.toString().trim();
 
     if (input === "stop") {
-        Logger.warn("Itinating graceful shutdown");
+        Logger.warn("Initiating graceful shutdown");
 
         try {
             await client.destroy();

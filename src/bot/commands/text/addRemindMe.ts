@@ -8,7 +8,7 @@ import Logger from "../../../utils/logger.js";
 async function sendReminder(
     creatorId: string,
     createdAt: number,
-    oraginalMessageURL: string,
+    originalMessageURL: string,
     reminderText: string,
     duration: number
 ) {
@@ -25,7 +25,7 @@ async function sendReminder(
                     compact: true,
                 })} ago you asked to be reminded of "${reminderText}"`
             )
-            .addField("Orginal Message", oraginalMessageURL)
+            .addField("Original Message", originalMessageURL)
             .setColor("BLUE")
             .setTimestamp()
             .setFooter({
@@ -44,9 +44,9 @@ async function sendReminder(
 // subprocess of remindme module
 
 client.on("asyncInit", async () => {
-    const remincders = await Reminder.find({});
-    Logger.info(`Refreshing ${remincders.length} reminders`);
-    remincders.forEach(async (document) => {
+    const reminders = await Reminder.find({});
+    Logger.info(`Refreshing ${reminders.length} reminders`);
+    reminders.forEach(async (document) => {
         const duration = document.duration;
         const createdAt = document.createdAt;
         const createdAgo = Date.now() - createdAt;
@@ -91,13 +91,13 @@ export default async function (message: Discord.Message, args: string[]) {
     try {
         const reminder = await new Reminder({
             creatorId: message.author.id,
-            orginalMessage: messageURL,
+            originalMessage: messageURL,
             duration: duration,
             reminder: reminderText,
             createdAt: createdAt,
         });
         await reminder.save();
-        //TODO: make this a funciton so startup task can use
+        //TODO: make this a function so that the startup task can use it
         await message.channel.send(
             `Alright, I'll remind you about ${reminderText} in ${prettyMilliseconds(
                 duration
