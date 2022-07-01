@@ -12,7 +12,7 @@ const reqNumber = {
 };
 const ReminderSchema = new Schema({
     creatorId: reqString,
-    originalMessage: reqString,
+    orginalMessage: reqString,
     duration: reqNumber,
     reminder: reqString,
     createdAt: reqNumber,
