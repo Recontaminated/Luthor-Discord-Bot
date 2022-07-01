@@ -1,16 +1,16 @@
-import * as Discord from 'discord.js';
-import parse from 'parse-duration';
-import { Reminder } from '../../../utils/mongo/schemas/reminder.js';
-import prettyMilliseconds from 'pretty-ms';
-import client from '../../../index.js';
-import Logger from '../../../utils/logger.js';
+import * as Discord from "discord.js";
+import parse from "parse-duration";
+import { Reminder } from "../../../utils/mongo/schemas/reminder.js";
+import prettyMilliseconds from "pretty-ms";
+import client from "../../../index.js";
+import Logger from "../../../utils/logger.js";
 
 async function sendReminder(
     creatorId: string,
     createdAt: number,
-    oraginalMessageURL: string,
+    originalMessageURL: string,
     reminderText: string,
-    duration: number,
+    duration: number
 ) {
     setTimeout(async function () {
         Logger.debug(`Sending reminder to ${creatorId}`);
@@ -20,16 +20,16 @@ async function sendReminder(
 
         let embed = new Discord.MessageEmbed()
             .addField(
-                'Reminder you requested',
+                "Reminder you requested",
                 `${prettyMilliseconds(createdAgo, {
                     compact: true,
-                })} ago you asked to be reminded of "${reminderText}"`,
+                })} ago you asked to be reminded of "${reminderText}"`
             )
-            .addField('Orginal Message', oraginalMessageURL)
-            .setColor('BLUE')
+            .addField("Original Message", originalMessageURL)
+            .setColor("BLUE")
             .setTimestamp()
             .setFooter({
-                text: client.user?.username || 'Bot',
+                text: client.user?.username || "Bot",
                 iconURL: client.user?.displayAvatarURL(),
             });
         //get DM channel using creatorId
@@ -43,10 +43,10 @@ async function sendReminder(
 
 // subprocess of remindme module
 
-client.on('asyncInit', async () => {
-    const remincders = await Reminder.find({});
-    Logger.info(`Refreshing ${remincders.length} reminders`);
-    remincders.forEach(async (document) => {
+client.on("asyncInit", async () => {
+    const reminders = await Reminder.find({});
+    Logger.info(`Refreshing ${reminders.length} reminders`);
+    reminders.forEach(async (document) => {
         const duration = document.duration;
         const createdAt = document.createdAt;
         const createdAgo = Date.now() - createdAt;
@@ -57,15 +57,20 @@ client.on('asyncInit', async () => {
             await Reminder.deleteOne({ _id: document._id });
             return;
         }
-        sendReminder(document.creatorId, createdAt, document.orginalMessage, reminderText, timeLeft);
+        sendReminder(
+            document.creatorId,
+            createdAt,
+            document.orginalMessage,
+            reminderText,
+            timeLeft
+        );
     });
-
 });
 
 const numberRegex = /^[^\d]*(\d+)/;
 export default async function (message: Discord.Message, args: string[]) {
     if (args.length < 2) {
-        await message.channel.send('Please use the correct input format.');
+        await message.channel.send("Please use the correct input format.");
         return;
     }
 
@@ -73,35 +78,37 @@ export default async function (message: Discord.Message, args: string[]) {
     let match = time.match(numberRegex);
     if (match?.length == 0 || match == null)
         return await message.channel.send(
-            'Please use the correct input format.',
+            "Please use the correct input format."
         );
     if (parseInt(match![0]) < 0)
-        return await message.channel.send('no negative times!');
+        return await message.channel.send("no negative times!");
 
     let duration = parse(args[0]);
     let reminderArray = args.slice(1);
-    let reminderText = reminderArray.join(' ');
+    let reminderText = reminderArray.join(" ");
     let messageURL = message.url;
     let createdAt = Date.now();
     try {
         const reminder = await new Reminder({
             creatorId: message.author.id,
-            orginalMessage: messageURL,
+            originalMessage: messageURL,
             duration: duration,
             reminder: reminderText,
             createdAt: createdAt,
         });
         await reminder.save();
-        //TODO: make this a funciton so startup task can use
+        //TODO: make this a function so that the startup task can use it
         await message.channel.send(
-            `Alright, I'll remind you about ${reminderText} in ${prettyMilliseconds(duration)}`,
+            `Alright, I'll remind you about ${reminderText} in ${prettyMilliseconds(
+                duration
+            )}`
         );
         sendReminder(
             message.author.id,
             createdAt,
             messageURL,
             reminderText,
-            duration,
+            duration
         );
     } catch (err) {
         Logger.error(err);
@@ -109,9 +116,9 @@ export default async function (message: Discord.Message, args: string[]) {
 }
 
 export const description: DescriptionTypes = {
-    name: 'remindme',
-    description: 'set a reminder',
-    usage: '<time> <reminder>',
+    name: "remindme",
+    description: "set a reminder",
+    usage: "<time> <reminder>",
 };
 
 export interface DescriptionTypes {

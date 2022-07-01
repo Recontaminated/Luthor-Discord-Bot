@@ -1,4 +1,4 @@
-import pkg from 'mongoose';
+import pkg from "mongoose";
 
 const { Schema, model } = pkg;
 
@@ -14,25 +14,20 @@ const reqNumber = {
 const featureSchema = new Schema({
     counting: {
         countingChannelId: Number,
-        countingCounter: Number
+        countingCounter: Number,
     },
-    luthorChatChannelId: String
+    luthorChatChannelId: String,
 });
-
-
-
 
 const GuildSchema = new Schema(
     {
         guildId: reqString,
         features: featureSchema,
-        prefix: String
-
-
+        prefix: String,
     },
     { timestamps: true }
 );
 
-let Guild = model('Guild', GuildSchema);
+let Guild = model("Guild", GuildSchema);
 
 export { Guild };

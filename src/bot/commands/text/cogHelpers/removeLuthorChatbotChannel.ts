@@ -1,7 +1,5 @@
 import * as Discord from "discord.js";
 import { Guild } from "../../../../utils/mongo/schemas/guild.js";
-import client from "../../../../index.js";
-import errorBuilder from "../../../responces/error.js";
 import { luthorChatBotConfig } from "../../../events/cogs/luthorChatbot.js";
 
 export default async function (message: Discord.Message, args: string[]) {

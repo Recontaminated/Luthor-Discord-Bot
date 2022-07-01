@@ -1,18 +1,18 @@
-import * as Discord from 'discord.js';
+import * as Discord from "discord.js";
 
 export default async function (message: Discord.Message, args: string[]) {
-  return;
+    return;
 }
 
 export const description: DescriptionTypes = {
-  name: '_example',
-  description: 'Example command',
-  usage: '<Required Argument> [Optional Argument]',
+    name: "_example",
+    description: "Example command",
+    usage: "<Required Argument> [Optional Argument]",
 };
 
 export interface DescriptionTypes {
-  name: string;
-  aliases?: string[];
-  description: string;
-  usage: string;
+    name: string;
+    aliases?: string[];
+    description: string;
+    usage: string;
 }

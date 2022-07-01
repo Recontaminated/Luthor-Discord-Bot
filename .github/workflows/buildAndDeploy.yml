@@ -32,7 +32,7 @@ jobs:
       - name: List output files
         run: ls
 
-      - name: Postbuild
+      - name: Post build
         run: mkdir -p build/dist
       - run: cp -r dist/ build/
       - run: cp package.json build/package.json

@@ -1,5 +1,4 @@
 import { Message } from "discord.js";
-import Logger from "../../../utils/logger.js";
 
 export default async function (message: Message) {
     if (!message.content.toLowerCase().includes("@someone")) return;
@@ -8,19 +7,15 @@ export default async function (message: Message) {
 
     let randomMember = members.random();
 
-    let loop = 0
+    let loop = 0;
 
-    while (true){
+    while (true) {
         randomMember = members.random();
-        if (randomMember.user.bot) continue
-        if (!randomMember.presence) continue
-        if (randomMember.presence.status == "offline" ) continue
-        break
-
-
-
+        if (randomMember.user.bot) continue;
+        if (!randomMember.presence) continue;
+        if (randomMember.presence.status == "offline") continue;
+        break;
     }
-
 
     await message.channel.send(`${randomMember.user.toString()}`);
 }
