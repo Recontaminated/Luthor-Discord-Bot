@@ -1,7 +1,5 @@
-import { existsSync } from "fs";
-import Logger from "./logger.js";
 import * as dotenv from "dotenv";
-import * as fs from "fs";
+
 declare global {
     namespace NodeJS {
         interface ProcessEnv {

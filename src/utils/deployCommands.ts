@@ -1,11 +1,8 @@
 import { readdir } from "fs/promises";
-import fs from "node:fs";
-import path from "node:path";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import client from "../index.js";
 import Logger from "./logger.js";
-import command from "../bot/commands/slash/_example.js";
 
 export default async function deployCommands(): Promise<void> {
     let clientId = client.config.clientID;

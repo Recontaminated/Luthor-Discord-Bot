@@ -1,13 +1,10 @@
 import client from "../../../index.js";
 import { Message } from "discord.js";
-import help from "../../commands/text/help.js";
 import fetch from "node-fetch";
 import errorBuilder from "../../responces/error.js";
 import { MessageMentions } from "discord.js";
-import { resourceUsage } from "process";
-import { config } from "dotenv";
 import { Guild } from "../../../utils/mongo/schemas/guild.js";
-import Logger from "../../../utils/logger.js";
+
 let luthorChatBotConfig: any = {};
 export { luthorChatBotConfig };
 

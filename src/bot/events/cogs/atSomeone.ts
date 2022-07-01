@@ -1,5 +1,4 @@
 import { Message } from "discord.js";
-import Logger from "../../../utils/logger.js";
 
 export default async function (message: Message) {
     if (!message.content.toLowerCase().includes("@someone")) return;
