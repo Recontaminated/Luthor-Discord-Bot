@@ -1,7 +1,7 @@
 export default async function () {
-  return;
+    return;
 }
 
 export const settings = {
-  once: true,
+    once: true,
 };
