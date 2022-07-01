@@ -105,7 +105,6 @@ return output_label;
 
 
 export default async function (message: Message) {
-  console.log("asdgadg"+ luthorChatBotConfig[message.guild.id])
   if (!message.mentions.has(client.user)) return;
 
   if (luthorChatBotConfig[message.guild.id] === null) return
