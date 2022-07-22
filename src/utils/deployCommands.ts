@@ -35,11 +35,21 @@ export default async function deployCommands(): Promise<void> {
     await getCommands();
     const rest = new REST({ version: "9" }).setToken(token);
 
+    if (client.config.debug) {
     rest.put(Routes.applicationGuildCommands(clientId, guildId), {
         body: commands,
     })
         .then(() =>
-            Logger.info("Successfully registered application commands.")
+            Logger.info("Successfully registered application commands. to development server")
         )
         .catch(console.error);
 }
+    else {
+        rest.put(Routes.applicationCommands(clientId), {
+            body: commands,
+        })
+            .then(() =>
+                Logger.info("Successfully registered application commands.")
+            )
+            .catch(console.error);
+    }}

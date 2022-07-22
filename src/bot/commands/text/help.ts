@@ -1,103 +1,94 @@
 import * as Discord from "discord.js";
-import { readdirSync } from "fs";
-import { DescriptionTypes } from "../text/_example.js";
+import {
+    ActionRowBuilder,
+    EmbedBuilder,
+    InteractionCollector,
+    SelectMenuBuilder,
+    SelectMenuComponentOptionData
+} from "discord.js";
 import client from "../../../index.js";
+import {categoryInfo} from "../../../utils/discord/catagories.js";
+
+client.on("asyncInit", async () => {
+    for (const category in categoryInfo) {
+        categoryInfo[category].embed = new EmbedBuilder()
+            .setTitle(`${client.config.botName} Help`)
+            .setDescription(`<> - Required Argument\n[] - Option Argument`)
+            .setFooter({text: "help command by Barely Awake"});
+        client.commands.text.forEach((SingularCommand: any) => {
+            if (categoryInfo[category].value !== SingularCommand.meta.category) {
+                return;
+            }
+            categoryInfo[category].embed.addFields(
+                [{"name":`${SingularCommand.meta.name} ${SingularCommand.meta.usage}`,value:
+                SingularCommand.meta.description}],
+            );
+        })
+    }
+})
 
 export default async function (message: Discord.Message, args: string[]) {
     await message.delete();
     if (!message.guildId) return;
     const prefix = client.prefix[message.guildId] || client.config.prefix;
 
-    const helpEmbed = new Discord.MessageEmbed();
+    const baseEmbed = new EmbedBuilder()
+        .setTitle(`${client.config.botName} Help`)
+        .setDescription(`<> - Required Argument\n[] - Option Argument\n${prefix} Bot Prefix `);
 
-    helpEmbed
-        .setTitle(
-            `${
-                client.config.botName ||
-                message?.client?.user?.username ||
-                "Bot"
-            } Help`
-        )
-        .setDescription(
-            `<> = Required Argument\n[] = Optional Argument\n${prefix} = Prefix`
-        )
-        .setColor("#00ff22")
-        .setFooter({
-            text: "Slash commands not listed here because they are self explanatory.",
-        });
-
-    let commandFields: { [index: string]: any[] } = {
-        0: [],
-    };
-    let totalCommands = 0;
-
-    async function fileLoop(pathAdditions = "") {
-        const files = readdirSync("./dist/bot/commands/text" + pathAdditions);
-
-        for (const file of files) {
-            if (
-                file.startsWith("_") ||
-                (file.includes(".") && !file.endsWith(".js"))
-            )
-                continue;
-
-            if (!file.endsWith(".js")) {
-                await fileLoop(pathAdditions + "/" + file);
-                continue;
+    const selectMenuOptions: SelectMenuComponentOptionData[] = [];
+    for (const category in categoryInfo) {
+        baseEmbed.addFields([
+            {
+                name: categoryInfo[category].label,
+                value: categoryInfo[category].description || ''
             }
-
-            let importedFile;
-            if (pathAdditions === "") importedFile = await import("./" + file);
-            else importedFile = await import("." + pathAdditions + "/" + file);
-
-            let fileDescription: DescriptionTypes = importedFile.description;
-
-            if (!fileDescription) continue;
-
-            let commandInfo = {
-                name: `${prefix}${fileDescription.name} ${fileDescription.usage}`,
-                value: `${fileDescription.description}`,
-                inline: false,
-            };
-            if (fileDescription.aliases)
-                commandInfo.value += `\nAliases: ${fileDescription.aliases.join(
-                    ", "
-                )}`;
-
-            totalCommands++;
-
-            if (commandFields[Math.floor(totalCommands / 25)] === undefined)
-                commandFields[Math.floor(totalCommands / 25)] = [];
-
-            commandFields[Math.floor(totalCommands / 25)].push(commandInfo);
-        }
+        ]);
+        const categoryDeepCopy = JSON.parse(JSON.stringify(categoryInfo[category]));
+        delete categoryDeepCopy.embed;
+        selectMenuOptions.push(categoryDeepCopy);
     }
 
-    await fileLoop();
+    const actionRow = new ActionRowBuilder<SelectMenuBuilder>()
+        .addComponents(new SelectMenuBuilder()
+            .setCustomId('categorySelector')
+            .setPlaceholder('Categories')
+            .addOptions(selectMenuOptions));
 
-    let embedsArray = [];
-
-    if (totalCommands <= 25) {
-        embedsArray.push(helpEmbed);
-        for (const field of commandFields[0])
-            helpEmbed.addField(field.name, field.value, field.inline);
-    } else {
-        for (let i = 0; i <= Math.floor(totalCommands / 3); i++) {
-            let copy = helpEmbed;
-            copy.title += ` (Page ${i})`;
-            for (const field of commandFields[i])
-                copy.addField(field.name, field.value, field.inline);
-            embedsArray.push(copy);
-        }
-    }
-
-    return message.channel.send({
-        embeds: embedsArray,
+    const sentMessage = await message.channel.send({
+        embeds: [baseEmbed],
+        components: [actionRow],
     });
+    const interactionCollector = new InteractionCollector(message.client, {
+        message: sentMessage,
+        time: 120 * 1000,
+    });
+
+    interactionCollector.on('collect', (interaction) => {
+        if (!interaction.isSelectMenu())
+            return;
+
+        if (interaction.user.id !== message.author.id) {
+            interaction.reply({
+                content: 'You can\'t do that to this message!',
+                ephemeral: true,
+            });
+            return
+        }
+
+        interaction.update({
+            embeds: [categoryInfo[interaction.values[0]].embed],
+            components: [actionRow],
+        });
+    });
+
+
 }
 
-export const description = {
+
+export const meta = {
     name: "help",
     description: "Shows this message.",
     usage: "",
+    category: "info"
 };

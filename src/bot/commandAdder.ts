@@ -1,7 +1,7 @@
 import { readdir } from "fs/promises";
 import Logger from "../utils/logger.js";
 import client from "../index.js";
-
+import {CommandType} from '../types/command.js';
 async function addTextCommands(pathAdditions = ""): Promise<void> {
     const textCommandFiles = await readdir(
         "./dist/bot/commands/text" + pathAdditions
@@ -19,17 +19,20 @@ async function addTextCommands(pathAdditions = ""): Promise<void> {
             continue;
         }
 
-        const command = await import(`./commands/text${pathAdditions}/${file}`);
-        let commandName = command.description.name;
+        const command = await import(`./commands/text${pathAdditions}/${file}`) as CommandType;
+    
 
-        client.commands.text.set(commandName, command.default);
+        Logger.debug(command.meta)
+        let commandName = command.meta.name;
+
+        client.commands.text.set(commandName, command);
         Logger.info(`Loaded command: ${commandName}`);
 
-        if (command.description?.aliases === undefined) continue;
+        if (command.meta?.aliases === undefined) continue;
 
-        for (let i in command.description.aliases) {
+        for (let i in command.meta.aliases) {
             client.commands.set(
-                command.description.aliases[i],
+                command.meta.aliases[i],
                 command.default
             );
         }

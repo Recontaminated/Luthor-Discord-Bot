@@ -1,8 +1,12 @@
 import clientCollections from "../../index.js";
 import * as Discord from "discord.js";
 import client from "../../index.js";
+import {InteractionType} from "discord.js";
+import Logger from "../../utils/logger.js";
 
 export default async function (message: Discord.Message) {
+   
+    
     commandHandler(message);
 }
 
@@ -23,13 +27,17 @@ function commandHandler(message: Discord.Message) {
 
     const args = messageArray.slice(1);
 
-    const command = clientCollections.commands.text.get(commandName);
+    let command = clientCollections.commands.text.get(commandName);
+   if (!command) return
+   command = command.default
+    
+
 
     if (!command || typeof command !== "function") return;
     command(message, args);
 }
 client.on("interactionCreate", async (interaction) => {
-    if (!interaction.isCommand()) return;
+    if (interaction.type !== InteractionType.ApplicationCommand) return;
 
     const command = client.commands.slash.get(interaction.commandName);
     if (!command) return;

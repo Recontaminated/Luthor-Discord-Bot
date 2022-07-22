@@ -29,15 +29,9 @@ export default async function (message: Discord.Message, args: string[]) {
     luthorChatBotConfig[message.guild.id] = chatChannelId;
     return await message.channel.send("Successfully added chatbot channel!");
 }
-export const description: DescriptionTypes = {
+export const meta = {
     name: "chatbotchannel",
     description: "set the channel for luthor to listen to",
     usage: "<ChannelID>",
 };
 
-export interface DescriptionTypes {
-    name: string;
-    aliases?: string[];
-    description: string;
-    usage: string;
-}

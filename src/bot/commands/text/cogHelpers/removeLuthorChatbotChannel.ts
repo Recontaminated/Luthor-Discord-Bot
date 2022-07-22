@@ -15,15 +15,9 @@ export default async function (message: Discord.Message, args: string[]) {
         await message.channel.send("No chatbot channel set!");
     }
 }
-export const description: DescriptionTypes = {
+export const meta = {
     name: "removechatbotchannel",
     description: "removes the chatbot channel",
     usage: "",
 };
 
-export interface DescriptionTypes {
-    name: string;
-    aliases?: string[];
-    description: string;
-    usage: string;
-}
