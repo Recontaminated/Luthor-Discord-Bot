@@ -128,7 +128,7 @@ export default async function (message: Message) {
     }, 1000 * 10);
 
     console.log(message.content);
-    const args = message.content.replace(MessageMentions.USERS_PATTERN, "");
+    const args = message.content.replace(MessageMentions.UsersPattern, "");
     const checks = argsChecks(args);
     if (checks != "") {
         await message.reply(checks);
