@@ -1,6 +1,6 @@
 import * as Discord from "discord.js";
 import parse from "parse-duration";
-import { Reminder } from "../../../utils/mongo/schemas/reminder.js";
+import {Reminder} from "../../../utils/mongo/schemas/reminder.js";
 import prettyMilliseconds from "pretty-ms";
 import client from "../../../index.js";
 import Logger from "../../../utils/logger.js";
@@ -18,15 +18,20 @@ async function sendReminder(
 
         let createdAgo = unixNow - createdAt;
 
-        let embed = new Discord.MessageEmbed()
-            .addField(
-                "Reminder you requested",
-                `${prettyMilliseconds(createdAgo, {
-                    compact: true,
-                })} ago you asked to be reminded of "${reminderText}"`
-            )
-            .addField("Original Message", originalMessageURL)
-            .setColor("BLUE")
+        let embed = new Discord.EmbedBuilder()
+            .addFields([
+                {
+                    name: "Reminder you requested",
+                    value: `${prettyMilliseconds(createdAgo, {
+                        compact: true,
+                    })} ago you asked to be reminded of "${reminderText}"`
+                },
+                {
+                    name: "Original Message", value: originalMessageURL
+                }
+            ])
+
+            .setColor("Blue")
             .setTimestamp()
             .setFooter({
                 text: client.user?.username || "Bot",
@@ -36,7 +41,7 @@ async function sendReminder(
         let dmChannel = await client.users.cache.get(creatorId)?.createDM();
 
         if (dmChannel) {
-            await dmChannel.send({ embeds: [embed] });
+            await dmChannel.send({embeds: [embed]});
         }
     }, duration);
 }
@@ -54,7 +59,7 @@ client.on("asyncInit", async () => {
         const timeLeft = duration - createdAgo;
         if (timeLeft <= 0) {
             Logger.info(`Reminder ${reminderText} has expired`);
-            await Reminder.deleteOne({ _id: document._id });
+            await Reminder.deleteOne({_id: document._id});
             return;
         }
         sendReminder(
@@ -115,15 +120,8 @@ export default async function (message: Discord.Message, args: string[]) {
     }
 }
 
-export const description: DescriptionTypes = {
+export const meta = {
     name: "remindme",
     description: "set a reminder",
     usage: "<time> <reminder>",
 };
-
-export interface DescriptionTypes {
-    name: string;
-    aliases?: string[];
-    description: string;
-    usage: string;
-}

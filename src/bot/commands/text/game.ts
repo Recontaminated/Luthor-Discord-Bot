@@ -8,12 +8,12 @@ export default async function (message: Discord.Message, args: any[]) {
     for (let i = 0; i < args.length; i++) {
         let userInQuestion = getUserFromMention(message.client, args[i]);
         if (message.author.id == userInQuestion?.id) {
-            message.reply("you cant play a game with yourself in it idot");
+            await message.reply("you cant play a game with yourself in it idot");
 
             return;
         }
         if (userInQuestion?.bot) {
-            message.reply("bots arent smart enough to play games");
+            await message.reply("bots arent smart enough to play games");
             return;
         }
     }
@@ -44,7 +44,7 @@ export default async function (message: Discord.Message, args: any[]) {
     await send.react("👍");
     let filter = (reaction: Discord.MessageReaction, user: Discord.User) => {
         for (let i = 0; i < list_of_players.length; i++) {
-            if (user.id == undefined || user.id === null) return false;
+            if (user.id === undefined || user.id === null) return false;
             if (user.id === list_of_players[i].id) {
                 return true;
             }
@@ -91,7 +91,7 @@ export default async function (message: Discord.Message, args: any[]) {
 
     let messageFilter = (message: Discord.Message) => {
         for (let i = 0; i < list_of_players.length; i++) {
-            if (message.author.id == undefined || message.author.id === null)
+            if (message.author.id === undefined || message.author.id === null)
                 return false;
             if (message.author.id === list_of_players[i].id) {
                 return true;
@@ -139,7 +139,6 @@ export default async function (message: Discord.Message, args: any[]) {
             }
         } catch (e) {
             await message.channel.send("No one answered in time, next round");
-            continue;
         }
     }
     // // @ts-ignore TODO: fix all the ts-ignores
@@ -161,15 +160,10 @@ export default async function (message: Discord.Message, args: any[]) {
     // });
 }
 
-export const description: DescriptionTypes = {
+export const meta = {
     name: "game",
     description: "that text game michael told me about",
     usage: "<mention>",
 };
 
-export interface DescriptionTypes {
-    name: string;
-    aliases?: string[];
-    description: string;
-    usage: string;
-}
+

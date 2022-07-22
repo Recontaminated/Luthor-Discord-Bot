@@ -4,15 +4,9 @@ export default async function (message: Discord.Message, args: string[]) {
     return;
 }
 
-export const description: DescriptionTypes = {
+export const meta = {
     name: "_example",
     description: "Example command",
     usage: "<Required Argument> [Optional Argument]",
 };
 
-export interface DescriptionTypes {
-    name: string;
-    aliases?: string[];
-    description: string;
-    usage: string;
-}

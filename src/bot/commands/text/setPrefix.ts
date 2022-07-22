@@ -22,7 +22,7 @@ export default async function (message: Discord.Message, args: string[]) {
     if (newPrefix.length > 1) {
         await message.channel.send({
             embeds: [
-                new Discord.MessageEmbed()
+                new Discord.EmbedBuilder()
                     .setDescription(
                         `Warning, prefix will be set with a trailing space. Ex: ${newPrefix} <Command>`
                     )
@@ -48,15 +48,10 @@ export default async function (message: Discord.Message, args: string[]) {
     });
 }
 
-export const description: DescriptionTypes = {
+export const meta = {
     name: "setprefix",
     description: "set the prefix for the bot",
     usage: "<Pefix> ",
+    category: "config"
 };
 
-export interface DescriptionTypes {
-    name: string;
-    aliases?: string[];
-    description: string;
-    usage: string;
-}

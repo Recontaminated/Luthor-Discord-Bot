@@ -1,4 +1,5 @@
 import * as Discord from "discord.js";
+import { GatewayIntentBits,IntentsBitField,Partials  } from "discord.js";
 declare module "discord.js" {
     interface Client<Ready extends boolean = boolean> {
         config: configType;
@@ -6,8 +7,20 @@ declare module "discord.js" {
         prefix: any;
     }
 }
-// all intents f*** the principal of Least Permissions
-const intents = new Discord.Intents(32767);
+const intents = new IntentsBitField().add([
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.MessageContent,
+  ]);
+
 const client = new Discord.Client({ intents: intents });
 import config from "./utils/readConfig.js";
 import { configType } from "./utils/readConfig.js";

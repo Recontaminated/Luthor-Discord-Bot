@@ -1,10 +1,10 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 export default function errorBuilder(
     errorDescription: string,
     commandName: string
 ) {
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setTitle(`Error with command \`${commandName}\``)
         .setColor("#ff0000")
         .setDescription(errorDescription);
