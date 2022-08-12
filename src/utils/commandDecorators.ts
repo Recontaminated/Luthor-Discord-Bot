@@ -1,5 +1,7 @@
 import {PermissionResolvable} from 'discord.js';
 
+
+
 export function requirePermission(permission: PermissionResolvable) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalFunction = descriptor.value;
