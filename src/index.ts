@@ -1,12 +1,14 @@
 import * as Discord from "discord.js";
 import { GatewayIntentBits,IntentsBitField,Partials  } from "discord.js";
-declare module "discord.js" {
-    interface Client<Ready extends boolean = boolean> {
-        config: configType;
-        commands: any;
-        prefix: any;
-    }
-}
+// declare module "discord.js" {
+//     interface Client<Ready extends boolean = boolean> {
+//         config: configType;
+//         commands: any;
+//         prefix: any;
+//     }
+// }
+import LuthorClient from "./types/luthorClient.js";
+
 const intents = new IntentsBitField().add([
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -21,23 +23,26 @@ const intents = new IntentsBitField().add([
     GatewayIntentBits.MessageContent,
   ]);
 
-const client = new Discord.Client({ intents: intents });
-import config from "./utils/readConfig.js";
-import { configType } from "./utils/readConfig.js";
-import commandAdder from "./bot/commandAdder.js";
-import eventHandler from "./bot/eventHandler.js";
-import shutdown from "./utils/shutdown.js";
-import Logger from "./utils/logger.js";
-import { initMongo } from "./utils/mongo/mongoManager.js";
-import deployCommands from "./utils/deployCommands.js";
-import { Guild } from "./utils/mongo/schemas/guild.js";
-// TODO: make prefix inside cache
+const client = new LuthorClient({ intents: intents, failIfNotExists: false, allowedMentions:{repliedUser: false}});
 client.config = config;
 client.commands = {};
 client.commands.text = new Discord.Collection();
 client.commands.slash = new Discord.Collection();
 client.prefix = {};
+
 export { client as default };
+import config from "./utils/readConfig.js";
+import { configType } from "./utils/readConfig.js";
+console.log("imporitng command adder")
+import commandAdder from "./bot/commandAdder.js";
+import eventHandler from "./bot/eventHandler.js";
+import shutdown from "./utils/discord/shutdown.js";
+import Logger from "./utils/logger.js";
+import { initMongo } from "./utils/mongo/mongoManager.js";
+import deployCommands from "./utils/discord/deployCommands.js";
+import { Guild } from "./utils/mongo/schemas/guild.js";
+
+
 
 async function loadPrefixes() {
     Logger.info("Loading prefixes...");

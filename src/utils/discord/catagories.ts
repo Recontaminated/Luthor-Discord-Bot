@@ -14,16 +14,11 @@ export const categoryInfo: { [index: string]: CategoryInfo } = {
     value: 'info',
     embed: new EmbedBuilder(),
   },
-  moderation: {
-    description: 'Useful for server moderation, allows you to ban, kick, set up auto mod (soon), etc...',
-    label: 'Moderation',
-    value: 'moderation',
-    embed: new EmbedBuilder(),
-  },
-  minecraft: {
-    description: 'Allows you to check information on players like their skin, stats, etc...',
-    label: 'Minecraft',
-    value: 'minecraft',
+
+  games: {
+    description: 'Fun little games that make the day less boring',
+    label: 'Games',
+    value: 'games',
     embed: new EmbedBuilder(),
   },
   externalApis: {

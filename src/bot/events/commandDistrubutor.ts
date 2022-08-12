@@ -1,4 +1,3 @@
-import clientCollections from "../../index.js";
 import * as Discord from "discord.js";
 import client from "../../index.js";
 import {InteractionType} from "discord.js";
@@ -10,7 +9,7 @@ export default async function (message: Discord.Message) {
     commandHandler(message);
 }
 
-function commandHandler(message: Discord.Message) {
+async function commandHandler(message: Discord.Message) {
     let prefix;
 
     if (!message.guildId) prefix = client.config.prefix;
@@ -19,22 +18,24 @@ function commandHandler(message: Discord.Message) {
     if (!message.content.startsWith(prefix)) return;
 
     let commandMessage = message.content.slice(prefix.length);
-    console.log(commandMessage);
     let messageArray = commandMessage.split(" ");
-    console.log(messageArray);
     let commandName = messageArray[0].toLowerCase();
-    console.log(commandName);
 
     const args = messageArray.slice(1);
 
-    let command = clientCollections.commands.text.get(commandName);
+
+    let command = client.commands.text.get(commandName);
+
    if (!command) return
-   command = command.default
-    
+   command = command.run
+
 
 
     if (!command || typeof command !== "function") return;
-    command(message, args);
+    const timeStart = new Date().getTime();
+    await command(message, args);
+    const timeEnd = new Date().getTime();
+    Logger.info(`user ${message.author.username} ran the command ${commandName} took ${(timeEnd - timeStart)} ms`)
 }
 client.on("interactionCreate", async (interaction) => {
     if (interaction.type !== InteractionType.ApplicationCommand) return;

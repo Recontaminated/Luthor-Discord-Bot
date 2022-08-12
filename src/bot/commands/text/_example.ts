@@ -1,12 +1,21 @@
-import * as Discord from "discord.js";
+import {Command} from "../../command.js";
+import client from "../../../index.js";
+import {Message} from "discord.js";
+import LuthorClient from "../../../types/luthorClient.js";
 
-export default async function (message: Discord.Message, args: string[]) {
-    return;
+export default class Ping extends Command{
+    constructor(client: LuthorClient) {
+        super(client,
+            {
+                name: "ping",
+                description: "replies with pong",
+                usage: "ping",
+                category: "misc",
+                cooldown: 1000
+            });
+    }
+    public async run(message: Message){
+
+    }
+
 }
-
-export const meta = {
-    name: "_example",
-    description: "Example command",
-    usage: "<Required Argument> [Optional Argument]",
-};
-

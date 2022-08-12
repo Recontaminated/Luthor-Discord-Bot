@@ -1,8 +1,8 @@
 import { readdir } from "fs/promises";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-import client from "../index.js";
-import Logger from "./logger.js";
+import client from "../../index.js";
+import Logger from "../logger.js";
 
 export default async function deployCommands(): Promise<void> {
     let clientId = client.config.clientID;
@@ -26,7 +26,7 @@ export default async function deployCommands(): Promise<void> {
                 continue;
             }
             const command = await import(
-                `../bot/commands/slash${pathAdditions}/` + file
+                `../../bot/commands/slash${pathAdditions}/` + file
             );
             commands.push(command.default.data.toJSON());
         }
