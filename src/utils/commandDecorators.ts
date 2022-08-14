@@ -16,7 +16,19 @@ export function requirePermission(permission: PermissionResolvable) {
         }
     }
 }
+export function argRegex(expression: RegExp) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        const originalFunction = descriptor.value;
+        descriptor.value = function () {
+            const message = arguments[0];
+            const args = arguments[1];
+            if (expression.test(args))
+                return message.reply('Please use the correct format');
 
+            return originalFunction.apply(this, arguments);
+        };
+    };
+}
 export function requireBotPermission(permission: PermissionResolvable) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalFunction = descriptor.value;
