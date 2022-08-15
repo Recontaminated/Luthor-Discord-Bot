@@ -1,9 +1,9 @@
-import client from '../../index.js'
+import client from '../../../index.js'
 import { Message } from 'discord.js'
 import fetch from 'node-fetch'
-import errorBuilder from '../responces/error.js'
+import errorBuilder from '../../responces/error.js'
 import { MessageMentions } from 'discord.js'
-import { Guild } from '../../utils/mongo/schemas/guild.js'
+import { Guild } from '../../../utils/mongo/schemas/guild.js'
 
 const luthorChatBotConfig: any = {}
 export { luthorChatBotConfig }

@@ -1,11 +1,11 @@
 import * as Discord from "discord.js";
-import { Guild } from "../../../utils/mongo/schemas/guild.js";
+import { Guild } from "@utils/mongo/schemas/guild.js";
 import errorBuilder from "../../responces/error.js";
-import client from "../../../index.js";
-import {Command} from "../../command.js";
+import client from "index.js";
+import {Command} from "bot/command.js";
 import LuthorClient from "../../../types/luthorClient.js";
 import {Message} from "discord.js";
-import {requirePermission} from "../../../utils/commandDecorators.js";
+import {requirePermission} from "@utils/commandDecorators.js";
 
 export default class SetPrefix extends Command {
     constructor(client: LuthorClient) {

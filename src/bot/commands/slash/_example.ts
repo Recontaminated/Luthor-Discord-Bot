@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import client from "../../../index.js";
+import client from "index.js";
 let command = {
     data: new SlashCommandBuilder()
         .setName("ping")

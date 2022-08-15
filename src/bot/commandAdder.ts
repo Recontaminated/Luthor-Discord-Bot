@@ -1,6 +1,6 @@
 import { readdir } from "fs/promises";
-import Logger from "../utils/logger.js";
-import client from "../index.js";
+import Logger from "@utils/logger.js";
+import client from "index.js";
 import {commandOptions, CommandType} from '../types/command.js';
 import LuthorClient from "../types/luthorClient.js";
 

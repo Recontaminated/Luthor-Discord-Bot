@@ -1,6 +1,6 @@
 import * as Discord from "discord.js";
 import { readdir } from "fs/promises";
-import Logger from "../utils/logger.js";
+import Logger from "@utils/logger.js";
 
 export default async function eventHandler(
     client: Discord.Client,
