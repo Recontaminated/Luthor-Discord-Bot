@@ -1,17 +1,12 @@
-name: Discord Bot CD
+name: deploy
 
 on:
   workflow_dispatch:
     branches:
       - master
   push:
-    paths-ignore:
-      - 'yarn.lock'
-      - 'package.json'
     branches:
       - master
-
-
 
 jobs:
 
@@ -20,74 +15,10 @@ jobs:
     environment: production
 
     steps:
-      - name: "Checkout branch"
-        uses: actions/checkout@master
-      - name: Build
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: yarn install --frozen-lockfile
-      - run: yarn run build
-
-      - name: List output files
-        run: ls
-
-      - name: Post build
-        run: mkdir -p build/dist
-      - run: cp -r dist/ build/
-      - run: cp package.json build/package.json
-      - run: cp yarn.lock build/yarn.lock
-
-
-      - name: Create upload directory
-        run: mkdir -p upload
-      - name: Zip files
-        run: tar -zcf upload/result.tar.gz -C build .
-
-
-      - run: |
-          echo "${{ secrets.SSH_KEY }}" >> /tmp/sftp_rsa
-          chmod 400 /tmp/sftp_rsa
-      - run: |
-          sftp -o StrictHostKeyChecking=no -oPort=${{ secrets.FTP_PORT }} -o LogLevel=ERROR -o identityfile=/tmp/sftp_rsa ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} <<< $"put upload/result.tar.gz ${{ secrets.FTP_PATH }}"
-          
-          
-
-
-      # - name: FTP-Deploy-Action
-      #   uses: SamKirkland/FTP-Deploy-Action@3.1.1
-      #   with:
-      #     ftp-server: ${{ secrets.FTP_SERVER }}
-      #     ftp-username: ${{ secrets.FTP_USERNAME }}
-      #     ftp-password: ${{ secrets.FTP_PASSWORD }}
-      #     local-dir: upload/
-      - name: Deploy (1/3)
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.API_ENDPOINT3 }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{
-  "root": "/",
-  "files": [
-    "dist"
-  ]
-}'
-
-      - name: Deploy (2/3)
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.API_ENDPOINT2 }}
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"root": "/", "file": "result.tar.gz"}'  
-                  
-      - name: Deploy (3/3)
+      - name: Signal for deploy
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT }}
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
           data: '{"signal":"restart"}'   
-
-
