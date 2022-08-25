@@ -5,12 +5,18 @@ import prettyMilliseconds from "pretty-ms";
 import client from "../../../index.js";
 import Logger from "../../../utils/logger.js";
 
+import LuthorClient from "../../../types/luthorClient.js";
+import {Command} from "../../command.js";
+import {Message} from "discord.js";
+import * as mongoose from "mongoose";
+
 async function sendReminder(
     creatorId: string,
     createdAt: number,
     originalMessageURL: string,
     reminderText: string,
-    duration: number
+    duration: number,
+    _id: mongoose.Types.ObjectId
 ) {
     setTimeout(async function () {
         Logger.debug(`Sending reminder to ${creatorId}`);
@@ -43,6 +49,7 @@ async function sendReminder(
         if (dmChannel) {
             await dmChannel.send({embeds: [embed]});
         }
+        Reminder.deleteOne({_id: _id});
     }, duration);
 }
 
@@ -62,12 +69,14 @@ client.on("asyncInit", async () => {
             await Reminder.deleteOne({_id: document._id});
             return;
         }
+        // @ts-ignore
         sendReminder(
             document.creatorId,
             createdAt,
             document.originalMessage,
             reminderText,
-            timeLeft
+            timeLeft,
+            document._id
         );
     });
 });
@@ -75,9 +84,7 @@ client.on("asyncInit", async () => {
 const numberRegex = /^[^\d]*(\d+)/;
 
 
-import LuthorClient from "../../../types/luthorClient.js";
-import {Command} from "../../command.js";
-import {Message} from "discord.js";
+
 
 export default class Ping extends Command{
     constructor(client: LuthorClient) {
@@ -130,7 +137,8 @@ export default class Ping extends Command{
                 createdAt,
                 messageURL,
                 reminderText,
-                duration
+                duration,
+                reminder._id
             );
         } catch (err) {
             Logger.error(err);
