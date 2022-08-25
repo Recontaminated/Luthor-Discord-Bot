@@ -49,7 +49,7 @@ async function sendReminder(
         if (dmChannel) {
             await dmChannel.send({embeds: [embed]});
         }
-        Reminder.deleteOne({_id: _id});
+        await Reminder.deleteOne({_id: _id});
     }, duration);
 }
 
