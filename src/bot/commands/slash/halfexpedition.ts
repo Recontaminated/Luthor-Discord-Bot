@@ -3,6 +3,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import client from "index.js";
 import {AttachmentBuilder} from "discord.js";
 import fetch from 'node-fetch';
+import Logger from "@utils/logger.js";
 let command = {
     data: new SlashCommandBuilder()
         .setName("halfexpedition")
@@ -22,6 +23,10 @@ let command = {
         const arrayBuffer = await response.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         const attachment = new AttachmentBuilder(buffer, {name: interaction.options.getString("prompt") + ".png"});
+        Logger.debug(response.headers.get("NSFW-detected"));
+        if (response.headers.get("NSFW-detected") == "[True]") {
+            return await interaction.editReply("NSFW detected, aborting");
+        }
         return await interaction.editReply({files: [attachment]});
 
         //response is a JPEG image
