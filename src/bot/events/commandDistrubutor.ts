@@ -39,12 +39,12 @@ async function commandHandler(message: Discord.Message) {
 }
 client.on("interactionCreate", async (interaction) => {
     if (interaction.type !== InteractionType.ApplicationCommand) return;
-
     const command = client.commands.slash.get(interaction.commandName);
     if (!command) return;
 
     try {
         await command.default.execute(interaction);
+        Logger.info(`user ${interaction.user.username} ran the command ${interaction.commandName}`)
     } catch (error) {
         console.error(error);
         await interaction.reply({

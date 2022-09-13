@@ -7,17 +7,14 @@ import client from "../../../index.js";
 import {Message} from "discord.js";
 import LuthorClient from "../../../types/luthorClient.js";
 
-export default class Ping extends Command{
-    constructor(client: LuthorClient) {
-        super(client,
-            {
-                name: "samegame",
-                description: "plays that ping game michael told me about",
-                usage: "\<mention\>",
-                category: "games",
-                cooldown: 1000
-            });
-    }
+export default class TextGame implements Command{
+    aliases= [""]
+    category= "fun";
+    cooldown = 0
+    cooldowns: Set<any>;
+    description = "that game michael told me about";
+    name = "TextGame";
+    usage = "<player 1> <player 2> ...";
     public async run(message: Message, args: string[]){
         if (message.mentions.users.first() === undefined) return;
 

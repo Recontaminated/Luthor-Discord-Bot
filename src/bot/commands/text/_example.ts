@@ -1,19 +1,15 @@
 import {Command} from "../../command.js";
-import client from "../../../index.js";
 import {Message} from "discord.js";
-import LuthorClient from "../../../types/luthorClient.js";
 
-export default class Ping extends Command{
-    constructor(client: LuthorClient) {
-        super(client,
-            {
-                name: "ping",
-                description: "replies with pong",
-                usage: "ping",
-                category: "misc",
-                cooldown: 1000
-            });
-    }
+export default class _example implements Command{
+    aliases= [""]
+    category= "info";
+    cooldown = 0
+    cooldowns: Set<any>;
+    description = "if you wana see if the bot is still wokring";
+    guildOnly = false;
+    name = "ping";
+    usage = "";
     public async run(message: Message){
 
     }

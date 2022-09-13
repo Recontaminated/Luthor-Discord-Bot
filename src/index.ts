@@ -67,6 +67,11 @@ let sycFunctions = async () => {
 sycFunctions();
 
 client.login(client.config.token);
+
+process.on("uncaughtException", (err) => {
+   Logger.error(err);
+});
+
 process.on("SIGINT", async function () {
     Logger.warn("Caught interrupt signal, initiating graceful shutdown");
 

@@ -19,13 +19,13 @@ export function generateHelpEmbed() {
             .setDescription(`<> - Required Argument\n[] - Option Argument`)
             .setFooter({text: "help command by Barely Awake"});
         client.commands.text.forEach((SingularCommand: any) => {
-            if (categoryInfo[category].value !== SingularCommand.conf.category) {
+            if (categoryInfo[category].value !== SingularCommand.category) {
                 return;
             }
             categoryInfo[category].embed.addFields(
                 [{
-                    "name": `${SingularCommand.conf.name} ${SingularCommand.conf.usage}`, value:
-                    SingularCommand.conf.description
+                    "name": `${SingularCommand.name} ${SingularCommand.usage}`, value:
+                    SingularCommand.description
                 }],
             );
         })
@@ -61,17 +61,15 @@ const actionRow = new ActionRowBuilder<SelectMenuBuilder>()
         .addOptions(selectMenuOptions));
 
 
-export default class Help extends Command {
-    constructor(client: LuthorClient) {
-        super(client,
-            {
-                name: "help",
-                description: "Shows all commands by catagory",
-                usage: "",
-                category: "info",
-                cooldown: 1000
-            });
-    }
+export default class Help implements Command{
+    aliases= [""]
+    category= "info";
+    cooldown = 0
+    cooldowns: Set<any>;
+    description = "i needsomeby to help";
+    guildOnly = false;
+    name = "help";
+    usage = "";
 
      async run(message: Discord.Message, args: string[]) {
         if (!message.guildId) return;

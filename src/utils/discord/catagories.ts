@@ -38,3 +38,6 @@ export const categoryInfo: { [index: string]: CategoryInfo } = {
 export interface CategoryInfo extends SelectMenuComponentOptionData {
   embed: EmbedBuilder;
 }
+
+// make a list of types from CategoryInfo's value field
+export type Category = keyof typeof categoryInfo;

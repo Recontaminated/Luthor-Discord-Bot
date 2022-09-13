@@ -27,7 +27,7 @@ let command = {
         const arrayBuffer = await response.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         const attachment = new AttachmentBuilder(buffer, {name: interaction.options.getString("prompt") + ".png"});
-        Logger.debug(response.headers.get("NSFW-detected"));
+
         if (response.headers.get("NSFW-detected") == "[True]") {
             return await interaction.editReply("NSFW detected, aborting");
         }
@@ -51,7 +51,7 @@ let command = {
           queue.push(interaction.user.id)
       //    wait till elemenet before resloves promise. This is a really bad implementation but its late and I'd rather have a bad solution than no solution
             await new Promise<void>(async resolve => {
-                await interaction.reply("you are in the queue!")
+                await interaction.reply("You are in the Queue!")
                 let interval = setInterval(() => {
                     interaction.editReply("You are in the Queue! position: " + queue.indexOf(interaction.user.id))
                     if (queue.indexOf(interaction.user.id) == 0) {
@@ -60,7 +60,7 @@ let command = {
                     }
                 }, 1000)
             })
-            let reply = await interaction.editReply("hang on a sec")
+            let reply = await interaction.editReply("Generating image...")
             await this.createImage(interaction)
             queue.splice(queue.indexOf(interaction.user.id), 1)
       }

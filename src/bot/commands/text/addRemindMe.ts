@@ -1,11 +1,13 @@
 import * as Discord from "discord.js";
 import parse from "parse-duration";
-import {Reminder} from "../../../utils/mongo/schemas/reminder.js";
+import {Reminder} from "@utils/mongo/schemas/reminder.js";
 import prettyMilliseconds from "pretty-ms";
-import client from "../../../index.js";
+
+import client from "index.js";
+
 import Logger from "../../../utils/logger.js";
 
-import LuthorClient from "../../../types/luthorClient.js";
+
 import {Command} from "../../command.js";
 import {Message} from "discord.js";
 import * as mongoose from "mongoose";
@@ -87,17 +89,15 @@ const numberRegex = /^[^\d]*(\d+)/;
 
 
 
-export default class Ping extends Command{
-    constructor(client: LuthorClient) {
-        super(client,
-            {
-                name: "remindme",
-                description: "sets reminders using human readable time formats",
-                usage: "<reminder>>",
-                category: "misc",
-                cooldown: 1000
-            });
-    }
+export default class AddRemindMe implements Command{
+    aliases= ["remind"]
+    category= "info";
+    cooldown = 0
+    cooldowns: Set<any>;
+    description = "if you wana see if the bot is still wokring";
+    guildOnly = false;
+    name = "remindme";
+    usage = "";
     public async run(message: Message, args: string[]) {
         if (args.length < 2) {
             await message.channel.send("Please use the correct input format.");

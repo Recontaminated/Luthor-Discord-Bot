@@ -7,17 +7,15 @@ import LuthorClient from "../../../types/luthorClient.js";
 import {Message} from "discord.js";
 import {requirePermission} from "@utils/commandDecorators.js";
 
-export default class SetPrefix extends Command {
-    constructor(client: LuthorClient) {
-        super(client,
-            {
-                name: "setprefix",
-                description: "sets the bot prefix",
-                usage: "\<prefix\>",
-                category: "config",
-                cooldown: 1000
-            });
-    }
+export default class SetPrefix implements Command{
+    aliases= [""]
+    category= "info";
+    cooldown = 0
+    cooldowns: Set<any>;
+    description = "if you wana see if the bot is still wokring";
+    guildOnly = true;
+    name = "setprefix";
+    usage = "<new prefix>";
     @requirePermission("ManageGuild")
     public async run(message: Message, args: string[]) {
         if (!message.guild)

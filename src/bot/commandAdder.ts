@@ -5,6 +5,7 @@ import {commandOptions, CommandType} from '../types/command.js';
 import LuthorClient from "../types/luthorClient.js";
 
 import assert from "assert";
+import {type} from "os";
 async function addTextCommands(pathAdditions = ""): Promise<void> {
     const textCommandFiles = await readdir(
         "./dist/bot/commands/text" + pathAdditions
@@ -28,7 +29,7 @@ async function addTextCommands(pathAdditions = ""): Promise<void> {
 
         const command = new commandClassDefault(client)
 
-        let commandName = command.conf.name
+        let commandName = command.name
 
         client.commands.text.set(commandName, command);
         const endTime = new Date().getTime()
@@ -38,7 +39,7 @@ async function addTextCommands(pathAdditions = ""): Promise<void> {
         if (command.aliases === undefined) continue;
 
         for (let i in command.aliases) {
-            client.commands.set(
+            client.commands.text.set(
                 command.aliases[i],
                 command
             );
