@@ -35,7 +35,7 @@ async function commandHandler(message: Discord.Message) {
     const timeStart = new Date().getTime();
     await command(message, args);
     const timeEnd = new Date().getTime();
-    Logger.info(`user ${message.author.username} ran the command ${commandName} took ${(timeEnd - timeStart)} ms`)
+    Logger.info(`user ${message.author.username} ran the command ${commandName} in ${(timeEnd - timeStart)} ms`)
 }
 client.on("interactionCreate", async (interaction) => {
     if (interaction.type !== InteractionType.ApplicationCommand) return;
@@ -43,8 +43,10 @@ client.on("interactionCreate", async (interaction) => {
     if (!command) return;
 
     try {
+        const timeStart = new Date().getTime();
         await command.default.execute(interaction);
-        Logger.info(`user ${interaction.user.username} ran the command ${interaction.commandName}`)
+        const timeEnd = new Date().getTime();
+        Logger.info(`user ${interaction.user.username} ran the command ${interaction.commandName} in ${(timeEnd - timeStart)} ms`)
     } catch (error) {
         console.error(error);
         await interaction.reply({
