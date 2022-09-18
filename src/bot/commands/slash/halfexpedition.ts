@@ -16,7 +16,7 @@ let command = {
         ),
     //@ts-ignore
     async createImage(interaction) {
-        const api = `http://192.168.1.88:50000/?username=${interaction.options.getString("prompt")}`;
+        const api = `http://192.168.1.88:5000/?username=${interaction.options.getString("prompt")}`;
 
 
         // if the useris in the queue, return
