@@ -1,4 +1,4 @@
-import {Command} from "../../command.js";
+import {Command} from "../command.js";
 import client from "../../../index.js";
 import {Message} from "discord.js";
 

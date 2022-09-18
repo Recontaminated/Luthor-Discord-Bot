@@ -2,7 +2,7 @@ import * as Discord from "discord.js";
 import { Guild } from "@utils/mongo/schemas/guild.js";
 import errorBuilder from "../../responces/error.js";
 import client from "index.js";
-import {Command} from "bot/command.js";
+import {Command} from "bot/commands/command.js";
 import LuthorClient from "../../../types/luthorClient.js";
 import {Message} from "discord.js";
 import {requirePermission} from "@utils/commandDecorators.js";

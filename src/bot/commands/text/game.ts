@@ -2,7 +2,7 @@ import * as Discord from "discord.js";
 import getUserFromMention from "../../../utils/discord/getUserFromMention.js";
 import sleep from "../../../utils/sleep.js";
 
-import {Command} from "../../command.js";
+import {Command} from "../command.js";
 import client from "../../../index.js";
 import {Message} from "discord.js";
 import LuthorClient from "../../../types/luthorClient.js";

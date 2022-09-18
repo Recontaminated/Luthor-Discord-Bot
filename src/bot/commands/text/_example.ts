@@ -1,4 +1,4 @@
-import {Command} from "../../command.js";
+import {Command} from "../command.js";
 import {Message} from "discord.js";
 
 export default class _example implements Command{

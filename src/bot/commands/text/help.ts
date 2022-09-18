@@ -8,7 +8,7 @@ import {
 } from 'discord.js'
 import client from "../../../index.js";
 import {categoryInfo} from "../../../utils/discord/catagories.js";
-import {Command} from "../../command.js";
+import {Command} from "../command.js";
 import LuthorClient from "../../../types/luthorClient.js";
 import Logger from "../../../utils/logger.js";
 //TODO: make this not rely on async init

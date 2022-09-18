@@ -1,4 +1,4 @@
-import {commandOptions} from "../types/command.js";
+import {commandOptions} from "../../types/command.js";
 import {Client, Message, PermissionResolvable} from "discord.js"
 import {Category} from "@utils/discord/catagories.js";
 

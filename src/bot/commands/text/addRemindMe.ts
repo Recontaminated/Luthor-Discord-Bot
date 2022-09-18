@@ -8,7 +8,7 @@ import client from "index.js";
 import Logger from "../../../utils/logger.js";
 
 
-import {Command} from "../../command.js";
+import {Command} from "../command.js";
 import {Message} from "discord.js";
 import * as mongoose from "mongoose";
 
