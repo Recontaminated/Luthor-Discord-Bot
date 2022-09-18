@@ -20,10 +20,10 @@ let command = {
 
 
         // if the useris in the queue, return
-        const controller = new AbortController()
+        const controller = new AbortController();
 
         // 20 second timeout:
-        const timeoutId = setTimeout(() => controller.abort(), 20000)
+        const timeoutId = setTimeout(() => controller.abort("Request timeout"), 20000)
         try {
             const response = await fetch(api , {signal: controller.signal});
 
@@ -42,7 +42,7 @@ let command = {
         }
         catch (e) {
             Logger.error(e)
-            return interaction.editReply("Something went wrong with the backend service");
+            return interaction.editReply("The backend service is offline");
         }
 
     },
