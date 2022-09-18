@@ -20,9 +20,12 @@ let command = {
 
 
         // if the useris in the queue, return
+        const controller = new AbortController()
 
+        // 20 second timeout:
+        const timeoutId = setTimeout(() => controller.abort(), 20000)
         try {
-            const response = await fetch(api);
+            const response = await fetch(api , {signal: controller.signal});
 
             if (!response.ok) {
                 return interaction.editReply({content: "Something went wrong", ephemeral: true});
