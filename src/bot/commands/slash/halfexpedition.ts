@@ -25,7 +25,7 @@ let command = {
         // 20 second timeout:
         const timeoutId = setTimeout(() => controller.abort("Request timeout"), 20000)
         try {
-            const response = await fetch(api , {signal: controller.signal});
+            const response = await fetch(api, {signal: controller.signal});
 
             if (!response.ok) {
                 return interaction.editReply({content: "Something went wrong", ephemeral: true});
@@ -35,12 +35,12 @@ let command = {
             const attachment = new AttachmentBuilder(buffer, {name: interaction.options.getString("prompt") + ".png"});
 
             if (response.headers.get("NSFW-detected") == "[True]") {
-                return await interaction.editReply("NSFW detected, aborting");
+                await interaction.editReply("NSFW detected, aborting");
+                return
             }
-
-            return await interaction.editReply({files: [attachment]})
-        }
-        catch (e) {
+            await interaction.editReply({files: [attachment]})
+            return
+        } catch (e) {
             Logger.error(e)
             return interaction.editReply("The backend service is offline");
         }
@@ -54,11 +54,15 @@ let command = {
 
         if (queue.length == 0) {
             queue.push(interaction.user.id)
-            let reply = await interaction.deferReply("hang on a sec")
-            await this.createImage(interaction)
-            queue.splice(queue.indexOf(interaction.user.id), 1)
+            await interaction.deferReply("hang on a sec")
+            try {
+                await this.createImage(interaction)
+            } finally {
+                queue.splice(queue.indexOf(interaction.user.id), 1)
+            }
 
-        } else if (queue.length > 0) {
+        }
+        else if (queue.length > 0) {
             queue.push(interaction.user.id)
             //    wait till elemenet before resloves promise. This is a really bad implementation but its late and I'd rather have a bad solution than no solution
             await new Promise<void>(async resolve => {
