@@ -3,7 +3,7 @@ import {AttachmentBuilder} from "discord.js";
 import fetch from 'node-fetch';
 import Logger from "@utils/logger.js";
 
-let queue: any[] = []
+let queue: string[] = []
 let command = {
     data: new SlashCommandBuilder()
         .setName("halfexpedition")
