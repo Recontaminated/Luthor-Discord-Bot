@@ -59,6 +59,8 @@ export default class emojiOnly implements Module {
                     //@ts-ignore im so done with this
                     await webhook.send(json.choices[0].text)
                     await webhook.delete()
+                    //@ts-ignore
+                    Logger.info("user " + message.author.username + " inputted " + message.content + " and got " + json.choices[0].text + " as a response")
                 }
 
         })
