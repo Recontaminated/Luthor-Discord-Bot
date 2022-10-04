@@ -33,7 +33,7 @@ export default class emojiOnly implements Module {
 
                 const data = {
                     model: 'text-davinci-002',
-                    prompt:"Convert the following text into emoji only text.\n 'Shakespeare was a famous 17th - century diesel mechanic.'\n 🏆🎭🎤🕰🚗🔧\n' "+message.content+"'\n",
+                    prompt:"Convert the following text into emoji only text.\n" +message.content,
                     temperature: 0.7,
                     max_tokens: 256,
                     top_p: 0.3,
