@@ -19,7 +19,8 @@ export default class emojiOnly implements Module {
             //TODO: make this a configurable option. im too lazy to do it now
             if (message.channel.id != "959218470543827024") return;
             //check if a user is on cooldown
-            if (cooldowns[message.author.id]) return;
+
+            if (message.author.id == client.user.id) return;
 
             if (!regex.test(message.content)) {
                 message.delete()
