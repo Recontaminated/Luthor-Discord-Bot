@@ -1,8 +1,9 @@
 import { Message } from 'discord.js'
-import Module from '../../module.js'
+import Module from '../../../types/module.js'
 import client from "index.js";
+import Logger from "@utils/logger.js";
 export default class AtSomeone implements Module{
-    public name = "atsomeone"
+    public name = "atsomeone";
     async entrypoint() {
         client.on("messageCreate", async (message:Message) => {
             let firstRole = message.mentions.roles.first()

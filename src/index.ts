@@ -41,6 +41,7 @@ import Logger from "./utils/logger.js";
 import { initMongo } from "./utils/mongo/mongoManager.js";
 import deployCommands from "./utils/discord/deployCommands.js";
 import { Guild } from "./utils/mongo/schemas/guild.js";
+import {loadModules} from "./bot/moduleLoader.js";
 
 
 
@@ -59,6 +60,7 @@ let sycFunctions = async () => {
     await eventHandler(client);
     await commandAdder();
     await initMongo();
+    await loadModules();
     await loadPrefixes();
     await deployCommands();
     Logger.info("Signaling for async init");
@@ -70,6 +72,7 @@ client.login(client.config.token);
 
 process.on("uncaughtException", (err) => {
    Logger.error(err);
+   Logger.error(err.stack)
 });
 
 process.on("SIGINT", async function () {
@@ -81,6 +84,7 @@ process.on("SIGINT", async function () {
         process.exit(0);
     } catch (err: any) {
         Logger.error(err);
+
     }
 });
 let stdin = process.openStdin();
