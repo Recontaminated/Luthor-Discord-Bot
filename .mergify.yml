@@ -7,7 +7,9 @@ pull_request_rules:
         method: merge
   - name: merge pull requests from dependabot if CI passes
     conditions:
-      - author=dependabot[bot]
+      - or:
+        - author=dependabot[bot] 
+        - author=Recontaminated
     actions:
       merge:
         method: merge
