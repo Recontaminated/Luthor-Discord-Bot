@@ -24,7 +24,7 @@ export default class emojiOnly implements Module {
     async entrypoint() {
         client.on("messageCreate", async (message: Message) => {
             //TODO: make this a configurable option. im too lazy to do it now
-            if (message.channel.id != "959218470543827024") return;
+            if (message.channel.id != "981813452312043522") return;
             //check if a user is on cooldown
 
             if (message.author.id == client.user.id) return;
@@ -73,7 +73,7 @@ export default class emojiOnly implements Module {
                     Webhooks.push(webhook)
                 }
                     //@ts-ignore
-                    await webhook.send(json.choices[0].text,{username:message.author.username,avatarURL:message.author.displayAvatarURL()})
+                    await webhook.send({content:json.choices[0].text, username: message.author.username, avatarURL: message.author.displayAvatarURL()})
                     //@ts-ignore
                     Logger.info("user " + message.author.username + " inputted " + message.content + " and got " + json.choices[0].text + " as a response")
                 }
