@@ -11,6 +11,7 @@ import Logger from "@utils/logger.js";
 //     Logger.info(`Loaded module: ${moduleObject.name}`);
 // }
 //    use code above but when find directory recurse
+let loadedModules:any = [];
 async function moduleLoader(pathAdditions = ""): Promise<void> {
     const moduleFiles = await fs.readdir("./dist/bot/modules" + pathAdditions);
     for (const file of moduleFiles) {
@@ -24,6 +25,7 @@ async function moduleLoader(pathAdditions = ""): Promise<void> {
         moduleObject = new moduleObject(client);
         moduleObject.entrypoint(client);
         Logger.info(`Loaded module: ${moduleObject.name}`);
+        loadedModules.push(moduleObject);
     }
 }
 
@@ -31,3 +33,4 @@ export async function loadModules() {
     await moduleLoader();
 
 }
+export {loadedModules}

@@ -4,6 +4,9 @@ import client from "index.js";
 import Logger from "@utils/logger.js";
 export default class AtSomeone implements Module{
     public name = "atsomeone";
+    shutdown() {
+
+    }
     async entrypoint() {
         client.on("messageCreate", async (message:Message) => {
             let firstRole = message.mentions.roles.first()

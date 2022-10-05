@@ -11,16 +11,25 @@ const headers = {
     Authorization: 'Bearer ' + client.config.openAIKey,
 }
 let cooldowns:any = [];
+let Webhooks:any = [];
 export default class emojiOnly implements Module {
     public name = "emojiOnly";
-
+    async shutdown() {
+//delete all webhooks
+        for (let webhook of Webhooks) {
+            Logger.info("Deleting webhook " + webhook.id)
+            await webhook.delete()
+        }
+    }
     async entrypoint() {
         client.on("messageCreate", async (message: Message) => {
             //TODO: make this a configurable option. im too lazy to do it now
-            if (message.channel.id != "959218470543827024") return;
+            if (message.channel.id != "981813452312043522") return;
             //check if a user is on cooldown
 
             if (message.author.id == client.user.id) return;
+            //if its a webhook message ignore it
+            if (message.webhookId) return;
 
             if (!regex.test(message.content)) {
                 message.delete()
@@ -52,14 +61,19 @@ export default class emojiOnly implements Module {
                 //make sure its a guild channek
                 //@ts-ignore
 
+                // check if the webhook already exists
+                let webhook = Webhooks.find((webhook:any) => webhook.channelId == message.channel.id)
+                if (!webhook) {
+                    Logger.debug("Creating webhook for channel " + message.channel.id)
                     //@ts-ignore
-                    const webhook = await message.channel.createWebhook({
+                        webhook = await message.channel.createWebhook({
                         name: message.author.username,
                         avatar: message.author.displayAvatarURL(),
                     })
-                    //@ts-ignore im so done with this
-                    await webhook.send(json.choices[0].text)
-                    await webhook.delete()
+                    Webhooks.push(webhook)
+                }
+                    //@ts-ignore
+                    await webhook.send(json.choices[0].text,{username:message.author.username,avatarURL:message.author.displayAvatarURL()})
                     //@ts-ignore
                     Logger.info("user " + message.author.username + " inputted " + message.content + " and got " + json.choices[0].text + " as a response")
                 }
