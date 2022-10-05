@@ -24,7 +24,7 @@ export default class emojiOnly implements Module {
     async entrypoint() {
         client.on("messageCreate", async (message: Message) => {
             //TODO: make this a configurable option. im too lazy to do it now
-            if (message.channel.id != "981813452312043522") return;
+            if (message.channel.id != "959218470543827024") return;
             //check if a user is on cooldown
 
             if (message.author.id == client.user.id) return;
