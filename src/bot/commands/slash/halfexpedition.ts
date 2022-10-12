@@ -48,28 +48,28 @@ let command = {
     },
     //@ts-ignore
     async execute(interaction) {
-        if (queue.includes(interaction.user.id)) {
-            return interaction.reply("Please wait for your current image to finish processing")
-        }
+        // if (queue.includes(interaction.user.id)) {
+        //     return interaction.reply("Please wait for your current image to finish processing")
+        // }
 
         if (queue.length == 0) {
-            queue.push(interaction.user.id)
+            queue.push(interaction.id)
             await interaction.deferReply("hang on a sec")
             try {
                 await this.createImage(interaction)
             } finally {
-                queue.splice(queue.indexOf(interaction.user.id), 1)
+                queue.splice(queue.indexOf(interaction.id), 1)
             }
 
         }
         else if (queue.length > 0) {
-            queue.push(interaction.user.id)
+            queue.push(interaction.id)
             //    wait till elemenet before resloves promise. This is a really bad implementation but its late and I'd rather have a bad solution than no solution
             await new Promise<void>(async resolve => {
                 await interaction.reply("You are in the Queue!")
                 let interval = setInterval(() => {
-                    interaction.editReply("You are in the Queue! position: " + queue.indexOf(interaction.user.id))
-                    if (queue.indexOf(interaction.user.id) == 0) {
+                    interaction.editReply("You are in the Queue! position: " + queue.indexOf(interaction.id))
+                    if (queue.indexOf(interaction.id) == 0) {
                         clearInterval(interval)
                         resolve()
                     }
@@ -77,7 +77,7 @@ let command = {
             })
             let reply = await interaction.editReply("Generating image...")
             await this.createImage(interaction)
-            queue.splice(queue.indexOf(interaction.user.id), 1)
+            queue.splice(queue.indexOf(interaction.id), 1)
         }
 
 
