@@ -38,14 +38,20 @@ let command = {
         interaction.reply({content: result1, components: [row]});
         const filter = (i: { customId: string; user: { id: any; }; }) => i.customId === 'next' && i.user.id === interaction.user.id;
 
-        const collector = interaction.channel.createMessageComponentCollector({filter, time: 15000});
+        const collector = interaction.channel.createMessageComponentCollector({filter, time: 60000});
+        //make button hide
+        collector.on("end", () => {
+            interaction.editReply({components: []});
+        })
         //@ts-ignore
         collector.on('collect', async i => {
             if (index == length - 1) {
                 index = 0
+                await i.update({content: list.list[index].definition, components: [row]});
+                return
             }
 
-            await i.update({content: list.list[index].definition, components: [row]});
+            await i.update({content: list.list[index+1].definition, components: [row]});
             index++;
         });
         return;
