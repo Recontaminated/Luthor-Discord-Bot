@@ -13,8 +13,7 @@ export default class AtSomeone implements Module{
             if (!firstRole)
                 if (!message.content.toLowerCase().includes("@someone"))
                     return;
-                else if (!message.content.toLowerCase().includes("@someone") && firstRole.name !== "someone")
-                    return;
+
 
             const members = message.guild.members.cache;
 

@@ -13,6 +13,11 @@ export default class syncEvent implements Command{
     name = "syncevent";
     usage = "eventid";
     public async run(message: Message, args: String[]){
+        if(!message.member?.permissions.has("ManageRoles")){
+            return message.reply("you dont have the perms to do that")
+
+        }
+
         Logger.debug("syncing event");
         const guild = message.guild;
         const channel = message.channel;
