@@ -36,6 +36,7 @@ export default class syncEvent implements Command{
             let member = guild.members.cache.get(userID);
             member.roles.add(role);
         })
+        message.channel.send("Synced: " + event.name + "with users: " + users.map(user => user.user.username).join(", "));
 
 
 
