@@ -20,6 +20,7 @@ logStream.write("-----------------------------------------------------\n");
 export default class Logger {
     //create a method for each loglevel starting with Logger.Info()
     static info(message: string) {
+        let time = new Date().toLocaleTimeString();
         console.log(`\x1b[42m[INFO]\x1b[40m ${message}`);
         logStream.write(new Date().toString());
         logStream.write("[INFO] " + message + "\n");
@@ -36,6 +37,7 @@ export default class Logger {
     }
     static debug(message: unknown) {
         // if message is object
+        let time = new Date().toLocaleTimeString();
         if (typeof message === "object") {
             let str = JSON.stringify(message);
             console.log(`\x1b[44m[DEBUG]\x1b[40m ${str}`);
@@ -44,7 +46,7 @@ export default class Logger {
             return;
         }
 
-        console.log(`\x1b[44m[DEBUG]\x1b[40m ${message}`);
+        console.log(time + ` \x1b[44m[DEBUG]\x1b[40m ${message}`);
         logStream.write(new Date().toString());
         logStream.write("[DEBUG] " + message + "\n");
     }
