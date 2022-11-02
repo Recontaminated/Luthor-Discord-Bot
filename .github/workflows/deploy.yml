@@ -9,7 +9,6 @@ on:
       - master
 
 jobs:
-
   buildAndDeployment:
     runs-on: ubuntu-latest
     environment: production
@@ -19,6 +18,6 @@ jobs:
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT }}
-          method: 'POST'
+          method: "POST"
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
-          data: '{"signal":"restart"}'   
+          data: '{"signal":"restart"}'

@@ -8,8 +8,8 @@ pull_request_rules:
   - name: merge pull requests from dependabot if CI passes
     conditions:
       - or:
-        - author=dependabot[bot] 
-        - author=Recontaminated
+          - author=dependabot[bot]
+          - author=Recontaminated
     actions:
       merge:
         method: merge
