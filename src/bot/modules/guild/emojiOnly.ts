@@ -77,8 +77,8 @@ export default class emojiOnly implements Module {
           });
           Webhooks.push(webhook);
         }
-        //@ts-ignore
         await webhook.send({
+          //@ts-ignore
           content: json.choices[0].text,
           username: message.author.username,
           avatarURL: message.author.displayAvatarURL(),
@@ -90,6 +90,7 @@ export default class emojiOnly implements Module {
             " inputted " +
             message.content +
             " and got " +
+            //@ts-ignore
             json.choices[0].text +
             " as a response"
         );
