@@ -2108,9 +2108,9 @@ ts-mixer@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/ts-mixer/-/ts-mixer-6.0.1.tgz"
 
-tsc-alias@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.npmjs.org/tsc-alias/-/tsc-alias-1.7.0.tgz"
+tsc-alias@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/tsc-alias/-/tsc-alias-1.7.1.tgz#24e846788c53761a7d96135d1cf0e6566ae6ae5b"
   dependencies:
     chokidar "^3.5.3"
     commander "^9.0.0"
