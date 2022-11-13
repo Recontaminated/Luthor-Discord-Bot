@@ -16,10 +16,12 @@ export default class TextGame implements Command {
   name = "TextGame";
   usage = "<player 1> <player 2> ...";
   public async run(message: Message, args: string[]) {
-    if (message.mentions.users.first() === undefined) return;
+    if (message.mentions.users.first() === undefined) {
+      return;
+    }
 
     for (let i = 0; i < args.length; i++) {
-      let userInQuestion = getUserFromMention(message.client, args[i]);
+      const userInQuestion = getUserFromMention(message.client, args[i]);
       if (message.author.id == userInQuestion?.id) {
         await message.reply("you cant play a game with yourself in it idot");
 
@@ -31,7 +33,7 @@ export default class TextGame implements Command {
       }
     }
 
-    let list_of_players: any = [];
+    const list_of_players: any = [];
     list_of_players.push(message.author);
     for (let i = 0; i < args.length; i++) {
       list_of_players.push(getUserFromMention(message.client, args[i]));
@@ -50,14 +52,16 @@ export default class TextGame implements Command {
     //     .setStyle('PRIMARY'),
     // );
 
-    let send = await message.channel.send({
+    const send = await message.channel.send({
       content: `${message_to_send}, you are now playing a game of what the is that word. React to this message to begin`,
     });
 
     await send.react("👍");
-    let filter = (reaction: Discord.MessageReaction, user: Discord.User) => {
+    const filter = (reaction: Discord.MessageReaction, user: Discord.User) => {
       for (let i = 0; i < list_of_players.length; i++) {
-        if (user.id === undefined || user.id === null) return false;
+        if (user.id === undefined || user.id === null) {
+          return false;
+        }
         if (user.id === list_of_players[i].id) {
           return true;
         }
@@ -65,7 +69,7 @@ export default class TextGame implements Command {
 
       return false;
     };
-    let readyPlayers: Discord.Collection<any, any> = new Discord.Collection();
+    const readyPlayers: Discord.Collection<any, any> = new Discord.Collection();
 
     const collector = send.createReactionCollector({
       filter,
@@ -102,10 +106,11 @@ export default class TextGame implements Command {
       return;
     }
 
-    let messageFilter = (message: Discord.Message) => {
+    const messageFilter = (message: Discord.Message) => {
       for (let i = 0; i < list_of_players.length; i++) {
-        if (message.author.id === undefined || message.author.id === null)
+        if (message.author.id === undefined || message.author.id === null) {
           return false;
+        }
         if (message.author.id === list_of_players[i].id) {
           return true;
         }
@@ -128,7 +133,7 @@ export default class TextGame implements Command {
       await sleep(1500);
       await countdown.edit(`${message_to_send} GO!`);
       try {
-        let answers = await message.channel.awaitMessages({
+        const answers = await message.channel.awaitMessages({
           filter: messageFilter,
           max: list_of_players.length,
           time: 2000,

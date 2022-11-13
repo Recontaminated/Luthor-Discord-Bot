@@ -20,3 +20,4 @@ export interface commandOptions {
   cooldown: number;
   requiredPermissions?: PermissionsString[] | null;
 }
+

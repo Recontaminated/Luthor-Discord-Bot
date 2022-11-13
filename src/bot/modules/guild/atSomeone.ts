@@ -7,9 +7,12 @@ export default class AtSomeone implements Module {
   shutdown() {}
   async entrypoint() {
     client.on("messageCreate", async (message: Message) => {
-      let firstRole = message.mentions.roles.first();
-      if (!firstRole)
-        if (!message.content.toLowerCase().includes("@someone")) return;
+      const firstRole = message.mentions.roles.first();
+      if (!firstRole) {
+        if (!message.content.toLowerCase().includes("@someone")) {
+          return;
+        }
+      }
 
       const members = message.guild.members.cache;
 
@@ -19,11 +22,19 @@ export default class AtSomeone implements Module {
 
       while (true) {
         loop++;
-        if (loop > 5) break;
+        if (loop > 5) {
+          break;
+        }
         randomMember = members.random();
-        if (randomMember.user.bot) continue;
-        if (!randomMember.presence) continue;
-        if (randomMember.presence.status == "offline") continue;
+        if (randomMember.user.bot) {
+          continue;
+        }
+        if (!randomMember.presence) {
+          continue;
+        }
+        if (randomMember.presence.status == "offline") {
+          continue;
+        }
         break;
       }
 

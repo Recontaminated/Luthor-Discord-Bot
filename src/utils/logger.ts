@@ -1,9 +1,9 @@
 //export a default class for the logger
 import * as fs from "fs";
 
-let today = new Date();
+const today = new Date();
 
-let d =
+const d =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
 if (!fs.existsSync("./logs")) {
@@ -14,13 +14,13 @@ if (!fs.existsSync(`./logs/${d}.txt`)) {
   //TODO: check if log directory exists, create if it doesnt
   fs.writeFileSync(`./logs/${d}.txt`, "");
 }
-let logStream = fs.createWriteStream(`./logs/${d}.txt`, { flags: "a" });
+const logStream = fs.createWriteStream(`./logs/${d}.txt`, { flags: "a" });
 logStream.write("-----------------------------------------------------\n");
 
 export default class Logger {
   //create a method for each loglevel starting with Logger.Info()
   static info(message: string) {
-    let time = new Date().toLocaleTimeString();
+    const time = new Date().toLocaleTimeString();
     console.log(`\x1b[42m[INFO]\x1b[40m ${message}`);
     logStream.write(new Date().toString());
     logStream.write("[INFO] " + message + "\n");
@@ -37,9 +37,9 @@ export default class Logger {
   }
   static debug(message: unknown) {
     // if message is object
-    let time = new Date().toLocaleTimeString();
+    const time = new Date().toLocaleTimeString();
     if (typeof message === "object") {
-      let str = JSON.stringify(message);
+      const str = JSON.stringify(message);
       console.log(`\x1b[44m[DEBUG]\x1b[40m ${str}`);
       logStream.write(new Date().toString());
       logStream.write("[DEBUG] " + str + "\n");

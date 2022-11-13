@@ -3,7 +3,7 @@ import Module from "../../../types/module.js";
 import client from "index.js";
 import fetch from "node-fetch";
 import Logger from "@utils/logger.js";
-let regex =
+const regex =
   / <:[^:\s]+:\d+>|<a:[^:\s]+:\d+>|(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|\ufe0f)/g;
 
 const headers = {
@@ -11,12 +11,12 @@ const headers = {
   Authorization: "Bearer " + client.config.openAIKey,
 };
 let cooldowns: any = [];
-let Webhooks: any = [];
+const Webhooks: any = [];
 export default class emojiOnly implements Module {
   public name = "emojiOnly";
   async shutdown() {
     //delete all webhooks
-    for (let webhook of Webhooks) {
+    for (const webhook of Webhooks) {
       Logger.info("Deleting webhook " + webhook.id);
       await webhook.delete();
     }
@@ -24,12 +24,18 @@ export default class emojiOnly implements Module {
   async entrypoint() {
     client.on("messageCreate", async (message: Message) => {
       //TODO: make this a configurable option. im too lazy to do it now
-      if (message.channel.id != "959218470543827024") return;
+      if (message.channel.id != "959218470543827024") {
+        return;
+      }
       //check if a user is on cooldown
 
-      if (message.author.id == client.user.id) return;
+      if (message.author.id == client.user.id) {
+        return;
+      }
       //if its a webhook message ignore it
-      if (message.webhookId) return;
+      if (message.webhookId) {
+        return;
+      }
 
       if (!regex.test(message.content)) {
         message.delete();

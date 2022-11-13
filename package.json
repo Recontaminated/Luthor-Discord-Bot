@@ -9,7 +9,8 @@
     "watch": "rm -rf dist && .\\node_modules\\.bin\\tsc -w",
     "dev": "yarn run build && node .",
     "build": "rm -rf dist && tsc && tsc-alias",
-    "host": "yarn install && node dist/index.js"
+    "host": "yarn install && node dist/index.js",
+    "lint": "eslint ."
   },
   "engines": {
     "node": "16.x"
@@ -35,6 +36,8 @@
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
     "tsc-alias": "^1.7.1"
   }
 }

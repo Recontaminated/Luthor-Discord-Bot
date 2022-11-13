@@ -5,9 +5,9 @@ import client from "../../index.js";
 import Logger from "../logger.js";
 
 export default async function deployCommands(): Promise<void> {
-  let clientId = client.config.clientID;
-  let guildId = client.config.guildID;
-  let token = client.config.token;
+  const clientId = client.config.clientID;
+  const guildId = client.config.guildID;
+  const token = client.config.token;
   const commands: {}[] = [];
 
   async function getCommands(pathAdditions = "") {
@@ -16,8 +16,12 @@ export default async function deployCommands(): Promise<void> {
     );
 
     for (const file of commandFiles) {
-      if (file.startsWith("_") || (file.includes(".") && !file.endsWith(".js")))
+      if (
+        file.startsWith("_") ||
+        (file.includes(".") && !file.endsWith(".js"))
+      ) {
         continue;
+      }
       if (!file.endsWith(".js")) {
         await getCommands(pathAdditions + "/" + file);
         continue;
