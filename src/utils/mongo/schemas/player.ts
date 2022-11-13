@@ -17,6 +17,6 @@ const PlayerSchema = new Schema(
   { timestamps: true }
 );
 
-let Player = model("Player", PlayerSchema);
+const Player = model("Player", PlayerSchema);
 
 export { Player };

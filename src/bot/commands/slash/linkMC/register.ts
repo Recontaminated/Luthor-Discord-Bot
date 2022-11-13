@@ -3,7 +3,7 @@ import usernameToUUID from "../../../../utils/minecraftUsernameToUUID.js";
 import { Player } from "../../../../utils/mongo/schemas/player.js";
 import errorBuilder from "../../../responces/error.js";
 
-let command = {
+const command = {
   data: new SlashCommandBuilder()
     .setName("register")
     .setDescription("Register your minecraft username with Luthor!")
@@ -20,7 +20,7 @@ let command = {
       discordId: interaction.user.id,
     });
 
-    if (existingDiscordData.length !== 0)
+    if (existingDiscordData.length !== 0) {
       return interaction.reply(
         errorBuilder(
           "You have already linked on this discord account. Please use the unlink command and then try " +
@@ -28,8 +28,9 @@ let command = {
           command.data.name
         )
       );
+    }
 
-    let username = options.get("username");
+    const username = options.get("username");
     let mojang;
     try {
       mojang = await usernameToUUID(username.value);

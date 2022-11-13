@@ -31,6 +31,6 @@ const GuildSchema = new Schema(
   { timestamps: true }
 );
 
-let Guild = model("Guild", GuildSchema);
+const Guild = model("Guild", GuildSchema);
 
 export { Guild };

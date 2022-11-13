@@ -4,7 +4,9 @@ export default function getUserFromMention(
   client: Discord.Client,
   mention: string
 ) {
-  if (!mention) return;
+  if (!mention) {
+    return;
+  }
 
   if (mention.startsWith("<@") && mention.endsWith(">")) {
     mention = mention.slice(2, -1);

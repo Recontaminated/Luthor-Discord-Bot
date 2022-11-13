@@ -2,6 +2,7 @@ import * as Discord from "discord.js";
 import client from "../../index.js";
 import { InteractionType } from "discord.js";
 import Logger from "../../utils/logger.js";
+import { type } from "os";
 
 export default async function (message: Discord.Message) {
   commandHandler(message);
@@ -10,23 +11,32 @@ export default async function (message: Discord.Message) {
 async function commandHandler(message: Discord.Message) {
   let prefix;
 
-  if (!message.guildId) prefix = client.config.prefix;
-  else prefix = client.prefix[message.guildId] || client.config.prefix;
+  if (!message.guildId) {
+    prefix = client.config.prefix;
+  } else {
+    prefix = client.prefix[message.guildId] || client.config.prefix;
+  }
 
-  if (!message.content.startsWith(prefix)) return;
+  if (!message.content.startsWith(prefix)) {
+    return;
+  }
 
-  let commandMessage = message.content.slice(prefix.length);
-  let messageArray = commandMessage.split(" ");
-  let commandName = messageArray[0].toLowerCase();
+  const commandMessage = message.content.slice(prefix.length);
+  const messageArray = commandMessage.split(" ");
+  const commandName = messageArray[0].toLowerCase();
 
   const args = messageArray.slice(1);
 
   let command = client.commands.text.get(commandName);
-
-  if (!command) return;
+  Logger.debug("Command: " + command.name);
+  if (!command) {
+    return;
+  }
   command = command.run;
-
-  if (!command || typeof command !== "function") return;
+  Logger.debug(command);
+  if (!command || typeof command !== "function") {
+    return;
+  }
   const timeStart = new Date().getTime();
   await command(message, args);
   const timeEnd = new Date().getTime();
@@ -37,9 +47,13 @@ async function commandHandler(message: Discord.Message) {
   );
 }
 client.on("interactionCreate", async (interaction) => {
-  if (interaction.type !== InteractionType.ApplicationCommand) return;
+  if (interaction.type !== InteractionType.ApplicationCommand) {
+    return;
+  }
   const command = client.commands.slash.get(interaction.commandName);
-  if (!command) return;
+  if (!command) {
+    return;
+  }
 
   try {
     const timeStart = new Date().getTime();
