@@ -2420,10 +2420,10 @@ ts-mixer@^6.0.2:
   resolved "https://registry.yarnpkg.com/ts-mixer/-/ts-mixer-6.0.2.tgz#3e4e4bb8daffb24435f6980b15204cb5b287e016"
   integrity sha512-zvHx3VM83m2WYCE8XL99uaM7mFwYSkjR2OZti98fabHrwkjsCvgwChda5xctein3xGOyaQhtTeDq/1H/GNvF3A==
 
-tsc-alias@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.npmjs.org/tsc-alias/-/tsc-alias-1.7.1.tgz"
-  integrity sha512-P4+0i+OB0hX17Ca+U6EJ4WZZ+OSupqW32VJ34N7g7+Ch+bwSx1AqYOvDdIVYEKymBh3dfG0t1qxbxPlBbtB1lQ==
+tsc-alias@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/tsc-alias/-/tsc-alias-1.8.1.tgz#2cb548a451cc99ccd2dabcd583a0ebe22f3c7dd8"
+  integrity sha512-d8Oc3y/XI9OvpdbdjzOWNYskEvFxqtobitHcTszmQr9iVt/tHL7pwV0WHKuCQ4uXHcHh+oDMx+uTlvMQBlpYcw==
   dependencies:
     chokidar "^3.5.3"
     commander "^9.0.0"
