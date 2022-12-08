@@ -9,7 +9,7 @@ const row = new ActionRowBuilder().addComponents(
     .setLabel("Next Result")
     .setStyle(ButtonStyle.Primary)
 );
-let command = {
+const command = {
   data: new SlashCommandBuilder()
     .setName("urban")
     .setDescription("better than brittanica")

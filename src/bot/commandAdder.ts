@@ -12,8 +12,9 @@ async function addTextCommands(pathAdditions = ""): Promise<void> {
   );
 
   for (const file of textCommandFiles) {
-    if (file.startsWith("_") || (file.includes(".") && !file.endsWith(".js")))
+    if (file.startsWith("_") || (file.includes(".") && !file.endsWith(".js"))) {
       continue;
+    }
 
     if (!file.endsWith(".js")) {
       await addTextCommands(pathAdditions + "/" + file);
@@ -27,16 +28,18 @@ async function addTextCommands(pathAdditions = ""): Promise<void> {
 
     const command = new commandClassDefault(client);
 
-    let commandName = command.name;
+    const commandName = command.name;
 
     client.commands.text.set(commandName, command);
     const endTime = new Date().getTime();
 
     Logger.info(`Loaded command: ${commandName} in ${endTime - startTime} ms`);
 
-    if (command.aliases === undefined) continue;
+    if (command.aliases === undefined) {
+      continue;
+    }
 
-    for (let i in command.aliases) {
+    for (const i in command.aliases) {
       client.commands.text.set(command.aliases[i], command);
     }
   }
@@ -47,8 +50,9 @@ async function addSlashCommands(pathAdditions = ""): Promise<void> {
   );
 
   for (const file of slashCommandFiles) {
-    if (file.startsWith("_") || (file.includes(".") && !file.endsWith(".js")))
+    if (file.startsWith("_") || (file.includes(".") && !file.endsWith(".js"))) {
       continue;
+    }
 
     if (!file.endsWith(".js")) {
       await addSlashCommands(pathAdditions + "/" + file);

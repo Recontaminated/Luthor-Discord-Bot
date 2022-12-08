@@ -21,11 +21,11 @@ async function sendReminder(
 ) {
   setTimeout(async function () {
     Logger.debug(`Sending reminder to ${creatorId}`);
-    let unixNow = Date.now();
+    const unixNow = Date.now();
 
-    let createdAgo = unixNow - createdAt;
+    const createdAgo = unixNow - createdAt;
 
-    let embed = new Discord.EmbedBuilder()
+    const embed = new Discord.EmbedBuilder()
       .addFields([
         {
           name: "Reminder you requested",
@@ -46,7 +46,7 @@ async function sendReminder(
         iconURL: client.user?.displayAvatarURL(),
       });
     //get DM channel using creatorId
-    let dmChannel = await client.users.cache.get(creatorId)?.createDM();
+    const dmChannel = await client.users.cache.get(creatorId)?.createDM();
 
     if (dmChannel) {
       await dmChannel.send({ embeds: [embed] });
@@ -101,18 +101,20 @@ export default class AddRemindMe implements Command {
       return;
     }
 
-    let time = args[0];
-    let match = time.match(numberRegex);
-    if (match?.length == 0 || match == null)
+    const time = args[0];
+    const match = time.match(numberRegex);
+    if (match?.length == 0 || match == null) {
       return await message.channel.send("Please use the correct input format.");
-    if (parseInt(match![0]) < 0)
+    }
+    if (parseInt(match![0]) < 0) {
       return await message.channel.send("no negative times!");
+    }
 
-    let duration = parse(args[0]);
-    let reminderArray = args.slice(1);
-    let reminderText = reminderArray.join(" ");
-    let messageURL = message.url;
-    let createdAt = Date.now();
+    const duration = parse(args[0]);
+    const reminderArray = args.slice(1);
+    const reminderText = reminderArray.join(" ");
+    const messageURL = message.url;
+    const createdAt = Date.now();
     try {
       const reminder = await new Reminder({
         creatorId: message.author.id,
