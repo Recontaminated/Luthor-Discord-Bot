@@ -20,7 +20,7 @@
   "dependencies": {
     "@discordjs/rest": "^1.4.0",
     "@types/node": "^18.11.11",
-    "chalk": "^5.1.2",
+    "chalk": "^5.2.0",
     "discord-api-types": "^0.37.21",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
