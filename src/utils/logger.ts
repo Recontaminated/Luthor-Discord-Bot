@@ -21,18 +21,20 @@ export default class Logger {
   //create a method for each loglevel starting with Logger.Info()
   static info(message: string) {
     const time = new Date().toLocaleTimeString();
-    console.log(`\x1b[42m[INFO]\x1b[40m ${message}`);
+    console.log(time + ` \x1b[42m[INFO]\x1b[40m ${message}`);
     logStream.write(new Date().toString());
-    logStream.write("[INFO] " + message + "\n");
+    logStream.write(time +" [INFO] " + message + "\n");
   }
   static warn(message: string) {
-    console.log(`\x1b[43m[INFO]\x1b[40m ${message}`);
+    const time = new Date().toLocaleTimeString();
+    console.log(time + ` \x1b[43m[INFO]\x1b[40m ${message}`);
     logStream.write(new Date().toString());
-    logStream.write("[WARN] " + message + "\n");
+    logStream.write(time +" [WARN] " + message + "\n");
   }
   static error(message: unknown) {
+    const time = new Date().toLocaleTimeString();
     logStream.write(new Date().toString());
-    console.log(`\x1b[41m[ERROR]\x1b[40m ${message}`);
+    console.log(time + ` \x1b[41m[ERROR]\x1b[40m ${message}`);
     logStream.write("[ERROR] " + message + "\n");
   }
   static debug(message: unknown) {
