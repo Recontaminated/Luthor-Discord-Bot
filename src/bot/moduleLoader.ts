@@ -27,8 +27,8 @@ async function moduleLoader(pathAdditions = ""): Promise<void> {
     moduleObject = new moduleObject(client);
     moduleObject.entrypoint(client);
     moduleObject.commands?.forEach((command: any) => {
-        command.run = command.run.bind(moduleObject);
-        client.commands.text.set(command.name, command);
+      command.run = command.run.bind(moduleObject);
+      client.commands.text.set(command.name, command);
     });
     Logger.info(`Loaded module: ${moduleObject.name}`);
     loadedModules.push(moduleObject);
