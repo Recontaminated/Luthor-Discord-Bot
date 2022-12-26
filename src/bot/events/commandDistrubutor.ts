@@ -2,6 +2,7 @@ import * as Discord from "discord.js";
 import client from "../../index.js";
 import { InteractionType } from "discord.js";
 import Logger from "../../utils/logger.js";
+import prettyMilliseconds from "pretty-ms";
 
 export default async function (message: Discord.Message) {
   commandHandler(message);
@@ -23,7 +24,6 @@ async function commandHandler(message: Discord.Message) {
     return;
   }
 
-
   const commandMessage = message.content.slice(prefix.length);
   const messageArray = commandMessage.split(" ");
   const commandName = messageArray[0].toLowerCase();
@@ -33,18 +33,31 @@ async function commandHandler(message: Discord.Message) {
   if (!command) {
     return;
   }
-  command = command.run;
-  if (!command || typeof command !== "function") {
+  const commandFn = command.run;
+  if (!commandFn || typeof commandFn !== "function") {
     return;
   }
+  //check the cooldowns
+  Logger.debug(command);
+  if (command.cooldowns.has(message.author.id)) {
+    return message.reply(
+      "You are on cooldown for this command! Please wait " +
+        prettyMilliseconds(command.cooldown) +
+        " between each use"
+    );
+  }
   const timeStart = new Date().getTime();
-  await command(message, args);
+  await commandFn(message, args);
   const timeEnd = new Date().getTime();
   Logger.info(
     `user ${message.author.username} ran the command ${commandName} in ${
       timeEnd - timeStart
     } ms`
   );
+  command.cooldowns.add(message.author.id);
+  setTimeout(() => {
+    command.cooldowns.delete(message.author.id);
+  }, command.cooldown);
 }
 client.on("interactionCreate", async (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) {
