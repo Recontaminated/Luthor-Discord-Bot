@@ -71,7 +71,11 @@ const sycFunctions = async () => {
 sycFunctions();
 
 client.login(client.config.token);
-
+client.on("rateLimit", (info) => {
+  Logger.warn(
+    `Rate limit hit: ${info.timeout}ms timeout on route ${info.path} (global: ${info.global})`
+  );
+});
 process.on("uncaughtException", (err) => {
   Logger.error(err);
   Logger.error(err.stack);
