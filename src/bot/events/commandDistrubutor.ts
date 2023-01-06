@@ -29,7 +29,7 @@ async function commandHandler(message: Discord.Message) {
   const commandName = messageArray[0].toLowerCase();
 
   const args = messageArray.slice(1);
-  let command = client.commands.text.get(commandName);
+  const command = client.commands.text.get(commandName);
   if (!command) {
     return;
   }
@@ -38,14 +38,7 @@ async function commandHandler(message: Discord.Message) {
     return;
   }
   //check the cooldowns
-  Logger.debug(command);
-  if (command.cooldowns.has(message.author.id)) {
-    return message.reply(
-      "You are on cooldown for this command! Please wait " +
-        prettyMilliseconds(command.cooldown) +
-        " between each use"
-    );
-  }
+
   const timeStart = new Date().getTime();
   await commandFn(message, args);
   const timeEnd = new Date().getTime();
@@ -54,10 +47,7 @@ async function commandHandler(message: Discord.Message) {
       timeEnd - timeStart
     } ms`
   );
-  command.cooldowns.add(message.author.id);
-  setTimeout(() => {
-    command.cooldowns.delete(message.author.id);
-  }, command.cooldown);
+
 }
 client.on("interactionCreate", async (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) {
