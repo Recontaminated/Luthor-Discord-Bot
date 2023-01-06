@@ -49,7 +49,7 @@ import { loadModules } from "./bot/moduleLoader.js";
 
 async function loadPrefixes() {
   Logger.info("Loading prefixes...");
-  let guildsWithCustomPrefix = await Guild.find({
+  const guildsWithCustomPrefix = await Guild.find({
     prefix: { $exists: true },
   });
   for (let index = 0; index < guildsWithCustomPrefix.length; index++) {
@@ -57,7 +57,7 @@ async function loadPrefixes() {
     client.prefix[guild.guildId] = guild.prefix;
   }
 }
-let sycFunctions = async () => {
+const sycFunctions = async () => {
   Logger.info("Sync init functions");
   await eventHandler(client);
   await commandAdder();
@@ -71,7 +71,11 @@ let sycFunctions = async () => {
 sycFunctions();
 
 client.login(client.config.token);
-
+client.on("rateLimit", (info) => {
+  Logger.warn(
+    `Rate limit hit: ${info.timeout}ms timeout on route ${info.path} (global: ${info.global})`
+  );
+});
 process.on("uncaughtException", (err) => {
   Logger.error(err);
   Logger.error(err.stack);
@@ -88,13 +92,13 @@ process.on("SIGINT", async function () {
     Logger.error(err);
   }
 });
-let stdin = process.openStdin();
+const stdin = process.openStdin();
 
 stdin.addListener("data", async function (d) {
   // note:  d is an object, and when converted to a string it will
   // end with a linefeed.  so we (rather crudely) account for that
   // with toString() and then trim()
-  let input = d.toString().trim();
+  const input = d.toString().trim();
 
   if (input === "stop") {
     Logger.warn("Initiating graceful shutdown");

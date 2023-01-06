@@ -73,7 +73,9 @@ export default class Help implements Command {
   usage = "";
 
   async run(message: Discord.Message, args: string[]) {
-    if (!message.guildId) return;
+    if (!message.guildId) {
+      return;
+    }
     const prefix = client.prefix[message.guildId] || client.config.prefix;
 
     const sentMessage = await message.channel.send({
@@ -86,7 +88,9 @@ export default class Help implements Command {
     });
 
     interactionCollector.on("collect", (interaction) => {
-      if (!interaction.isSelectMenu()) return;
+      if (!interaction.isSelectMenu()) {
+        return;
+      }
 
       if (interaction.user.id !== message.author.id) {
         interaction.reply({

@@ -12,7 +12,7 @@ export default class syncEvent implements Command {
   guildOnly = false;
   name = "syncevent";
   usage = "eventid";
-  public async run(message: Message, args: String[]) {
+  public async run(message: Message, args: string[]) {
     if (!message.member?.permissions.has("ManageRoles")) {
       return message.reply("you dont have the perms to do that");
     }
@@ -27,17 +27,17 @@ export default class syncEvent implements Command {
       member.roles.remove(role);
     });
     //first arg is event url
-    // @ts-ignore
-    const eventName: string = args[0];
+
+    const eventName = args[0];
     //@ts-ignore
-    let eventSnowflake: Snowflake = parse(eventName, true).query.event;
+    const eventSnowflake: Snowflake = parse(eventName, true).query.event;
     Logger.debug("event snowflake: " + eventSnowflake);
     const event = await guild.scheduledEvents.fetch(eventSnowflake);
     //list users of event
     const users = await event.fetchSubscribers();
     users.forEach((user) => {
-      let userID = user.user.id;
-      let member = guild.members.cache.get(userID);
+      const userID = user.user.id;
+      const member = guild.members.cache.get(userID);
       member.roles.add(role);
     });
     message.channel.send(

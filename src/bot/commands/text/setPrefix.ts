@@ -18,22 +18,25 @@ export default class SetPrefix implements Command {
   usage = "<new prefix>";
   @requirePermission("ManageGuild")
   public async run(message: Message, args: string[]) {
-    if (!message.guild)
+    if (!message.guild) {
       return await message.channel.send(
         errorBuilder(
           "You can't use this command in DM! Please ping me instead",
           "setprefix"
         )
       );
+    }
     let newPrefix = args[0];
-    if (!newPrefix)
+    if (!newPrefix) {
       return await message.channel.send(
         errorBuilder("Please provide a prefix!", "setPrefix")
       );
-    if (newPrefix.length > 5)
+    }
+    if (newPrefix.length > 5) {
       return await message.channel.send(
         errorBuilder("Prefix must be less than 5 characters!", "setPrefix")
       );
+    }
     if (newPrefix.length > 1) {
       await message.channel.send({
         embeds: [
@@ -48,7 +51,9 @@ export default class SetPrefix implements Command {
       console.log(newPrefix.length);
     }
     let data = await Guild.findOne({ guildId: message.guild?.id });
-    if (!data) data = await Guild.create({ guildId: message.guild?.id });
+    if (!data) {
+      data = await Guild.create({ guildId: message.guild?.id });
+    }
 
     data.prefix = newPrefix;
     await data.save();

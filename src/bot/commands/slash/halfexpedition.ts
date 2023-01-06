@@ -1,10 +1,15 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { AttachmentBuilder } from "discord.js";
+import {
+  AttachmentBuilder,
+  ChatInputCommandInteraction,
+  CommandInteraction,
+  CommandInteractionOptionResolver,
+} from "discord.js";
 import fetch from "node-fetch";
 import Logger from "@utils/logger.js";
 
-let queue: string[] = [];
-let command = {
+const queue: string[] = [];
+const command = {
   data: new SlashCommandBuilder()
     .setName("halfexpedition")
     .setDescription("makes a shitty image")
@@ -14,8 +19,7 @@ let command = {
         .setDescription("Your prmopt idk")
         .setRequired(true)
     ),
-  //@ts-ignore
-  async createImage(interaction) {
+  async createImage(interaction: ChatInputCommandInteraction) {
     const api = `http://192.168.1.88:5000/?username=${interaction.options.getString(
       "prompt"
     )}`;
@@ -34,7 +38,6 @@ let command = {
       if (!response.ok) {
         return interaction.editReply({
           content: "Something went wrong",
-          ephemeral: true,
         });
       }
       const arrayBuffer = await response.arrayBuffer();
@@ -54,8 +57,7 @@ let command = {
       return interaction.editReply("The backend service is offline");
     }
   },
-  //@ts-ignore
-  async execute(interaction) {
+  async execute(interaction: any) {
     // if (queue.includes(interaction.user.id)) {
     //     return interaction.reply("Please wait for your current image to finish processing")
     // }
@@ -74,7 +76,7 @@ let command = {
       await new Promise<void>(async (resolve) => {
         let position = queue.indexOf(interaction.id);
         await interaction.reply("You are in the Queue! position: " + position);
-        let interval = setInterval(() => {
+        const interval = setInterval(() => {
           if (queue.indexOf(interaction.id) != position) {
             interaction.editReply(
               "You are in the Queue! position: " + queue.indexOf(interaction.id)
@@ -87,7 +89,7 @@ let command = {
           }
         }, 1000);
       });
-      let reply = await interaction.editReply("Generating image...");
+      const reply = await interaction.editReply("Generating image...");
       await this.createImage(interaction);
       queue.splice(queue.indexOf(interaction.id), 1);
     }

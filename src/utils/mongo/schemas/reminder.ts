@@ -18,6 +18,6 @@ const ReminderSchema = new Schema({
   createdAt: reqNumber,
 });
 
-let Reminder = model("Reminder", ReminderSchema);
+const Reminder = model("Reminder", ReminderSchema);
 
 export { Reminder };
