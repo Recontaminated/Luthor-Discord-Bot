@@ -21,11 +21,11 @@ export default class syncEvent implements Command {
   guildOnly = false;
   name = "sudo";
   usage = "<selector> <something to say>";
-  @argRegex(/[*].*/g)
+  @argRegex(/([*].*)|(^<@)/)
   @onlyInGuild()
   public async run(message: Message, args: string[]) {
     const selector = args[0];
-    let channel = message.channel as TextChannel;
+    const channel = message.channel as TextChannel;
     //TODO: fix this awfulness with a decorator or something
 
     const webhook = await channel.createWebhook({ name: "luthor" });
@@ -41,9 +41,20 @@ export default class syncEvent implements Command {
           avatarURL: member.user.avatarURL(),
         });
         //wait for 0.5s
-        await new Promise((r) => setTimeout(r, 500));
+        await new Promise((r) => setTimeout(r, 300));
       }
     }
+    else if (selector.startsWith("<@")) {
+        const id = selector.slice(2, -1);
+        const member = await channel.guild.members.fetch(id);
+        await webhook.send({
+            content: messageText.join(" "),
+            username: member.user.username,
+            avatarURL: member.user.avatarURL(),
+        });
+    }
+
+
     Logger.debug("done , deleting webhook");
     await webhook.delete();
   }
