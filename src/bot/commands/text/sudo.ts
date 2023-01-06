@@ -21,7 +21,8 @@ export default class syncEvent implements Command {
   guildOnly = false;
   name = "sudo";
   usage = "<selector> <something to say>";
-  @argRegex(/([*].*)|(^<@)/)
+
+  @argRegex(/ ?([*]( (\w+))+)|(<@!*&*[0-9]+>( \w+)+)/)
   @onlyInGuild()
   public async run(message: Message, args: string[]) {
     const selector = args[0];
