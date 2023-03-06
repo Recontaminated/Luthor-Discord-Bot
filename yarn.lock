@@ -1161,9 +1161,9 @@ parent-module@^1.0.0:
   dependencies:
     callsites "^3.0.0"
 
-parse-duration@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/parse-duration/-/parse-duration-1.0.2.tgz"
+parse-duration@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/parse-duration/-/parse-duration-1.0.3.tgz#b6681f5edcc2689643b34c09ea63f86f58a35814"
 
 parse-ms@^3.0.0:
   version "3.0.0"
