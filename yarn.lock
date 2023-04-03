@@ -14,9 +14,9 @@
     ts-mixer "^6.0.3"
     tslib "^2.5.0"
 
-"@discordjs/collection@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-1.4.0.tgz#6b5d5429db0691a3f5a962c21f6bc7859eef3333"
+"@discordjs/collection@^1.4.0", "@discordjs/collection@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-1.5.0.tgz#478acd5d510cb5996c5101f47b24959ac7499cc2"
 
 "@discordjs/formatters@^0.2.0":
   version "0.2.0"
@@ -24,18 +24,18 @@
   dependencies:
     discord-api-types "^0.37.35"
 
-"@discordjs/rest@^1.5.0", "@discordjs/rest@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-1.6.0.tgz#d77c9b5533f6d2079468d4fd497d3fabeb529c20"
+"@discordjs/rest@^1.6.0", "@discordjs/rest@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-1.7.0.tgz#c61fcd14e810b44e4821df5dfb5e74fa5fcb6e5d"
   dependencies:
-    "@discordjs/collection" "^1.4.0"
+    "@discordjs/collection" "^1.5.0"
     "@discordjs/util" "^0.2.0"
     "@sapphire/async-queue" "^1.5.0"
     "@sapphire/snowflake" "^3.4.0"
-    discord-api-types "^0.37.35"
+    discord-api-types "^0.37.37"
     file-type "^18.2.1"
     tslib "^2.5.0"
-    undici "^5.20.0"
+    undici "^5.21.0"
 
 "@discordjs/util@^0.2.0":
   version "0.2.0"
@@ -1515,7 +1515,7 @@ typescript@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.3.tgz#fe976f0c826a88d0a382007681cbb2da44afdedf"
 
-undici@^5.20.0:
+undici@^5.20.0, undici@^5.21.0:
   version "5.21.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-5.21.0.tgz#b00dfc381f202565ab7f52023222ab862bb2494f"
   dependencies:
