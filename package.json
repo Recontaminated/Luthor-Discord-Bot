@@ -29,7 +29,7 @@
     "node-fetch": "^3.3.1",
     "parse-duration": "^1.0.3",
     "pretty-ms": "^8.0.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
