@@ -542,9 +542,9 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dotenv@^16.1.0:
-  version "16.1.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.1.0.tgz#beb4232166ea080520a42245b8007227ad84b052"
+dotenv@^16.1.2:
+  version "16.1.2"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.1.2.tgz#5c62cefa33c9e034354f5828c06aeedc4acfe7f3"
 
 ee-first@1.1.1:
   version "1.1.1"
