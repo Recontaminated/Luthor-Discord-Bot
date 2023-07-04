@@ -38,6 +38,6 @@
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
-    "tsc-alias": "^1.8.6"
+    "tsc-alias": "^1.8.7"
   }
 }
