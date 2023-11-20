@@ -32,9 +32,9 @@
   dependencies:
     discord-api-types "0.37.61"
 
-"@discordjs/rest@^2.0.0", "@discordjs/rest@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-2.1.0.tgz#080df097333fc03226cdb3b528d1bd7472768764"
+"@discordjs/rest@^2.1.0", "@discordjs/rest@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-2.2.0.tgz#f4ec00d3faff965c00a879b7e87bb4b6f4446966"
   dependencies:
     "@discordjs/collection" "^2.0.0"
     "@discordjs/util" "^1.0.2"
