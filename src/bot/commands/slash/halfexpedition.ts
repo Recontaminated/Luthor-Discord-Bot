@@ -12,11 +12,11 @@ const queue: string[] = [];
 const command = {
   data: new SlashCommandBuilder()
     .setName("halfexpedition")
-    .setDescription("makes a shitty image")
+    .setDescription("wish.com midjourney")
     .addStringOption((option) =>
       option
         .setName("prompt")
-        .setDescription("Your prmopt idk")
+        .setDescription("Your prompt idk")
         .setRequired(true)
     ),
   async createImage(interaction: ChatInputCommandInteraction) {
