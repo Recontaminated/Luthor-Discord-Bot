@@ -28,7 +28,7 @@
     "mongoose": "^8.5.1",
     "node-fetch": "^3.3.2",
     "parse-duration": "^1.1.0",
-    "pretty-ms": "^9.0.0",
+    "pretty-ms": "^9.1.0",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
