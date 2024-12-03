@@ -23,7 +23,7 @@
     "chalk": "^5.3.0",
     "discord-api-types": "^0.37.110",
     "discord.js": "^14.16.3",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "mongoose": "^8.8.3",
     "node-fetch": "^3.3.2",
