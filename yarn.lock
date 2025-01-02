@@ -32,16 +32,16 @@
   dependencies:
     discord-api-types "0.37.97"
 
-"@discordjs/rest@^2.2.0", "@discordjs/rest@^2.3.0", "@discordjs/rest@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-2.4.0.tgz#63bfc816af58af844914e3589d7eae609cd199b5"
+"@discordjs/rest@^2.3.0", "@discordjs/rest@^2.4.0", "@discordjs/rest@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-2.4.2.tgz#8c18c717cd81521d6f886a33e2dd7a454be97e41"
   dependencies:
     "@discordjs/collection" "^2.1.1"
     "@discordjs/util" "^1.1.1"
     "@sapphire/async-queue" "^1.5.3"
     "@sapphire/snowflake" "^3.5.3"
     "@vladfrangu/async_event_emitter" "^2.4.6"
-    discord-api-types "0.37.97"
+    discord-api-types "^0.37.114"
     magic-bytes.js "^1.10.0"
     tslib "^2.6.3"
     undici "6.19.8"
@@ -132,11 +132,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@sapphire/async-queue@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.5.2.tgz#2982dce16e5b8b1ea792604d20c23c0585877b97"
-
-"@sapphire/async-queue@^1.5.3":
+"@sapphire/async-queue@^1.5.2", "@sapphire/async-queue@^1.5.3":
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.5.3.tgz#03cd2a2f3665068f314736bdc56eee2025352422"
 
@@ -318,11 +314,7 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
 
-"@vladfrangu/async_event_emitter@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@vladfrangu/async_event_emitter/-/async_event_emitter-2.2.4.tgz#d3537432c6db6444680a596271dff8ea407343b3"
-
-"@vladfrangu/async_event_emitter@^2.4.6":
+"@vladfrangu/async_event_emitter@^2.2.4", "@vladfrangu/async_event_emitter@^2.4.6":
   version "2.4.6"
   resolved "https://registry.yarnpkg.com/@vladfrangu/async_event_emitter/-/async_event_emitter-2.4.6.tgz#508b6c45b03f917112a9008180b308ba0e4d1805"
 
