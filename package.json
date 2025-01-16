@@ -19,7 +19,7 @@
   "license": "WTFPL",
   "dependencies": {
     "@discordjs/rest": "^2.4.2",
-    "@types/node": "^22.10.6",
+    "@types/node": "^22.10.7",
     "chalk": "^5.4.1",
     "discord-api-types": "^0.37.115",
     "discord.js": "^14.17.3",
