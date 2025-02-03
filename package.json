@@ -27,7 +27,7 @@
     "express": "^4.21.2",
     "mongoose": "^8.9.5",
     "node-fetch": "^3.3.2",
-    "parse-duration": "^2.0.1",
+    "parse-duration": "^2.1.2",
     "pretty-ms": "^9.2.0",
     "typescript": "^5.7.3"
   },
