@@ -22,7 +22,7 @@
     "@types/node": "^22.13.1",
     "chalk": "^5.4.1",
     "discord-api-types": "^0.37.119",
-    "discord.js": "^14.17.3",
+    "discord.js": "^14.18.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.10.0",
