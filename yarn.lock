@@ -32,9 +32,9 @@
   dependencies:
     discord-api-types "^0.38.1"
 
-"@discordjs/rest@^2.4.2", "@discordjs/rest@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-2.5.0.tgz#fc4c5e23bee31f4df98e6e148e9d22f8eb031924"
+"@discordjs/rest@^2.5.0", "@discordjs/rest@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@discordjs/rest/-/rest-2.5.1.tgz#a6bde4d08f0e23bd763506cc1fcc83564afee077"
   dependencies:
     "@discordjs/collection" "^2.1.1"
     "@discordjs/util" "^1.1.1"
@@ -44,7 +44,7 @@
     discord-api-types "^0.38.1"
     magic-bytes.js "^1.10.0"
     tslib "^2.6.3"
-    undici "6.21.1"
+    undici "6.21.3"
 
 "@discordjs/util@^1.1.0", "@discordjs/util@^1.1.1":
   version "1.1.1"
@@ -1547,6 +1547,10 @@ undici-types@~7.8.0:
 undici@6.21.1:
   version "6.21.1"
   resolved "https://registry.yarnpkg.com/undici/-/undici-6.21.1.tgz#336025a14162e6837e44ad7b819b35b6c6af0e05"
+
+undici@6.21.3:
+  version "6.21.3"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-6.21.3.tgz#185752ad92c3d0efe7a7d1f6854a50f83b552d7a"
 
 unpipe@1.0.0:
   version "1.0.0"
