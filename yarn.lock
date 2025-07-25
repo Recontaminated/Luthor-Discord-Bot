@@ -1161,9 +1161,9 @@ mongodb@~6.17.0:
     bson "^6.10.4"
     mongodb-connection-string-url "^3.0.0"
 
-mongoose@^8.16.4:
-  version "8.16.4"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-8.16.4.tgz#89ed4b3baab1972cc951cfc82a4f754f280a9433"
+mongoose@^8.16.5:
+  version "8.16.5"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-8.16.5.tgz#ea00038f1867e764aa61b267eb033d63096deb6f"
   dependencies:
     bson "^6.10.4"
     kareem "2.6.3"
